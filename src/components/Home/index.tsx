@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {
+  Layout, List, Typography, Divider,
+} from 'antd';
+import GitLogin from '../GitLogin';
 
-import { Layout } from 'antd';
-import { List, Typography, Divider } from 'antd';
+const {
+  Header, Footer, Sider, Content
+} = Layout;
 
-const { Header, Footer, Sider, Content } = Layout;
+type tHome = {
+  logged: boolean;
+  setLogged: (arg:boolean)=>void;
+  setRole: (arg:string)=>void;
+  props: any;
+}
 
-// import GitLogin from '../GitLogin';
+const Home:React.FC<tHome> = ({ logged, setLogged, setRole, props }) => {
 
-const Home:React.FC<any> = ({ logged, setLogged, setRole }) => {
   console.log(logged);
+  console.log(props);
 
 
   const data = [
@@ -19,18 +29,10 @@ const Home:React.FC<any> = ({ logged, setLogged, setRole }) => {
     'Los Angeles battles huge wildfires.',
   ];
 
-
   return (
     <>
       {logged
         ? (
-          <div>
-            THIS IS HOME
-          </div>
-        )
-        : (
-      // <GitLogin setLogged={setLogged} setRole={setRole} />
-
           <Layout>
             <Header>X Cross Check Task</Header>
             <Layout>
@@ -49,14 +51,15 @@ const Home:React.FC<any> = ({ logged, setLogged, setRole }) => {
                     </List.Item>
                   )}
                 />
-
-
               </Content>
             </Layout>
             <Footer>Footer</Footer>
           </Layout>
+        )
+        : (
+          <GitLogin setLogged={setLogged} setRole={setRole} />
         )}
-        </>
+    </>
   );
 }
 

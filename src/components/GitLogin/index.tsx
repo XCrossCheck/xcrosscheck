@@ -11,11 +11,17 @@ type fGitLogin = {
   setRole: (role:string)=>void;
 }
 
+function randomString(i:number) {
+  let rnd = '';
+  while (rnd.length < i) rnd += Math.random().toString(36).substring(2);
+  return rnd.substring(0, i);
+}
 
 const GitLogin:React.FC<fGitLogin> = ({ setLogged, setRole }) => {
 
   const clientId = 'f4ecf84a7ba9d4e393f2';
-  const authhref = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+  const state = randomString(12);
+  const authhref = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${state}`;
 
 
   const onFinish = (values:any) => {
