@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from '../Home';
@@ -7,7 +8,7 @@ import './app.css';
 const Test = () => (<div>This is a TEST</div>);
 
 const App = (props:any) => {
-  console.log('app:',props);
+  console.log('app:', props);
   const [logged, setLogged] = useState(false);
   const [role, setRole] = useState('student');
 
@@ -21,7 +22,7 @@ const App = (props:any) => {
         path="/meho"
         render={(props) => (
           <Home
-            logged={true}
+            logged
             setLogged={setLogged}
             setRole={setRole}
             props={props}
