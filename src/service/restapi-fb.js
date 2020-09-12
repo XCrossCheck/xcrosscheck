@@ -4,9 +4,9 @@ const dbUrl = 'https://xcrosscheck.firebaseio.com/';
 
 let accessToken = ''; 
 
-export const dbGetReq = (req, index = null, value = '') => {
+export const dbGetReq = (req, index = null, value = null) => {
   // https://xcrosscheck.firebaseio.com/tasks.json?orderBy=%22author%22&equalTo="newuser";
-  const pr = index ? `?orderBy="${index}"&equalTo="${value}"` : '';
+  const pr = index && value ? `?orderBy="${index}"&equalTo="${value}"` : '';
   const res = axios.get(`${dbUrl}/${req}.json${pr}${accessToken}`); // ,
   // { credentials: 'include', withCredentials: true });
   // console.log(`Status code:`, res.status);
