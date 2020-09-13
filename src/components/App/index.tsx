@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from '../Home';
 import Callback from '../Callback';
 import './app.css';
 
-const Test = () => (<div>This is a TEST</div>);
+const Test = () => <div>This is a TEST</div>;
 
-const App = (props:any) => {
-  console.log('app:',props);
+const App = (props: any) => {
+  console.log('app:', props);
+
   const [logged, setLogged] = useState(false);
   const [role, setRole] = useState('student');
 
@@ -19,16 +22,8 @@ const App = (props:any) => {
 
       <Route
         path="/meho"
-        render={(props) => (
-          <Home
-            logged={true}
-            setLogged={setLogged}
-            setRole={setRole}
-            props={props}
-          />
-        )}
+        render={(props) => <Home logged setLogged={setLogged} setRole={setRole} props={props} />}
       />
-
       <Route
         path="/callback"
         render={(props) => (
@@ -44,12 +39,7 @@ const App = (props:any) => {
         // exact
         path="/"
         render={(props) => (
-          <Home
-            logged={logged}
-            setLogged={setLogged}
-            setRole={setRole}
-            props={props}
-          />
+          <Home logged={logged} setLogged={setLogged} setRole={setRole} props={props} />
         )}
       />
     </Switch>
