@@ -22,6 +22,7 @@ const webpackConfig = (env): Configuration => ({
     filename: 'build.js',
   },
   devServer: {
+    clientLogLevel: 'error',
     port: 3000,
     historyApiFallback: true,
     http2: true,

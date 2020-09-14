@@ -1,13 +1,8 @@
-/* eslint-disable linebreak-style */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-// import App from './components/App';
-import AddTask from './components/AddTask/index';
+import App from './components/App';
 
 ReactDOM.render(
-  <Router>
-    <AddTask />
-  </Router>,
+  <App />,
   document.getElementById('root'),
 );

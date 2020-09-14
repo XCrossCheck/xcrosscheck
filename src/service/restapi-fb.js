@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from 'axios';
 
 const dbUrl = 'https://xcrosscheck.firebaseio.com/';
 
-let accessToken = ''; 
+const accessToken = '';
 
 export const dbGetReq = (req, index = null, value = null) => {
   // https://xcrosscheck.firebaseio.com/tasks.json?orderBy=%22author%22&equalTo="newuser";
