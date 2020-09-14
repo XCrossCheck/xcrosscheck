@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-=======
-/* eslint-disable @typescript-eslint/naming-convention */
-import React from 'react';
->>>>>>> develop
 import {
   Layout, List, Divider, Button, Input
 } from 'antd';
@@ -30,12 +25,11 @@ type tTask = {
 };
 
 const {
-  Header, Footer, Sider, Content,
+  Header, Footer, Sider, Content
 } = Layout;
 
 type tHome = {
   logged: boolean;
-<<<<<<< HEAD
   // setLogged: (arg:boolean)=>void;
   // setRole: (arg:string)=>void;
   // props: any;
@@ -58,34 +52,12 @@ const Home:React.FC<tHome> = ({ logged }) => {
         (reason:any) => console.error('error', reason)
       );
   }, []);
-=======
-  setLogged: (arg: boolean) => void;
-  setRole: (arg: string) => void;
-  props: any;
-};
-
-const Home: React.FC<tHome> = ({
-  logged, setLogged, setRole, props,
-}) => {
-  console.log(logged);
-  console.log(props);
-
-  const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
-  ];
->>>>>>> develop
 
   return (
     <>
-      {logged ? (
-        <Layout>
-          <Header>X Cross Check Task</Header>
+      {logged
+        ? (
           <Layout>
-<<<<<<< HEAD
             <Header>X Cross Check Task</Header>
             <Layout>
               {/* <Sider>Menu ???</Sider> */}
@@ -152,33 +124,8 @@ const Home: React.FC<tHome> = ({
         : (
           <></>
         )}
-=======
-            <Sider>Menu ???</Sider>
-            <Content>
-              <Divider orientation="left">Task List</Divider>
-              <List
-                header={<div>Header</div>}
-                footer={<div>Footer</div>}
-                bordered
-                dataSource={data}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Typography.Text mark>[ITEM]</Typography.Text>
-                    {' '}
-                    {item}
-                  </List.Item>
-                )}
-              />
-            </Content>
-          </Layout>
-          <Footer>Footer</Footer>
-        </Layout>
-      ) : (
-        <GitLogin setLogged={setLogged} setRole={setRole} />
-      )}
->>>>>>> develop
     </>
   );
-};
+}
 
 export default Home;
