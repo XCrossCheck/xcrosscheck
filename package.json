@@ -1,24 +1,68 @@
 {
-  "name": "xcrosscheck",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
+  "name": "x-cross-check",
+  "description": "group 47",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "repository": "https://github.com/XCrossCheck/xcrosscheck.git",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "webpack-dev-server --mode development --env.development --open --hot --progress",
+    "build": "webpack --mode production --env.production --progress",
+    "lint": "eslint --fix . --ext .ts,.tsx src"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/node": "13.13.19",
+    "@types/react": "16.9.49",
+    "@types/react-dom": "16.9.8",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.54",
-    "@types/react": "^16.9.46",
-    "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.5",
+    "@types/webpack": "4.41.22",
+    "@types/webpack-dev-server": "3.11.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "4.1.0",
+    "babel-loader": "^8.1.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "7.8.1",
+    "eslint-config-airbnb-typescript": "^10.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-loader": "^2.2.1",
+    "copy-webpack-plugin": "^6.1.0",
+    "css-loader": "^3.6.0",
+    "file-loader": "^5.1.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "fork-ts-checker-webpack-plugin": "5.1.0",
+    "html-webpack-plugin": "4.4.1",
+    "ts-loader": "8.0.3",
+    "ts-node": "9.0.0",
+    "typescript": "4.0.2",
+    "sass-loader": "^7.3.1",
+    "url-loader": "^3.0.0",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
+  },
+  "dependencies": {
     "antd": "^4.5.4",
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "googleapis": "^59.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
     "redux": "^4.0.5"
+<<<<<<< HEAD
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,4 +98,7 @@
     "typescript": "^4.0.2"
   },
   "main": "index.js"
+=======
+  }
+>>>>>>> develop
 }
