@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { IReducer } from '../types';
 import constants from './constants';
 
-const logged: IReducer<boolean | null> = (state = false, action) => {
+const logged: IReducer<boolean | null> = (state = true, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -13,7 +13,7 @@ const logged: IReducer<boolean | null> = (state = false, action) => {
   }
 };
 
-const userRole: IReducer<string | null> = (state = null, action) => {
+const userRole: IReducer<string | null> = (state = 'student', action) => {
   const { type, payload } = action;
 
   switch (type) {
