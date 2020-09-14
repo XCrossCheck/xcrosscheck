@@ -15,7 +15,7 @@ const Home: FC<THome> = ({ userRole }) => (
   <Layout>
     <Header>X Cross Check Task</Header>
     <Layout>
-      <Sider>Menu ???</Sider>
+      {/* <Sider>Menu ???</Sider> */}
       <MainRouter pages={pages} userRole={userRole} />
     </Layout>
     <Footer>Footer</Footer>
