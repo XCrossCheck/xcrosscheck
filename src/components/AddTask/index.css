@@ -1,0 +1,5 @@
+@import '~antd/dist/antd.css';
+
+#formAddTask {
+    margin: 50px;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from '../Home';
@@ -6,11 +7,12 @@ import './app.css';
 
 
 const App = (props:any) => {
-  console.log('app:',props);
-  const [logged, setLogged] = useState(true);
-  const [role, setRole] = useState('student');
+console.log('app:',props);
+const [logged, setLogged] = useState(true);
 
-  console.log(logged);
+const [role, setRole] = useState('student');
+
+console.log(logged);
 
   return (
     <Switch>
