@@ -1,3 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable max-len */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import axios from 'axios';
 // import { exit } from 'process';
@@ -6,31 +16,30 @@ async function getAccessToken(code: string, state: string) {
   // const authurl = 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token';
   // const authurl = 'https://github.com/login/oauth/access_token';
   // const authurl = 'https://cors-anywhere.herokuapp.com/https://lmaa.ru';
-  const authurl = 'http://localhost:9999/authenticate/'+code;
+  const authurl = `http://localhost:9999/authenticate/${code}`;
   let res;
   try {
     // debugger;
     // res = await axios('https://localhost:3000');
-    res = await axios(authurl,
-      {
-        method: 'get'
-        // withCredentials: true,
-        // data: {
-        //   code,
-        //   client_id: 'f4ecf84a7ba9d4e393f2',
-        //   client_secret: 'e636e6260894895446c8805faeb4988e302f309a',
-        //   // redirect_uri: 'https://localhost',
-        //   state,
-        // },
-        // headers: {
-        //   'Access-Control-Allow-Origin': '*',
-        //   Accept: 'application/json',
-        //   // 'Content-Type': 'application/json',
-        //   'Content-Type': 'application/x-www-form-urlencoded',
-        //   'X-Requested-With': 'XMLHttpRequest',
-        //   'Access-Control-Allow-Headers': 'x-request-with, x-request-by',
-        // }
-      });
+    res = await axios(authurl, {
+      method: 'get',
+      // withCredentials: true,
+      // data: {
+      //   code,
+      //   client_id: 'f4ecf84a7ba9d4e393f2',
+      //   client_secret: 'e636e6260894895446c8805faeb4988e302f309a',
+      //   // redirect_uri: 'https://localhost',
+      //   state,
+      // },
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      //   Accept: 'application/json',
+      //   // 'Content-Type': 'application/json',
+      //   'Content-Type': 'application/x-www-form-urlencoded',
+      //   'X-Requested-With': 'XMLHttpRequest',
+      //   'Access-Control-Allow-Headers': 'x-request-with, x-request-by',
+      // }
+    });
 
     console.log('res', res);
   } catch (e) {
@@ -41,29 +50,26 @@ async function getAccessToken(code: string, state: string) {
 
 type fCallback = {
   history: {}; // {length: number, action: string, location: {…}, createHref: ƒ, push: ƒ, …}
-  location: {pathname: string, search: string, hash: string, state: undefined};
-  match: {path: string, url: string, isExact: boolean, params: {}};
+  location: { pathname: string; search: string; hash: string; state: undefined };
+  match: { path: string; url: string; isExact: boolean; params: {} };
   staticContext: undefined;
-}
+};
 
 // const Callback:React.FC<fCallback> = ({ location }) => {
-const Callback:React.FC<any> = ( {props} ) => {
-  
-
-//   let res = axios('https://lmaa.ru')
-//     .then(data => console.log('then', data))
-//     .catch(data => console.log('catch', data));
-// console.log(res);
-
+const Callback: React.FC<any> = ({ props }) => {
+  //   let res = axios('https://lmaa.ru')
+  //     .then(data => console.log('then', data))
+  //     .catch(data => console.log('catch', data));
+  // console.log(res);
 
   console.log('Callback:', props.location);
   console.log(props.location.search);
 
   const url = new URLSearchParams(props.location.search);
   const code = url.get('code');
-  const state = url.get('state')||'';
+  const state = url.get('state') || '';
 
-  let token='not ready';
+  let token = 'not ready';
   //  !!!!!!!
   // if (state !== verify_state) then exit;
 
@@ -80,16 +86,19 @@ const Callback:React.FC<any> = ( {props} ) => {
 
   if (code) {
     getAccessToken(code, state)
-      .then(data => { token = data?.data.token; console.log('then', data?.data)})
-      .catch(data => console.log('catch', data));
+      .then((data) => {
+        token = data?.data.token;
+        console.log('then', data?.data);
+      })
+      .catch((data) => console.log('catch', data));
 
     // console.log(rs);
   }
 
   return (
     <div className="login-form">
-      CALLBACK detected token={token}
-
+      CALLBACK detected token=
+      {token}
     </div>
   );
 };

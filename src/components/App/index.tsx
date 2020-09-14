@@ -5,31 +5,17 @@ import Home from '../Home';
 import Callback from '../Callback';
 import './app.css';
 
-const Test = () => (<div>This is a TEST</div>);
 
 const App = (props:any) => {
-  console.log('app:', props);
-  const [logged, setLogged] = useState(false);
-  const [role, setRole] = useState('student');
+console.log('app:',props);
+const [logged, setLogged] = useState(true);
 
-  console.log(logged);
+const [role, setRole] = useState('student');
+
+console.log(logged);
 
   return (
     <Switch>
-      <Route path="/test" component={Test} />
-
-      <Route
-        path="/meho"
-        render={(props) => (
-          <Home
-            logged
-            setLogged={setLogged}
-            setRole={setRole}
-            props={props}
-          />
-        )}
-      />
-
       <Route
         path="/callback"
         render={(props) => (
@@ -47,9 +33,9 @@ const App = (props:any) => {
         render={(props) => (
           <Home
             logged={logged}
-            setLogged={setLogged}
-            setRole={setRole}
-            props={props}
+//            setLogged={setLogged}
+//            setRole={setRole}
+//            props={props}
           />
         )}
       />
@@ -58,3 +44,5 @@ const App = (props:any) => {
 };
 
 export default App;
+
+
