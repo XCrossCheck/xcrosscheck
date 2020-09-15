@@ -1,8 +1,7 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 .ant-layout-header,
 .ant-layout-sider {
   color: white;
   background-color: #1890ff;
 }
-

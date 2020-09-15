@@ -1,20 +1,28 @@
 import { FC } from 'react';
-import StudentPage from '../StudentPage';
+import StudentPage from '../Student';
+import StudentSubmitPage from '../Student/Submit';
 import AddTask from '../AddTask';
 
-export type TPage= {
-  component: FC<any>,
-  title: string,
-  url: string,
-  role: string,
-  exact: boolean,
+export type TPage = {
+  component: FC<any>;
+  title: string;
+  url: string;
+  role: string;
+  exact: boolean;
 };
 
 const pages: TPage[] = [
   {
     component: StudentPage,
     title: 'Student Page',
-    url: '/',
+    url: '/student',
+    role: 'student',
+    exact: true,
+  },
+  {
+    component: StudentSubmitPage,
+    title: 'Student Submit Page',
+    url: '/student/submit',
     role: 'student',
     exact: true,
   },
