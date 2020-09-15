@@ -1,47 +1,51 @@
-import React, { FC, useEffect, useState } from "react";
-import "./Submit.css";
-import { Button, Form, Select, Typography, Space } from "antd";
-import { CheckCircleTwoTone } from "@ant-design/icons";
-import { Task, Submission } from "./types";
+import React, { FC, useEffect, useState } from 'react';
+import './Submit.css';
+import {
+  Button, Form, Select, Typography, Space,
+} from 'antd';
+import { CheckCircleTwoTone } from '@ant-design/icons';
+import { Task, Submission } from './types';
 
 const { Option } = Select;
 const { Text, Paragraph, Title } = Typography;
 const tasksMock: Task[] = [
   {
-    id: "Songbird",
+    id: 'Songbird',
     availableToSubmit: true,
-    deadlineReview: "2020-09-20 23:59:59",
-    deadlineSubmit: "2020-09-15 23:59:59",
+    deadlineReview: '2020-09-20 23:59:59',
+    deadlineSubmit: '2020-09-15 23:59:59',
   },
   {
-    id: "RS Lang",
+    id: 'RS Lang',
     availableToSubmit: false,
-    deadlineReview: "2020-09-13 23:59:59",
-    deadlineSubmit: "2020-09-12 23:59:59",
+    deadlineReview: '2020-09-13 23:59:59',
+    deadlineSubmit: '2020-09-12 23:59:59',
   },
   {
-    id: "X-Check",
+    id: 'X-Check',
     availableToSubmit: true,
-    deadlineReview: "2020-09-20 23:59:59",
-    deadlineSubmit: "2020-09-20 23:59:59",
+    deadlineReview: '2020-09-20 23:59:59',
+    deadlineSubmit: '2020-09-20 23:59:59',
   },
 ];
 
 const submissionMock: Submission = {
-  taskId: "Songbird",
-  userId: "User",
-  repoLink: "https://github.com/sleepwalky/blabla",
-  demoLink: "https://onliner.by",
-  submittedAt: "Mon Sep 14 2020",
-  selfCheckScore: "180",
+  taskId: 'Songbird',
+  userId: 'User',
+  repoLink: 'https://github.com/sleepwalky/blabla',
+  demoLink: 'https://onliner.by',
+  submittedAt: 'Mon Sep 14 2020',
+  selfCheckScore: '180',
 };
 
 export const SelectTask: FC<{
   onNext: () => void;
   onChange: (task: Task) => void;
   selectedTask?: Task;
-  mode: "submit" | "review";
-}> = ({ onNext, onChange, selectedTask, mode }) => {
+  mode: 'submit' | 'review';
+}> = ({
+  onNext, onChange, selectedTask, mode,
+}) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [form] = Form.useForm();
 
@@ -55,10 +59,10 @@ export const SelectTask: FC<{
 
   if (selectedTask) {
     const now = new Date();
-    if (mode === "submit") {
+    if (mode === 'submit') {
       canProceed = new Date(selectedTask.deadlineSubmit) > now;
     }
-    if (mode === "review") {
+    if (mode === 'review') {
       canProceed = new Date(selectedTask.deadlineReview) > now;
     }
   }
@@ -66,9 +70,15 @@ export const SelectTask: FC<{
   return (
     <>
       {selectedTask?.availableToSubmit && (
-        <Title level={5} style={{ marginBottom: "2rem" }}>
-          <span className="warning">Attention!</span> You should submit the task{" "}
-          {selectedTask.id} before{" "}
+        <Title level={5} style={{ marginBottom: '2rem' }}>
+          <span className="warning">Attention!</span>
+          {' '}
+          You should submit the task
+          {' '}
+          {selectedTask.id}
+          {' '}
+          before
+          {' '}
           {new Date(selectedTask.deadlineSubmit).toLocaleString().slice(0, -3)}
         </Title>
       )}
@@ -95,7 +105,7 @@ export const SelectTask: FC<{
           <Button
             onClick={onNext}
             type="primary"
-            style={{ marginTop: "1rem", marginBottom: "1rem" }}
+            style={{ marginTop: '1rem', marginBottom: '1rem' }}
           >
             Next
           </Button>
@@ -110,12 +120,18 @@ export const SelectTask: FC<{
             <Space>
               <CheckCircleTwoTone twoToneColor="#52c41a" />
               <span>
-                Task {submissionMock.taskId} succsessfully submited{" "}
+                Task
+                {' '}
+                {submissionMock.taskId}
+                {' '}
+                succsessfully submited
+                {' '}
                 {submissionMock.submittedAt}
               </span>
             </Space>
           </Text>
-          ,<Title level={5}>Link on Demo </Title>
+          ,
+          <Title level={5}>Link on Demo </Title>
           <Paragraph>{submissionMock.demoLink}</Paragraph>
           <Title level={5}>Link on repository</Title>
           <Paragraph>{submissionMock.repoLink}</Paragraph>

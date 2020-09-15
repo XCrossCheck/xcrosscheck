@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import { Steps } from "antd";
-import { Links, Task } from "./types";
-import { SelectTask } from "./SelectTask";
-import { SelfCheck } from "./SelfCheck";
-import { SubmitForm } from "./SubmitForm";
-import { ReviewAndSubmit } from "./ReviewAndSubmit";
-import { Success } from "./Success";
-import "./Submit.css";
+import React, { useState } from 'react';
+import { Steps } from 'antd';
+import { Links, Task } from './types';
+import { SelectTask } from './SelectTask';
+import { SelfCheck } from './SelfCheck';
+import { SubmitForm } from './SubmitForm';
+import { ReviewAndSubmit } from './ReviewAndSubmit';
+import { Success } from './Success';
+import './Submit.css';
 
 const { Step } = Steps;
 
 const steps = [
-  "Select Task",
-  "Submit Links",
-  "Self-check",
-  "Submit",
-  "Success",
+  'Select Task',
+  'Submit Links',
+  'Self-check',
+  'Submit',
+  'Success',
 ];
 
 export default function Submit() {
   const [current, setCurrent] = useState(0);
   const [task, setTask] = useState<Task>();
   const [links, setLinks] = useState<Links>({
-    demoLink: "",
-    repoLink: "",
+    demoLink: '',
+    repoLink: '',
   });
-  const [selfCheck, setSelfCheck] = useState<string>("");
-  const [submittedAt, setSubmitedDate] = useState<string>("");
+  const [selfCheck, setSelfCheck] = useState<string>('');
+  const [submittedAt, setSubmitedDate] = useState<string>('');
 
   const next = () => {
     setCurrent(current + 1);

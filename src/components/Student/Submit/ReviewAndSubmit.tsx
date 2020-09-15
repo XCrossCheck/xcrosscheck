@@ -1,7 +1,8 @@
-import React, { FC } from "react";
-import { Button, Space, Typography } from "antd";
-import { Task, Links } from "./types";
-import "./Submit.css";
+import React, { FC } from 'react';
+import { Button, Space, Typography } from 'antd';
+import { Task, Links } from './types';
+import './Submit.css';
+
 interface Props {
   onNext: () => void;
   onBack: () => void;
