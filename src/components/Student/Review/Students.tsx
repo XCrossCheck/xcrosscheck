@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
-import {
-  Button, Form, Select, Typography,
-} from 'antd';
+import { Button, Form, Select, Typography } from 'antd';
 import { Task, Submission, Submission2 } from './types';
 
 const { Option } = Select;
@@ -52,9 +50,7 @@ export const SelectStudents: FC<{
   task: Task;
   onChange: (student: Submission) => void;
   selectedStudent?: Submission;
-}> = ({
-  onBack, onNext, task, onChange, selectedStudent,
-}) => {
+}> = ({ onBack, onNext, task, onChange, selectedStudent }) => {
   const [students, setStudents] = useState<Submission[]>([]);
   const [form] = Form.useForm();
 
@@ -65,26 +61,18 @@ export const SelectStudents: FC<{
   }, []);
 
   console.log(selectedStudent);
-  const currentReview = reviewMock.filter(
-    (elem) => elem.recipient === selectedStudent?.userId,
-  );
+  const currentReview = reviewMock.filter(elem => elem.recipient === selectedStudent?.userId);
   return (
     <>
       <Typography.Title level={4}>
-        Task Review:
-        {' '}
-        <span>
-          "
-          {task?.id}
-          "
-        </span>
+        Task Review: <span>"{task?.id}"</span>
       </Typography.Title>
       <Select
         defaultValue={selectedStudent?.userId}
         placeholder="Select student"
         style={{ width: 360 }}
-        onChange={(value) => {
-          const student = students.find((t) => t.userId === value);
+        onChange={value => {
+          const student = students.find(t => t.userId === value);
           if (student) {
             onChange(student);
           }
@@ -120,10 +108,7 @@ export const SelectStudents: FC<{
           <div>
             {' '}
             <Title level={5}>Task </Title>
-            <Paragraph>
-              {' '}
-              {selectedStudent.taskId}
-            </Paragraph>
+            <Paragraph> {selectedStudent.taskId}</Paragraph>
             <Title level={5}>Link on Demo </Title>
             <Link href={selectedStudent.demoLink} target="_blank">
               {selectedStudent.demoLink}

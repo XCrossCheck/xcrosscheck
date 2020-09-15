@@ -10,22 +10,14 @@ import './Review.css';
 
 const { Step } = Steps;
 
-const steps = [
-  'Select Task',
-  'Select Student',
-  'Cross-check',
-  'Review',
-  'Success',
-];
+const steps = ['Select Task', 'Select Student', 'Cross-check', 'Review', 'Success'];
 
 export default function Review() {
   const [current, setCurrent] = useState(0);
   const [task, setTask] = useState<Task>();
   const [student, setStudent] = useState<Submission>();
   const [crossCheckScore, setCrossCheckScore] = useState<string>('');
-  const [feedback, setFeedback] = useState<string>(
-    'В целом работа неплохая, бла-бла-бла',
-  );
+  const [feedback, setFeedback] = useState<string>('В целом работа неплохая, бла-бла-бла');
 
   const next = () => {
     setCurrent(current + 1);
@@ -39,14 +31,7 @@ export default function Review() {
 
   switch (current) {
     case 0:
-      content = (
-        <SelectTask
-          onNext={next}
-          onChange={setTask}
-          selectedTask={task}
-          mode="review"
-        />
-      );
+      content = <SelectTask onNext={next} onChange={setTask} selectedTask={task} mode="review" />;
       break;
     case 1:
       content = task && (
@@ -84,7 +69,7 @@ export default function Review() {
   return (
     <>
       <Steps current={current}>
-        {steps.map((item) => (
+        {steps.map(item => (
           <Step key={item} title={item} />
         ))}
       </Steps>

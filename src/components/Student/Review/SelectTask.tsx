@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
-import {
-  Button, Form, Select, Typography, Space,
-} from 'antd';
+import { Button, Form, Select, Typography, Space } from 'antd';
 import { Task } from './types';
 
 const { Option } = Select;
@@ -33,9 +31,7 @@ export const SelectTask: FC<{
   onChange: (task: Task) => void;
   selectedTask?: Task;
   mode: 'submit' | 'review';
-}> = ({
-  onNext, onChange, selectedTask, mode,
-}) => {
+}> = ({ onNext, onChange, selectedTask, mode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [form] = Form.useForm();
 
@@ -50,8 +46,8 @@ export const SelectTask: FC<{
   if (selectedTask) {
     const now = new Date();
     if (mode === 'review') {
-      canProceed = new Date(selectedTask.deadlineSubmit) < now
-        && new Date(selectedTask.deadlineReview) > now;
+      canProceed =
+        new Date(selectedTask.deadlineSubmit) < now && new Date(selectedTask.deadlineReview) > now;
     }
   }
 
@@ -59,14 +55,8 @@ export const SelectTask: FC<{
     <>
       {selectedTask ? (
         <Title level={5} style={{ marginBottom: '2rem' }}>
-          <span className="warning">Attention!</span>
-          {' '}
-          You should review more
-          then three tasks
-          {selectedTask.id}
-          {' '}
-          before
-          {' '}
+          <span className="warning">Attention!</span> You should review more then three tasks
+          {selectedTask.id} before{' '}
           {new Date(selectedTask.deadlineReview).toLocaleString().slice(0, -3)}
         </Title>
       ) : null}
@@ -74,8 +64,8 @@ export const SelectTask: FC<{
         defaultValue={selectedTask?.id}
         placeholder="Select task"
         style={{ width: 360 }}
-        onChange={(value) => {
-          const task = tasks.find((t) => t.id === value);
+        onChange={value => {
+          const task = tasks.find(t => t.id === value);
           if (task) {
             onChange(task);
           }
@@ -100,10 +90,7 @@ export const SelectTask: FC<{
         </>
       )}
       {!canProceed && selectedTask && (
-        <div className="warning">
-          Deadline has passed or time to check has not come yet
-          {' '}
-        </div>
+        <div className="warning">Deadline has passed or time to check has not come yet </div>
       )}
     </>
   );
