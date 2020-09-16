@@ -12,7 +12,7 @@ interface Props {
   setSubmitedDate: (submitedDate: string) => void;
 }
 
-const { Paragraph, Title } = Typography;
+const { Paragraph, Title, Link } = Typography;
 
 export const ReviewAndSubmit: FC<Props> = ({
   onNext,
@@ -31,9 +31,13 @@ export const ReviewAndSubmit: FC<Props> = ({
         <Title level={5}>Task</Title>
         <Paragraph>{task.id}</Paragraph>
         <Title level={5}>Link on Demo </Title>
-        <Paragraph>{links.demoLink}</Paragraph>
+        <Link href={links.demoLink} target="_blank">
+          {links.demoLink}
+        </Link>
         <Title level={5}>Link on repository</Title>
-        <Paragraph>{links.repoLink}</Paragraph>
+        <Link href={links.repoLink} target="_blank">
+          {links.repoLink}
+        </Link>
         <Title level={5}>Self-check score</Title>
         <Paragraph>{selfCheck}</Paragraph>
       </div>

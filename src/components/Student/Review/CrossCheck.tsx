@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Button, Space } from "antd";
+import React, { FC } from 'react';
+import { Button, Space } from 'antd';
 
 interface Props {
   onNext: () => void;

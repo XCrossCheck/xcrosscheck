@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import { Steps } from "antd";
-import { Submission, Task } from "./types";
-import { SelectTask } from "./SelectTask";
-import { SelectStudents } from "./Students";
-import { CrossCheck } from "./CrossCheck";
-import { ReviewAndSubmit } from "./ReviewAndSubmit";
-import { Success } from "./Success";
-import "./Review.css";
+import React, { useState } from 'react';
+import { Steps } from 'antd';
+import { Submission, Task } from './types';
+import { SelectTask } from './SelectTask';
+import { SelectStudents } from './Students';
+import { CrossCheck } from './CrossCheck';
+import { ReviewAndSubmit } from './ReviewAndSubmit';
+import { Success } from './Success';
+import './Review.css';
 
 const { Step } = Steps;
 
 const steps = [
-  "Select Task",
-  "Select Student",
-  "Cross-check",
-  "Review",
-  "Success",
+  'Select Task',
+  'Select Student',
+  'Cross-check',
+  'Review',
+  'Success',
 ];
 
 export default function Review() {
   const [current, setCurrent] = useState(0);
   const [task, setTask] = useState<Task>();
   const [student, setStudent] = useState<Submission>();
-  const [crossCheckScore, setCrossCheckScore] = useState<string>("");
+  const [crossCheckScore, setCrossCheckScore] = useState<string>('');
   const [feedback, setFeedback] = useState<string>(
-    "В целом работа неплохая, бла-бла-бла"
+    'В целом работа неплохая, бла-бла-бла',
   );
 
   const next = () => {

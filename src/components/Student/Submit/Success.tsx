@@ -18,7 +18,7 @@ export const Success: FC<Props> = ({ task, submittedAt }) => (
       <Title level={3}>
         <Space>
           <span>
-            Task {task.id} succsessfully submited{' '}
+            Task {task.id} was successfully submitted{' '}
             {new Date(submittedAt).toLocaleString().slice(0, -3)}
           </span>
         </Space>

@@ -5,7 +5,7 @@ import { CheckCircleTwoTone } from '@ant-design/icons';
 import { Task, Submission } from './types';
 
 const { Option } = Select;
-const { Text, Paragraph, Title } = Typography;
+const { Text, Paragraph, Title, Link } = Typography;
 const tasksMock: Task[] = [
   {
     id: 'Songbird',
@@ -106,19 +106,23 @@ export const SelectTask: FC<{
             <Space>
               <CheckCircleTwoTone twoToneColor="#52c41a" />
               <span>
-                Task {submissionMock.taskId} succsessfully submited {submissionMock.submittedAt}
+                Task {submissionMock.taskId} was successfully submitted {submissionMock.submittedAt}
               </span>
             </Space>
           </Text>
-          ,<Title level={5}>Link on Demo </Title>
-          <Paragraph>{submissionMock.demoLink}</Paragraph>
+          <Title level={5}>Link on Demo </Title>
+          <Link href={submissionMock.demoLink} target="_blank">
+            {submissionMock.demoLink}
+          </Link>
           <Title level={5}>Link on repository</Title>
-          <Paragraph>{submissionMock.repoLink}</Paragraph>
+          <Link href={submissionMock.demoLink} target="_blank">
+            {submissionMock.repoLink}
+          </Link>
           <Title level={5}>Self-check score</Title>
           <Paragraph>{submissionMock.selfCheckScore}</Paragraph>
         </div>
       ) : (
-        selectedTask?.id && <Paragraph>This task hasn`&apos;t submited</Paragraph>
+        selectedTask?.id && <Paragraph>This task wasn'&apos;t submited</Paragraph>
       )}
     </>
   );

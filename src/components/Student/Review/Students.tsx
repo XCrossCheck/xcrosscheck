@@ -1,46 +1,48 @@
-import React, { FC, useEffect, useState } from "react";
-import "./Review.css";
-import { Button, Form, Select, Typography } from "antd";
-import { Task, Submission, Submission2 } from "./types";
+import React, { FC, useEffect, useState } from 'react';
+import './Review.css';
+import {
+  Button, Form, Select, Typography,
+} from 'antd';
+import { Task, Submission, Submission2 } from './types';
 
 const { Option } = Select;
 const { Link, Paragraph, Title } = Typography;
 
 const studentsMock: Submission[] = [
   {
-    taskId: "Songbird",
-    userId: "Felix",
-    repoLink: "https://github.com/blabla",
-    demoLink: "https://onliner.by",
-    submittedAt: "Mon Sep 14 2020",
-    selfCheckScore: "180",
+    taskId: 'Songbird',
+    userId: 'Felix',
+    repoLink: 'https://github.com/blabla',
+    demoLink: 'https://onliner.by',
+    submittedAt: 'Mon Sep 14 2020',
+    selfCheckScore: '180',
   },
   {
-    taskId: "Songbird",
-    userId: "Gena",
-    repoLink: "https://github.com/blabla",
-    demoLink: "https://onliner.by",
-    submittedAt: "Mon Sep 14 2020",
-    selfCheckScore: "200",
+    taskId: 'Songbird',
+    userId: 'Gena',
+    repoLink: 'https://github.com/blabla',
+    demoLink: 'https://onliner.by',
+    submittedAt: 'Mon Sep 14 2020',
+    selfCheckScore: '200',
   },
   {
-    taskId: "Songbird",
-    userId: "Franky",
-    repoLink: "https://github.com/blabla",
-    demoLink: "https://onliner.by",
-    submittedAt: "Mon Sep 14 2020",
-    selfCheckScore: "190",
+    taskId: 'Songbird',
+    userId: 'Franky',
+    repoLink: 'https://github.com/blabla',
+    demoLink: 'https://onliner.by',
+    submittedAt: 'Mon Sep 14 2020',
+    selfCheckScore: '190',
   },
 ];
 
 const reviewMock: Submission2[] = [
   {
-    taskId: "Songbird",
-    sender: "MyId",
-    recipient: "Felix",
-    crossCheckScore: "210",
-    feedbackId: "15bhdg2",
-    feedback: "В целом работа неплохая, но можно и лучше",
+    taskId: 'Songbird',
+    sender: 'MyId',
+    recipient: 'Felix',
+    crossCheckScore: '210',
+    feedbackId: '15bhdg2',
+    feedback: 'В целом работа неплохая, но можно и лучше',
   },
 ];
 
@@ -50,7 +52,9 @@ export const SelectStudents: FC<{
   task: Task;
   onChange: (student: Submission) => void;
   selectedStudent?: Submission;
-}> = ({ onBack, onNext, task, onChange, selectedStudent }) => {
+}> = ({
+  onBack, onNext, task, onChange, selectedStudent,
+}) => {
   const [students, setStudents] = useState<Submission[]>([]);
   const [form] = Form.useForm();
 
@@ -62,12 +66,18 @@ export const SelectStudents: FC<{
 
   console.log(selectedStudent);
   const currentReview = reviewMock.filter(
-    (elem) => elem.recipient === selectedStudent?.userId
+    (elem) => elem.recipient === selectedStudent?.userId,
   );
   return (
     <>
       <Typography.Title level={4}>
-        Task Review: <span>"{task?.id}"</span>
+        Task Review:
+        {' '}
+        <span>
+          "
+          {task?.id}
+          "
+        </span>
       </Typography.Title>
       <Select
         defaultValue={selectedStudent?.userId}
@@ -92,14 +102,14 @@ export const SelectStudents: FC<{
           <Button
             onClick={onBack}
             type="default"
-            style={{ marginTop: "1rem", marginBottom: "1rem" }}
+            style={{ marginTop: '1rem', marginBottom: '1rem' }}
           >
             Go back
           </Button>
           <Button
             onClick={onNext}
             type="primary"
-            style={{ marginTop: "1rem", marginBottom: "1rem" }}
+            style={{ marginTop: '1rem', marginBottom: '1rem' }}
           >
             Next
           </Button>
@@ -108,9 +118,12 @@ export const SelectStudents: FC<{
       {selectedStudent?.taskId === task.id ? (
         <div className="review-wrapper">
           <div>
-            {" "}
+            {' '}
             <Title level={5}>Task </Title>
-            <Paragraph> {selectedStudent.taskId}</Paragraph>
+            <Paragraph>
+              {' '}
+              {selectedStudent.taskId}
+            </Paragraph>
             <Title level={5}>Link on Demo </Title>
             <Link href={selectedStudent.demoLink} target="_blank">
               {selectedStudent.demoLink}
@@ -123,7 +136,7 @@ export const SelectStudents: FC<{
             <Paragraph>{selectedStudent.selfCheckScore}</Paragraph>
           </div>
           {currentReview.length ? (
-            <div style={{ marginLeft: "40px" }}>
+            <div style={{ marginLeft: '40px' }}>
               <Title className="warning" level={5}>
                 Score was already submitted
               </Title>
