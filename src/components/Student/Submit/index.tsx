@@ -10,13 +10,7 @@ import './Submit.css';
 
 const { Step } = Steps;
 
-const steps = [
-  'Select Task',
-  'Submit Links',
-  'Self-check',
-  'Submit',
-  'Success',
-];
+const steps = ['Select Task', 'Submit Links', 'Self-check', 'Submit', 'Success'];
 
 export default function Submit() {
   const [current, setCurrent] = useState(0);
@@ -25,7 +19,7 @@ export default function Submit() {
     demoLink: '',
     repoLink: '',
   });
-  const [selfCheck, setSelfCheck] = useState<string>('');
+  const [selfCheck] = useState<string>('');
   const [submittedAt, setSubmitedDate] = useState<string>('');
 
   const next = () => {
@@ -40,14 +34,7 @@ export default function Submit() {
 
   switch (current) {
     case 0:
-      content = (
-        <SelectTask
-          onNext={next}
-          onChange={setTask}
-          selectedTask={task}
-          mode="submit"
-        />
-      );
+      content = <SelectTask onNext={next} onChange={setTask} selectedTask={task} mode="submit" />;
       break;
     case 1:
       content = task && (
@@ -57,7 +44,7 @@ export default function Submit() {
           onBack={prev}
           task={task}
           initialValues={links}
-          setLinks={(values) => setLinks(values)}
+          setLinks={values => setLinks(values)}
         />
       );
       break;
@@ -86,7 +73,7 @@ export default function Submit() {
   return (
     <>
       <Steps current={current}>
-        {steps.map((item) => (
+        {steps.map(item => (
           <Step key={item} title={item} />
         ))}
       </Steps>

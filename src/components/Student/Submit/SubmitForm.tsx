@@ -1,10 +1,8 @@
-import React, { FC, useState } from 'react';
-import { DEMO_LINK, REPO_LINK } from '../../../helpers/validationRules';
+import React, { FC } from 'react';
+import { Form, Input, Button, Typography } from 'antd';
 import './Submit.css';
-import {
-  Form, Input, Button, Typography,
-} from 'antd';
-import { Links, Submission, Task } from './types';
+import { DEMO_LINK, REPO_LINK } from '../../../helpers/validationRules';
+import { Links, Task } from './types';
 
 interface Props {
   onSubmit: () => void;
@@ -15,14 +13,7 @@ interface Props {
   initialValues: Links;
 }
 
-export const SubmitForm: FC<Props> = ({
-  onSubmit,
-  onNext,
-  onBack,
-  task,
-  setLinks,
-  initialValues,
-}) => (
+export const SubmitForm: FC<Props> = ({ onNext, onBack, task, setLinks, initialValues }) => (
   <>
     <Typography.Title level={4}>
       Task Submit:
@@ -32,7 +23,7 @@ export const SubmitForm: FC<Props> = ({
       layout="vertical"
       name="basic"
       initialValues={initialValues}
-      onFinish={(values) => {
+      onFinish={values => {
         setLinks(values);
         onNext();
       }}

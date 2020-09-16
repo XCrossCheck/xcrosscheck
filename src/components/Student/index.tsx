@@ -3,7 +3,7 @@ import './Student.css';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 
-const MainStudentPage: React.FC = (props: any) => (
+const MainStudentPage: React.FC = () => (
   <div className="Main">
     <div className="buttonWrapper">
       <Link to="/student/submit">

@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Submit.css';
-import {
-  Button, Form, Select, Typography, Space,
-} from 'antd';
+import { Button, Select, Typography, Space } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import { Task, Submission } from './types';
 
@@ -43,11 +41,8 @@ export const SelectTask: FC<{
   onChange: (task: Task) => void;
   selectedTask?: Task;
   mode: 'submit' | 'review';
-}> = ({
-  onNext, onChange, selectedTask, mode,
-}) => {
+}> = ({ onNext, onChange, selectedTask, mode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [form] = Form.useForm();
 
   useEffect(() => {
     setTimeout(() => {
@@ -71,23 +66,16 @@ export const SelectTask: FC<{
     <>
       {selectedTask?.availableToSubmit && (
         <Title level={5} style={{ marginBottom: '2rem' }}>
-          <span className="warning">Attention!</span>
-          {' '}
-          You should submit the task
-          {' '}
-          {selectedTask.id}
-          {' '}
-          before
-          {' '}
-          {new Date(selectedTask.deadlineSubmit).toLocaleString().slice(0, -3)}
+          <span className="warning">Attention!</span> You should submit the task {selectedTask.id}{' '}
+          before {new Date(selectedTask.deadlineSubmit).toLocaleString().slice(0, -3)}
         </Title>
       )}
       <Select
         defaultValue={selectedTask?.id}
         placeholder="Select task"
         style={{ width: 360 }}
-        onChange={(value) => {
-          const task = tasks.find((t) => t.id === value);
+        onChange={value => {
+          const task = tasks.find(t => t.id === value);
           if (task) {
             onChange(task);
           }
@@ -111,27 +99,18 @@ export const SelectTask: FC<{
           </Button>
         </>
       )}
-      {!canProceed && selectedTask && (
-        <div className="warning">Deadline has passed</div>
-      )}
+      {!canProceed && selectedTask && <div className="warning">Deadline has passed</div>}
       {submissionMock.taskId === selectedTask?.id ? (
         <div>
           <Text>
             <Space>
               <CheckCircleTwoTone twoToneColor="#52c41a" />
               <span>
-                Task
-                {' '}
-                {submissionMock.taskId}
-                {' '}
-                succsessfully submited
-                {' '}
-                {submissionMock.submittedAt}
+                Task {submissionMock.taskId} succsessfully submited {submissionMock.submittedAt}
               </span>
             </Space>
           </Text>
-          ,
-          <Title level={5}>Link on Demo </Title>
+          ,<Title level={5}>Link on Demo </Title>
           <Paragraph>{submissionMock.demoLink}</Paragraph>
           <Title level={5}>Link on repository</Title>
           <Paragraph>{submissionMock.repoLink}</Paragraph>
@@ -139,7 +118,7 @@ export const SelectTask: FC<{
           <Paragraph>{submissionMock.selfCheckScore}</Paragraph>
         </div>
       ) : (
-        selectedTask?.id && <Paragraph>This task hasn't submited</Paragraph>
+        selectedTask?.id && <Paragraph>This task hasn`&apos;t submited</Paragraph>
       )}
     </>
   );
