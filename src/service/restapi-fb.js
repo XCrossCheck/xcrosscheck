@@ -1,48 +1,36 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from 'axios';
 
 const dbUrl = 'https://xcrosscheck.firebaseio.com/';
 
-const accessToken = '';
+// let accessToken = '';
 
 export const dbGetReq = (req, index = null, value = null) => {
-  // https://xcrosscheck.firebaseio.com/tasks.json?orderBy=%22author%22&equalTo="newuser";
   const pr = index && value ? `?orderBy="${index}"&equalTo="${value}"` : '';
-  const res = axios.get(`${dbUrl}/${req}.json${pr}${accessToken}`); // ,
+  const res = axios.get(`${dbUrl}/${req}.json${pr}`); // ,
   // { credentials: 'include', withCredentials: true });
-  // console.log(`Status code:`, res.status);
-  // console.log(`Status text:`,res.statusText);
   return res;
 };
 
 export const dbCreateRecord = (req, obj) => {
-  const res = axios.post(`${dbUrl}/${req}.json${accessToken}`, obj); // ,
+  const res = axios.post(`${dbUrl}/${req}.json`, obj); // ,
   // { credentials: 'include', withCredentials: true });
   return res;
 };
 
-export const dbDeleteRecord = async (req, success, reject, id) => {
-  try {
-    const res = await axios.delete(`${dbUrl}/${req}.json/${id}${accessToken}`); // ,
-    // { credentials: 'include', withCredentials: true });
-    if (success) success(res.data);
-    return res;
-  } catch (e) {
-    console.log(`request failed: ${e}`);
-    if (reject) reject(e);
-    return null;
-  }
+export const dbPutReq = (req, obj) => {
+  const res = axios.put(`${dbUrl}/${req}.json`, obj); // ,
+  // { credentials: 'include', withCredentials: true });
+  return res;
 };
 
-export const dbUpdateRecord = async (req, success, reject, id) => {
-  try {
-    const res = await axios.delete(`${dbUrl}/${req}.json/${id}${accessToken}`); // ,
-    // { credentials: 'include', withCredentials: true });
-    if (success) success(res.data);
-    return res;
-  } catch (e) {
-    console.log(`request failed: ${e}`);
-    if (reject) reject(e);
-    return null;
-  }
+export const dbPatchReq = (req, obj) => {
+  const res = axios.patch(`${dbUrl}/${req}.json`, obj); // ,
+  // { credentials: 'include', withCredentials: true });
+  return res;
+};
+
+export const dbDeleteReq = (req, key) => {
+  const res = axios.delete(`${dbUrl}/${req}/${key}.json`); // ,
+  // { credentials: 'include', withCredentials: true });
+  return res;
 };
