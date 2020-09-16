@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import StudentPage from '../Student';
 import StudentSubmitPage from '../Student/Submit';
+import StudentReviewPage from '../Student/Review';
 import AddTask from '../AddTask';
 
 export type TPage = {
@@ -16,6 +17,13 @@ const pages: TPage[] = [
     component: StudentPage,
     title: 'Student Page',
     url: '/student',
+    role: 'student',
+    exact: true,
+  },
+  {
+    component: StudentReviewPage,
+    title: 'Student Review Page',
+    url: '/student/review',
     role: 'student',
     exact: true,
   },
