@@ -16,8 +16,8 @@ export default function Review() {
   const [current, setCurrent] = useState(0);
   const [task, setTask] = useState<Task>();
   const [student, setStudent] = useState<Submission>();
-  const [crossCheckScore, setCrossCheckScore] = useState<string>('');
-  const [feedback, setFeedback] = useState<string>('В целом работа неплохая, бла-бла-бла');
+  const [crossCheckScore] = useState<string>('');
+  const [feedback] = useState<string>('В целом работа неплохая, бла-бла-бла');
 
   const next = () => {
     setCurrent(current + 1);

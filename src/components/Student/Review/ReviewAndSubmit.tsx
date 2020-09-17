@@ -31,7 +31,7 @@ export const ReviewAndSubmit: FC<Props> = ({
       <Title level={5}>Score:</Title>
       <Paragraph>{crossCheckScore}</Paragraph>
       <Title level={5}>Feedback:</Title>
-      <Paragraph>{feedback}</Paragraph>
+      <Paragraph style={{ width: '600px' }}>{feedback}</Paragraph>
     </div>
     <Space className="button-wrapper">
       <Button onClick={onBack}>Back</Button>

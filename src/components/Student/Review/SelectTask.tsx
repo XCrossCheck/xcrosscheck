@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
-import { Button, Form, Select, Typography, Space } from 'antd';
+import { Button, Select, Typography } from 'antd';
 import { Task } from './types';
 
 const { Option } = Select;
-const { Text, Paragraph, Title } = Typography;
+const { Title } = Typography;
 const tasksMock: Task[] = [
   {
     id: 'Songbird',
@@ -33,7 +33,6 @@ export const SelectTask: FC<{
   mode: 'submit' | 'review';
 }> = ({ onNext, onChange, selectedTask, mode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [form] = Form.useForm();
 
   useEffect(() => {
     setTimeout(() => {

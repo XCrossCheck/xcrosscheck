@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
-import { Button, Form, Select, Typography } from 'antd';
+import { Button, Select, Typography } from 'antd';
 import { Task, Submission, Submission2 } from './types';
 
 const { Option } = Select;
@@ -52,7 +52,6 @@ export const SelectStudents: FC<{
   selectedStudent?: Submission;
 }> = ({ onBack, onNext, task, onChange, selectedStudent }) => {
   const [students, setStudents] = useState<Submission[]>([]);
-  const [form] = Form.useForm();
 
   useEffect(() => {
     setTimeout(() => {
@@ -60,12 +59,11 @@ export const SelectStudents: FC<{
     }, 1500);
   }, []);
 
-  console.log(selectedStudent);
   const currentReview = reviewMock.filter(elem => elem.recipient === selectedStudent?.userId);
   return (
     <>
       <Typography.Title level={4}>
-        Task Review: <span>"{task?.id}"</span>
+        Task Review: <span>{task?.id}</span>
       </Typography.Title>
       <Select
         defaultValue={selectedStudent?.userId}
@@ -121,7 +119,7 @@ export const SelectStudents: FC<{
             <Paragraph>{selectedStudent.selfCheckScore}</Paragraph>
           </div>
           {currentReview.length ? (
-            <div style={{ marginLeft: '40px' }}>
+            <div style={{ marginLeft: '40px', width: '400px', overflow: 'hidden' }}>
               <Title className="warning" level={5}>
                 Score was already submitted
               </Title>

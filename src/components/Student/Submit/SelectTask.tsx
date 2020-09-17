@@ -122,7 +122,7 @@ export const SelectTask: FC<{
           <Paragraph>{submissionMock.selfCheckScore}</Paragraph>
         </div>
       ) : (
-        selectedTask?.id && <Paragraph>This task wasn'&apos;t submited</Paragraph>
+        selectedTask?.id && <Paragraph>This task wasn&apos;t submited</Paragraph>
       )}
     </>
   );
