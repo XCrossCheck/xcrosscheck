@@ -1,16 +1,16 @@
-import React, { FC } from "react";
-import { Layout } from "antd";
-import MainRouter from "../MainRouter";
-import pages from "./pages";
+import React, { FC } from 'react';
+import { Layout } from 'antd';
+import MainRouter from '../MainRouter';
+import pages from './pages';
 
-const { Header, Footer, Content, Sider } = Layout;
+const { Header, Footer, Content } = Layout;
 
 type THome = {
   userRole: string;
 };
 
 const Home: FC<THome> = ({ userRole }) => (
-  <Layout style={{ minHeight: "100vh" }}>
+  <Layout style={{ minHeight: '100vh' }}>
     <Header>X Cross Check Task</Header>
     <Content>
       {/* <Sider>Menu ???</Sider> */}
