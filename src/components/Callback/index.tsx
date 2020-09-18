@@ -13,14 +13,9 @@ import axios from 'axios';
 // import { exit } from 'process';
 
 async function getAccessToken(code: string, state: string) {
-  // const authurl = 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token';
-  // const authurl = 'https://github.com/login/oauth/access_token';
-  // const authurl = 'https://cors-anywhere.herokuapp.com/https://lmaa.ru';
-  const authurl = `http://localhost:9999/authenticate/${code}`;
+  const authurl = `https://noxcc.herokuapp.com/authenticate/${code}`;
   let res;
   try {
-    // debugger;
-    // res = await axios('https://localhost:3000');
     res = await axios(authurl, {
       method: 'get',
       // withCredentials: true,

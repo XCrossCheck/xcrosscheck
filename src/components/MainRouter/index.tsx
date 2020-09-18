@@ -17,10 +17,10 @@ const Router: FC<TRouter> = ({ userRole, pages }) => (
           <e.component routes={pages} />
         </Route>
       ))}
-    <Route exact path="/404" component={PageNotFound} />
+    {/* <Route exact path="/404" component={PageNotFound} />
     <Route>
       <Redirect to="/404" />
-    </Route>
+    </Route> */}
   </Switch>
 );
 

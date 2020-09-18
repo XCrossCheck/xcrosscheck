@@ -13,8 +13,10 @@ const AuthRouter: FC = () => {
   const dispatch: IDispatch = useDispatch();
   const logged = useSelector<TStore, boolean | null>((state) => authSelectors.logged(state));
   const userRole = useSelector<TStore, string | null>((state) => authSelectors.userRole(state));
+  const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
   const setLogged: IDispatchAction<boolean> = (payload) => dispatch(authAct.logged.set(payload));
   const setUserRole: IDispatchAction<string> = (payload) => dispatch(authAct.userRole.set(payload));
+  const setGithubId: IDispatchAction<string> = (payload) => dispatch(authAct.githubId.set(payload));
 
   if (logged === false && !userRole) {
     return (
@@ -28,13 +30,13 @@ const AuthRouter: FC = () => {
         <Route
           path="/"
           render={() => (
-            <GitLogin setLogged={setLogged} setRole={setUserRole} />
+            <GitLogin setLogged={setLogged} setRole={setUserRole} setGithubId={setGithubId} />
           )}
         />
       </Switch>
     );
   } if (logged && userRole) {
-    return <Home userRole={userRole} />;
+    return <Home userRole={userRole} githubId={githubId}/>;
   }
   return <Loading />;
 };
