@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-console */
 import React from 'react';
 import {
   Form, Button, Card, Select,
 } from 'antd';
 import './GitLogin.css';
 
-type fGitLogin = {
-  setLogged: (lstate: boolean) => void;
+type TGitLogin = {
+  // setLogged: (lstate: boolean) => void;
   setRole: (role: string) => void;
-  setGithubId: (githubId: string) => void;
+  // setGithubId: (githubId: string) => void;
+  // setToken: (githubId: string) => void;
 };
 
 function randomString(i: number) {
@@ -17,14 +19,14 @@ function randomString(i: number) {
   return rnd.substring(0, i);
 }
 
-const GitLogin: React.FC<fGitLogin> = ({ setLogged, setRole, setGithubId }) => {
+const GitLogin: React.FC<TGitLogin> = ({ setRole }) => {
   const clientId = 'f4ecf84a7ba9d4e393f2';
   const state = randomString(12);
   const authhref = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${state}`;
 
   const onFinish = (values: any) => {
     console.log('Success:', values);
-    setLogged(true);
+    // setLogged(true);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -35,7 +37,6 @@ const GitLogin: React.FC<fGitLogin> = ({ setLogged, setRole, setGithubId }) => {
 
   function handleChange(value: any) {
     console.log('selected', value);
-
     setRole(value);
   }
 
@@ -43,6 +44,7 @@ const GitLogin: React.FC<fGitLogin> = ({ setLogged, setRole, setGithubId }) => {
     <div className="login-form">
       <Card title="You are not logged in" bordered className="login-card">
         <Form
+          // layout="vertical"
           name="login"
           initialValues={{ userrole: 'student' }}
           onFinish={onFinish}

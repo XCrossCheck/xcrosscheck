@@ -4,6 +4,9 @@ type TAuthConstants = {
   CLEAR_USER_ROLE: string,
   SET_GITHUBID: string,
   CLEAR_GITHUBID: string,
+  SET_TOKEN: string,
+  CLEAR_TOKEN: string,
+
 };
 
 const constants: TAuthConstants = {
@@ -12,6 +15,8 @@ const constants: TAuthConstants = {
   CLEAR_USER_ROLE: 'CLEAR_USER_ROLE',
   SET_GITHUBID: 'SET_GITHUBID',
   CLEAR_GITHUBID: 'CLEAR_GITHUBID',
+  SET_TOKEN: 'SET_TOKEN',
+  CLEAR_TOKEN: 'CLEAR_TOKEN',
 
 };
 

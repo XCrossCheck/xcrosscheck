@@ -39,11 +39,25 @@ const githubId: IReducer<string | null> = (state = '', action) => {
   }
 };
 
+const token: IReducer<string | null> = (state = '', action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case constants.SET_TOKEN:
+      return payload;
+    case constants.CLEAR_TOKEN:
+      return null;
+    default:
+      return state;
+  }
+};
+
 
 const reducer = combineReducers({
   logged,
   userRole,
   githubId,
+  token,
 });
 
 export default reducer;
