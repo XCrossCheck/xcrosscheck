@@ -16,7 +16,7 @@ export const Success: FC = () => (
       </Title>
     </div>
     <Space>
-      <Link to="/student">
+      <Link to="/">
         <Button>To Main Page</Button>
       </Link>
     </Space>

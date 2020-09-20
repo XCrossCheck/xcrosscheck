@@ -18,6 +18,7 @@ const webpackConfig = (env): Configuration => ({
     },
   },
   output: {
+    publicPath: '/',
     path: path.join(__dirname, '/dist'),
     filename: 'build.js',
   },
