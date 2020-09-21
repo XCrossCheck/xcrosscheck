@@ -10,29 +10,33 @@ export type TPage = {
   url: string;
   role: string;
   exact: boolean;
+  isTab: boolean;
 };
 
 const pages: TPage[] = [
   {
     component: StudentPage,
-    title: 'Student Page',
-    url: '/student',
+    title: 'Home Page',
+    url: '/',
     role: 'student',
     exact: true,
+    isTab: true,
   },
   {
     component: StudentReviewPage,
-    title: 'Student Review Page',
-    url: '/student/review',
+    title: 'Review',
+    url: '/review',
     role: 'student',
     exact: true,
+    isTab: true,
   },
   {
     component: StudentSubmitPage,
-    title: 'Student Submit Page',
-    url: '/student/submit',
+    title: 'Submit',
+    url: '/submit',
     role: 'student',
     exact: true,
+    isTab: true,
   },
   {
     component: AddTask,
@@ -40,6 +44,7 @@ const pages: TPage[] = [
     url: '/',
     role: 'author',
     exact: true,
+    isTab: true,
   },
 ];
 

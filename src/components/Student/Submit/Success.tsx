@@ -25,7 +25,7 @@ export const Success: FC<Props> = ({ task, submittedAt }) => (
       </Title>
     </div>
     <Space>
-      <Link to="/student">
+      <Link to="/">
         <Button>To Main Page</Button>
       </Link>
     </Space>
