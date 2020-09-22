@@ -1,37 +1,29 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { dbGetReq } from '../../service/restapi-fb';
 import { IAction } from '../types';
 import constants from './constants';
 import { IThunkAction } from '..';
-import { ITask, ICrosscheckSession } from './reducer';
+import { createSession, deleteSession, getSessions, mapDomainToDb, updateSession } from '../../service/crossCheckSession';
+import { getTasks } from '../../service/task';
+import { ICrosscheckSession } from './reducer';
 
 type TTasks = {
-  get: () => IThunkAction
-  set: IAction<boolean>
-  clear: IAction<void>
+  get: () => IThunkAction;
+  set: IAction<boolean>;
+  clear: IAction<void>;
 };
 
 type TCrosscheckSessions = {
-  get: () => IThunkAction
-  set: IAction<boolean>
-  clear: IAction<void>
+  get: () => IThunkAction;
+  set: IAction<boolean>;
+  create: (data: ICrosscheckSession) => IThunkAction;
+  update: (data: ICrosscheckSession, key: string) => IThunkAction;
+  delete: (id: string) => IThunkAction;
+  clear: IAction<void>;
 };
-
 
 const tasks: TTasks = {
   get: () => async dispatch => {
-    const response = await dbGetReq('tasks');
-    const payload = Object.keys(response.data).map<ITask>(key => ({
-      author: response.data[key].author,
-      availableToSubmit: response.data[key].availableToSubmit,
-      categoriesOrder: response.data[key].categoriesOrder,
-      id: response.data[key].id,
-      key,
-      items: response.data[key].items,
-      name: response.data[key].name,
-      state: response.data[key].state,
-    }));
-    dispatch({ type: constants.SET_TASKS, payload });
+    const payload = getTasks();
+    dispatch({ type: constants.SET_TASKS, payload: await payload });
   },
   set: (payload) => ({ type: constants.SET_TASKS, payload }),
   clear: () => ({ type: constants.CLEAR_TASKS, payload: null }),
@@ -39,23 +31,30 @@ const tasks: TTasks = {
 
 const crosscheckSessions: TCrosscheckSessions = {
   get: () => async dispatch => {
-    const response = await dbGetReq('crossCheckSession');
-    const payload = Object.keys(response.data).map<ICrosscheckSession>(key => ({
-      attendees: response.data[key].attendees,
-      coefficient: response.data[key].coefficient,
-      deadlineReview: response.data[key].deadlineReview,
-      deadlineSubmit: response.data[key].deadlineSubmit,
-      desiredReviewersAmount: response.data[key].desiredReviewersAmount,
-      discardMaxScore: response.data[key].discardMaxScore,
-      discardMinScore: response.data[key].discardMinScore,
-      id: response.data[key].id,
-      minReiewsAmount: response.data[key].minReiewsAmount,
-      startDate: response.data[key].startDate,
-      state: response.data[key].state,
-      taskId: response.data[key].taskId,
-      key,
-    }));
+    const payload = await getSessions();
     dispatch({ type: constants.SET_CROSSCHECK_SESSIONS, payload });
+  },
+  create: (data) => async dispatch => {
+    const id = await createSession(mapDomainToDb(data));
+    if (id) {
+      const payload: ICrosscheckSession = {
+        ...data,
+        id,
+      };
+      dispatch({ type: constants.CREATE_CROSSCHECK_SESSION, payload });
+    }
+  },
+  update: (data, key) => async dispatch => {
+    const result = await updateSession(mapDomainToDb(data), key);
+    if (result) {
+      dispatch({ type: constants.UPDATE_CROSSCHECK_SESSION, payload: data });
+    }
+  },
+  delete: (id) => async dispatch => {
+    const result = await deleteSession(id);
+    if (result) {
+      dispatch({ type: constants.DELETE_CROSSCHECK_SESSION, payload: id });
+    }
   },
   set: (payload) => ({ type: constants.SET_CROSSCHECK_SESSIONS, payload }),
   clear: () => ({ type: constants.CLEAR_CROSSCHECK_SESSIONS, payload: null }),

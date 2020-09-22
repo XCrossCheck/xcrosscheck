@@ -1,26 +1,27 @@
 import { combineReducers } from 'redux';
-import { IReducer } from '../types';
+import { IReducer, IReducerP } from '../types';
 import constants from './constants';
 
 export interface IAttendee {
   githubId: string;
   reviewerOf: string[];
 }
-
-export interface ICrosscheckSession {
+export interface ICrosscheckSessionDb {
   attendees: IAttendee[];
   coefficient: number;
-  deadlineReview: string;
-  deadlineSubmit: string;
+  deadlineReview: Date;
+  deadlineSubmit: Date;
   desiredReviewersAmount: number;
   discardMaxScore: boolean;
   discardMinScore: boolean;
-  id: string;
-  key: string;
   minReiewsAmount: number;
-  startDate: string;
+  startDate: Date;
   state: string;
   taskId: string;
+}
+
+export interface ICrosscheckSession extends ICrosscheckSessionDb {
+  id: string;
 }
 
 export interface Item {
@@ -56,14 +57,20 @@ const tasks: IReducer<ITask[]> = (state = null, action) => {
   }
 };
 
-const crosscheckSessions: IReducer<ICrosscheckSession[]> = (state = null, action) => {
+const crosscheckSessions: IReducerP<ICrosscheckSession[], ICrosscheckSession[] | ICrosscheckSession | string> = (state = null, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case constants.SET_CROSSCHECK_SESSIONS:
-      return payload;
+      return payload as ICrosscheckSession[];
     case constants.CLEAR_CROSSCHECK_SESSIONS:
       return null;
+    case constants.CREATE_CROSSCHECK_SESSION:
+      return [...state, payload as ICrosscheckSession];
+    case constants.UPDATE_CROSSCHECK_SESSION:
+      return [...state.filter(e => e.id !== (payload as ICrosscheckSession).id), payload as ICrosscheckSession];
+    case constants.DELETE_CROSSCHECK_SESSION:
+      return state.filter(e => e.id !== payload as string);
     default:
       return state;
   }

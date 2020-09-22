@@ -1,12 +1,22 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Table, Button } from 'antd';
 import { TStore } from '../../storage';
 import * as dataActions from '../../storage/data/actions';
 import * as dataSelectors from '../../storage/data/selectors';
 import { ITask, ICrosscheckSession } from '../../storage/data/reducer';
 import Loading from '../_Common/loading';
+import { ICrosscheckSessionList } from './types';
+import tableColumns from './tableConfig';
+import ModalWindow from './ModalWindow';
 
 const CrossCheck: FC = () => {
+
+  const [visible, setVisible] = useState(false);
+
+  function showModal() {
+    setVisible(true);
+  }
 
   const dispatch = useDispatch();
   const tasks = useSelector<TStore, ITask[] | null>((state) => dataSelectors.tasks(state));
@@ -26,13 +36,41 @@ const CrossCheck: FC = () => {
     };
   }, []);
 
-  if (!tasks || !crosscheckSessions) {
+  const list = useMemo<ICrosscheckSessionList[] | null>(() => {
+    if (tasks && crosscheckSessions) {
+      const result = crosscheckSessions.map<ICrosscheckSessionList>(e => {
+        const task = tasks.find((t) => t.id === e.taskId);
+        const item: ICrosscheckSessionList = {
+          ...e,
+          task,
+        };
+        return item;
+      });
+      console.log('memo', result);
+      return result;
+    }
+    return null;
+  }, [tasks, crosscheckSessions]);
+
+  if (!list) {
     return <Loading />;
   }
   return (
-    <div>
-      hi
-    </div>
+    <>
+      <Button onClick={showModal}>
+          <i className="fas fa-plus" />
+          Add Session
+      </Button>
+      <ModalWindow visible={visible} setVisible={setVisible}/>
+      <div>
+          <Table
+            rowKey="id" 
+            columns={tableColumns}
+            pagination={{ position: ['bottomLeft'] }}
+            dataSource={list}
+          />
+      </div>
+    </>
   );
 };
 
