@@ -3,6 +3,7 @@ import StudentPage from '../Student';
 import StudentSubmitPage from '../Student/Submit';
 import StudentReviewPage from '../Student/Review';
 import AddTask from '../AddTask';
+import CrossCheck from '../CrossCheck';
 
 export type TPage = {
   component: FC<any>;
@@ -42,6 +43,14 @@ const pages: TPage[] = [
     component: AddTask,
     title: 'Add task',
     url: '/',
+    role: 'author',
+    exact: true,
+    isTab: true,
+  },
+  {
+    component: CrossCheck,
+    title: 'Cross Check',
+    url: '/crosscheck',
     role: 'author',
     exact: true,
     isTab: true,

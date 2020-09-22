@@ -8,10 +8,9 @@ const { Header, Footer, Content } = Layout;
 
 type THome = {
   userRole: string;
-  githubId: string;
 };
 
-const Home: FC<THome> = ({ userRole, githubId }) => (
+const Home: FC<THome> = ({ userRole }) => (
   <Layout style={{ minHeight: '100vh' }}>
     <Header>X Cross Check Task</Header>
     <TabsMenu pages={pages} userRole={userRole} />

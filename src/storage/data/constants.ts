@@ -1,0 +1,16 @@
+type TDataConstants = {
+  SET_TASKS: string,
+  CLEAR_TASKS: string,
+  SET_CROSSCHECK_SESSIONS: string,
+  CLEAR_CROSSCHECK_SESSIONS: string,
+};
+
+
+const constants: TDataConstants = {
+  SET_TASKS: 'SET_TASKS',
+  CLEAR_TASKS: 'CLEAR_TASKS',
+  SET_CROSSCHECK_SESSIONS: 'SET_CROSSCHECK_SESSIONS',
+  CLEAR_CROSSCHECK_SESSIONS: 'CLEAR_CROSSCHECK_SESSIONS',
+};
+
+export default constants;
