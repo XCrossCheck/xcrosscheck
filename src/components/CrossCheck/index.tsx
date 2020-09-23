@@ -8,7 +8,7 @@ import { ITask, ICrosscheckSession } from '../../storage/data/reducer';
 import Loading from '../_Common/loading';
 import { ICrosscheckSessionList } from './types';
 import tableColumns from './tableConfig';
-import ModalWindow from './ModalWindow';
+import EditForm from './EditForm';
 
 const CrossCheck: FC = () => {
 
@@ -61,7 +61,7 @@ const CrossCheck: FC = () => {
           <i className="fas fa-plus" />
           Add Session
       </Button>
-      <ModalWindow visible={visible} setVisible={setVisible}/>
+      <EditForm visible={visible} setVisible={setVisible}/>
       <div>
           <Table
             rowKey="id" 

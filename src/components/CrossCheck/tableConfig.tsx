@@ -10,7 +10,7 @@ const tableColumns: ColumnsType<ICrosscheckSessionList> = [
     title: 'Task Name',
     key: 'taskName',
     render: (val, rec) => (
-      <EditSession text={rec.task.name} />
+      <EditSession text={rec.task.name} session={rec}/>
     ),
     sorter: (a, b) => a.task.name > b.task.name ? 1 : -1
   },
@@ -50,7 +50,7 @@ const tableColumns: ColumnsType<ICrosscheckSessionList> = [
     key: 'action',
     render: (val, rec) => (
       <>
-        <EditSession>
+        <EditSession session={rec}>
           <i className='fas fa-pencil-alt' />
         </EditSession>
         <DeleteSession id={rec.id}/>

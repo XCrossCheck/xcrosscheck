@@ -1,14 +1,16 @@
 import { Button } from 'antd';
 import React, { FC, useState } from 'react';
-import ModalWindow from './ModalWindow';
+import { ICrosscheckSession } from '../../storage/data/reducer';
+import EditForm from './EditForm';
 
 type TEditSession = {
   text?: string
+  session: ICrosscheckSession;
 };
 
-const EditSession: FC<TEditSession> = ({ text, children }) =>  {
+const EditSession: FC<TEditSession> = ({ text, children, session }) =>  {
 
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   function showModal() {
     setVisible(true);
@@ -19,7 +21,7 @@ const EditSession: FC<TEditSession> = ({ text, children }) =>  {
         <Button onClick={showModal}>
           {children || text}
         </Button>
-        <ModalWindow visible={visible} setVisible={setVisible}/>
+        <EditForm visible={visible} setVisible={setVisible} session={session}/>
       </>
   );
 };

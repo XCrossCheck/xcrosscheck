@@ -15,7 +15,7 @@ type TCrosscheckSessions = {
   get: () => IThunkAction;
   set: IAction<boolean>;
   create: (data: ICrosscheckSession) => IThunkAction;
-  update: (data: ICrosscheckSession, key: string) => IThunkAction;
+  update: (data: ICrosscheckSession) => IThunkAction;
   delete: (id: string) => IThunkAction;
   clear: IAction<void>;
 };
@@ -44,8 +44,9 @@ const crosscheckSessions: TCrosscheckSessions = {
       dispatch({ type: constants.CREATE_CROSSCHECK_SESSION, payload });
     }
   },
-  update: (data, key) => async dispatch => {
-    const result = await updateSession(mapDomainToDb(data), key);
+  update: (data) => async dispatch => {
+    const result = await updateSession(mapDomainToDb(data), data.id);
+    console.log(data);
     if (result) {
       dispatch({ type: constants.UPDATE_CROSSCHECK_SESSION, payload: data });
     }
