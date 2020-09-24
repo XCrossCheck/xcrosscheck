@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
-import { Layout, Button } from 'antd';
+import { Layout, Button, Typography } from 'antd';
 import  './Head.css';
 
+const { Title } = Typography;
 const { Header } = Layout;
 type THead = {
   userRole: string;
@@ -11,7 +12,7 @@ type THead = {
 
 const Head: FC<THead> = ({ userRole, githubId, logOut }) => (
     <Header className="header">
-      <span>X Cross Check Task</span>
+      <Title type="secondary" id="title">XCrossCheckTask</Title>
       <div>
         {userRole} / {githubId}
       </div>
