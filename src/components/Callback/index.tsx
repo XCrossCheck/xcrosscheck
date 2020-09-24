@@ -12,6 +12,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { setCookie, getCookie } from '../../service/cookies';
 // import { exit } from 'process';
 
 async function getAccessToken(code: string) {
@@ -43,11 +44,6 @@ async function getGitUser(token:string) {
     console.log(`Axios request failed: ${e}`);
     return null;
   }
-}
-
-const createOrUpdateDBUser = () => {
-  
-
 }
 
 type TCallback = {
@@ -90,12 +86,7 @@ const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId, setToken 
         
         setGithubId( login);
         setLogged(true);
-        // const exp = (new Date(Date.now() + 86400e3)).toUTCString();
-        document.cookie = `login=${login}; max-age=3600; secure`;   // expires=${exp}`;
-        // encodeURIComponent(name) + '=' + encodeURIComponent(value);        
-        // write 2 db
-
-
+        setCookie('login', login);
 
       })
       .catch((data) => console.log('catch', data));

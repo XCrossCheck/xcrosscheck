@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Home from '../Home';
 import Callback from '../Callback';
@@ -8,15 +8,8 @@ import GitLogin from '../GitLogin';
 import { TStore, IDispatch, IDispatchAction } from '../../storage';
 import * as authSelectors from '../../storage/auth/selectors';
 import * as authAct from '../../storage/auth/actions';
+import { setCookie, getCookie, delCookie } from '../../service/cookies';
 
-// возвращает куки с указанным name,
-// или undefined, если ничего не найдено
-function getCookie(name) {
-  const matches = document.cookie.match( new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
 
 
 const AuthRouter: FC = () => {
@@ -31,6 +24,19 @@ const AuthRouter: FC = () => {
   const setToken: IDispatchAction<string> = (payload) => dispatch(authAct.token.set(payload));
 
   const login = getCookie('login');
+
+  const logOut = () => {
+    delCookie('login');
+    delCookie('userRole');
+    setLogged(false);
+    setUserRole('');
+    setGithubId('');
+    setToken('');
+    console.log('logOut');
+    return <Redirect to="/" />;
+  };
+  
+
 //  console.log(login);
   if ( login) {
     setLogged( true);
@@ -55,7 +61,7 @@ const AuthRouter: FC = () => {
       </Switch>
     );
   } if (logged && userRole) {
-    return <Home userRole={userRole} githubId={githubId}/>;
+    return <Home userRole={userRole} githubId={githubId} logOut={logOut}/>;
   }
   return <Loading />;
 };
