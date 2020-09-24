@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import {
-  Form, Input, Button, DatePicker, Divider, Typography, List, InputNumber,
+  Form, Input, Button, DatePicker, Divider, Typography, InputNumber,
 } from 'antd';
-import { MinusCircleOutlined, PlusOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import './index.css';
 
 const { Title } = Typography;
@@ -17,9 +17,7 @@ const tailLayout = {
 };
 
 const dividerLayout = {
-  style: {
-    width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
-  },
+  width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
 };
 
 const dividerBlack = {
@@ -29,20 +27,12 @@ const dividerBlack = {
 };
 
 const AddTask = (props: any) => {
-  // console.log('app: ', props);
-
   const onFinish = (values: any) => {
     // console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
     // console.log('Failed:', errorInfo);
-  };
-
-  /* в процессе */
-  const addListItem = () => {
-    const list = document.getElementById('basicList');
-    // console.log(list);
   };
 
   return (
@@ -52,11 +42,21 @@ const AddTask = (props: any) => {
         render={() => (
           <Form
             {...layout}
-            name="formAddTask"
+            id="formAddTask"
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
+            <Form.Item
+              label="id"
+              name="taskId"
+              rules={[{ required: true, message: 'Please input task id!' }]}
+            >
+              <Input
+                placeholder="task id"
+              />
+            </Form.Item>
+
             <Form.Item
               label="Название"
               name="taskName"
@@ -73,8 +73,9 @@ const AddTask = (props: any) => {
               rules={[{ required: true, message: 'Please input start date!' }]}
             >
               <DatePicker
-                placeholder="start date"
-                style={{ width: '50%' }}
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                placeholder="Select Time"
               />
             </Form.Item>
 
@@ -84,8 +85,9 @@ const AddTask = (props: any) => {
               rules={[{ required: true, message: 'Please input deadline!' }]}
             >
               <DatePicker
-                placeholder="start date"
-                style={{ width: '50%' }}
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                placeholder="Select Time"
               />
             </Form.Item>
 
@@ -170,16 +172,20 @@ const AddTask = (props: any) => {
                         label="минимальный балл"
                         name={[field.name, 'minScore']}
                         fieldKey={[field.fieldKey, 'minScore']}
-                        rules={[{ message: 'Missing min Score' }]}
+                        rules={[{
+                          type: 'number', min: -10000, max: 10000, message: 'Missing min Score',
+                        }]}
                       >
-                        <InputNumber defaultValue={0} />
+                        <InputNumber />
                       </Form.Item>
                       <Form.Item
                         {...field}
                         label="максимальный балл"
                         name={[field.name, 'maxScore']}
                         fieldKey={[field.fieldKey, 'maxScore']}
-                        rules={[{ message: 'Missing maxScore' }]}
+                        rules={[{
+                          type: 'number', min: -10000, max: 10000, message: 'Missing max Score',
+                        }]}
                       >
                         <InputNumber defaultValue={0} />
                       </Form.Item>
@@ -196,16 +202,7 @@ const AddTask = (props: any) => {
                         />
                       </Form.Item>
 
-                      <List
-                        id="basicList"
-                      />
-
-                      <PlusCircleOutlined
-                        onClick={() => {
-                          addListItem();
-                        }}
-                        style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}
-                      />
+                      <div style={{ height: '20px' }} />
 
                       <Button
                         type="dashed"
@@ -213,7 +210,7 @@ const AddTask = (props: any) => {
                         onClick={() => {
                           remove(field.name);
                         }}
-                        style={{ display: 'flex', margin: '0 auto' }}
+                        style={{ display: 'flex', marginRight: '0', marginLeft: 'auto' }}
                       >
                         удалить пункт
                         {' '}
@@ -222,9 +219,7 @@ const AddTask = (props: any) => {
                         Basic
                       </Button>
                       <Divider
-                        style={{
-                          width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
-                        }}
+                        style={dividerLayout}
                       />
                     </div>
                   ))}
