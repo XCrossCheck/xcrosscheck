@@ -1,3 +1,7 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/prefer-regexp-exec */
 import React, { FC } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,14 +14,10 @@ import * as authSelectors from '../../storage/auth/selectors';
 import * as authAct from '../../storage/auth/actions';
 import { setCookie, getCookie, delCookie } from '../../service/cookies';
 
-
-
 const AuthRouter: FC = () => {
   const dispatch: IDispatch = useDispatch();
   const logged = useSelector<TStore, boolean | null>((state) => authSelectors.logged(state));
   const userRole = useSelector<TStore, string | null>((state) => authSelectors.userRole(state));
-  const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
-  const token = useSelector<TStore, string | null>((state) => authSelectors.token(state));
   const setLogged: IDispatchAction<boolean> = (payload) => dispatch(authAct.logged.set(payload));
   const setUserRole: IDispatchAction<string> = (payload) => dispatch(authAct.userRole.set(payload));
   const setGithubId: IDispatchAction<string> = (payload) => dispatch(authAct.githubId.set(payload));
@@ -35,9 +35,8 @@ const AuthRouter: FC = () => {
     console.log('logOut');
     return <Redirect to="/" />;
   };
-  
 
-//  console.log(login);
+
   if ( login) {
     setLogged( true);
     setGithubId( login);
@@ -61,6 +60,7 @@ const AuthRouter: FC = () => {
       </Switch>
     );
   } if (logged && userRole) {
+
     return <Home userRole={userRole} githubId={githubId} logOut={logOut}/>;
   }
   return <Loading />;
