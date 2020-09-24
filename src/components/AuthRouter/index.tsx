@@ -10,20 +10,17 @@ import * as authSelectors from '../../storage/auth/selectors';
 import * as authAct from '../../storage/auth/actions';
 import { setCookie, getCookie, delCookie } from '../../service/cookies';
 
-
-
 const AuthRouter: FC = () => {
   const dispatch: IDispatch = useDispatch();
   const logged = useSelector<TStore, boolean | null>((state) => authSelectors.logged(state));
   const userRole = useSelector<TStore, string | null>((state) => authSelectors.userRole(state));
   const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
-  const token = useSelector<TStore, string | null>((state) => authSelectors.token(state));
   const setLogged: IDispatchAction<boolean> = (payload) => dispatch(authAct.logged.set(payload));
   const setUserRole: IDispatchAction<string> = (payload) => dispatch(authAct.userRole.set(payload));
   const setGithubId: IDispatchAction<string> = (payload) => dispatch(authAct.githubId.set(payload));
-  const setToken: IDispatchAction<string> = (payload) => dispatch(authAct.token.set(payload));
 
   const login = getCookie('login');
+  const ur = getCookie('userRole');
 
   const logOut = () => {
     delCookie('login');
@@ -31,13 +28,11 @@ const AuthRouter: FC = () => {
     setLogged(false);
     setUserRole('');
     setGithubId('');
-    setToken('');
-    console.log('logOut');
     return <Redirect to="/" />;
   };
   
-
-//  console.log(login);
+  if (ur) setUserRole(ur);
+  else if (userRole) setCookie('userRole', userRole);
   if ( login) {
     setLogged( true);
     setGithubId( login);
@@ -49,9 +44,9 @@ const AuthRouter: FC = () => {
         <Route
           path="/callback"
           render={(props) => (
-            <Callback props={props} setLogged={setLogged} setGithubId={setGithubId} setToken={setToken}/>
+            <Callback props={props} setLogged={setLogged} setGithubId={setGithubId}/>
           )}
-        />
+        /> 
         <Route
           path="/"
           render={() => (

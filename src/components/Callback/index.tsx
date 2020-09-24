@@ -12,7 +12,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { setCookie, getCookie } from '../../service/cookies';
+import { setCookie } from '../../service/cookies';
 // import { exit } from 'process';
 
 async function getAccessToken(code: string) {
@@ -57,11 +57,10 @@ type TGitAuth = {
   props: TCallback;
   setLogged: (lstate: boolean) => void;
   setGithubId: (githubId: string) => void;
-  setToken: (githubId: string) => void;
 };
 
 // const Callback:React.FC<fCallback> = ({ location }) => {
-const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId, setToken }) => {
+const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId }) => {
 
   const {location: {search} } = props;
   // console.log('Callback:', search);
@@ -76,14 +75,12 @@ const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId, setToken 
     getAccessToken(code) // state
       .then((data) => {
         token = data?.data.token;
-        setToken(token);
+        // setToken(token);
         const github = getGitUser(token);
         return github;
       })
       .then((data) => {
         const {data: {login}} = data;
-        console.log('then', login);
-        
         setGithubId( login);
         setLogged(true);
         setCookie('login', login);
