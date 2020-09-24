@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/ban-types */
@@ -54,7 +56,7 @@ type TCallback = {
 };
 
 type TGitAuth = {
-  props: TCallback;
+  props: RouteComponentProps<any>;
   setLogged: (lstate: boolean) => void;
   setGithubId: (githubId: string) => void;
 };

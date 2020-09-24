@@ -1,3 +1,7 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/prefer-regexp-exec */
 import React, { FC } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -56,6 +60,7 @@ const AuthRouter: FC = () => {
       </Switch>
     );
   } if (logged && userRole) {
+
     return <Home userRole={userRole} githubId={githubId} logOut={logOut}/>;
   }
   return <Loading />;

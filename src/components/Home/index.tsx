@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
 import MainRouter from '../MainRouter';
 import TabsMenu from '../TabsMenu';
 import pages from './pages';
