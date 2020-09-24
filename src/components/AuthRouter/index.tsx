@@ -1,3 +1,7 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/prefer-regexp-exec */
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +17,7 @@ import * as authAct from '../../storage/auth/actions';
 // или undefined, если ничего не найдено
 function getCookie(name) {
   const matches = document.cookie.match( new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    `(?:^|; )${  name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')  }=([^;]*)`
   ));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
@@ -23,15 +27,13 @@ const AuthRouter: FC = () => {
   const dispatch: IDispatch = useDispatch();
   const logged = useSelector<TStore, boolean | null>((state) => authSelectors.logged(state));
   const userRole = useSelector<TStore, string | null>((state) => authSelectors.userRole(state));
-  const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
-  const token = useSelector<TStore, string | null>((state) => authSelectors.token(state));
   const setLogged: IDispatchAction<boolean> = (payload) => dispatch(authAct.logged.set(payload));
   const setUserRole: IDispatchAction<string> = (payload) => dispatch(authAct.userRole.set(payload));
   const setGithubId: IDispatchAction<string> = (payload) => dispatch(authAct.githubId.set(payload));
   const setToken: IDispatchAction<string> = (payload) => dispatch(authAct.token.set(payload));
 
   const login = getCookie('login');
-//  console.log(login);
+  //  console.log(login);
   if ( login) {
     setLogged( true);
     setGithubId( login);
@@ -55,7 +57,7 @@ const AuthRouter: FC = () => {
       </Switch>
     );
   } if (logged && userRole) {
-    return <Home userRole={userRole} githubId={githubId}/>;
+    return <Home userRole={userRole}/>;
   }
   return <Loading />;
 };

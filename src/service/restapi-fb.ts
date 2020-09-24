@@ -29,6 +29,12 @@ export const dbPatchReq = (req:string, obj) => {
   return res;
 };
 
+export const dbPatchReqByKey = (req:string, key:string, obj) => {
+  const res = axios.patch(`${dbUrl}/${req}/${key}.json`, obj); // ,
+  // { credentials: 'include', withCredentials: true });
+  return res;
+};
+
 export const dbDeleteReq = (req:string, key:string) => {
   const res = axios.delete(`${dbUrl}/${req}/${key}.json`); // ,
   // { credentials: 'include', withCredentials: true });

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/ban-types */
@@ -11,7 +13,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 // import { exit } from 'process';
 
 async function getAccessToken(code: string) {
@@ -48,7 +50,7 @@ async function getGitUser(token:string) {
 const createOrUpdateDBUser = () => {
   
 
-}
+};
 
 type TCallback = {
   history: {}; // {length: number, action: string, location: {…}, createHref: ƒ, push: ƒ, …}
@@ -58,7 +60,7 @@ type TCallback = {
 };
 
 type TGitAuth = {
-  props: TCallback;
+  props: RouteComponentProps<any>;
   setLogged: (lstate: boolean) => void;
   setGithubId: (githubId: string) => void;
   setToken: (githubId: string) => void;

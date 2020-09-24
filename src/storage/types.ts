@@ -10,3 +10,9 @@ export type IActionResult<T> = {
 export interface IReducer<T> {
   (state: T, payload: IActionResult<T>): T;
 }
+
+
+export interface IReducerP<T, P> {
+  (state: T, payload: IActionResult<P>): T;
+}
+
