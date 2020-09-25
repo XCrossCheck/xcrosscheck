@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Steps } from 'antd';
-import { Links, Task } from './types';
+import { Links, Task, SubmitInfo } from './types';
 import { SelectTask } from './SelectTask';
 import { SelfCheck } from './SelfCheck';
 import { SubmitForm } from './SubmitForm';
@@ -21,6 +21,7 @@ export default function Submit() {
   });
   const [selfCheck] = useState<string>('');
   const [submittedAt, setSubmitedDate] = useState<string>('');
+  const [previousInfo, setPreviousInfo] = useState<SubmitInfo>();
 
   const next = () => {
     setCurrent(current + 1);
@@ -34,7 +35,16 @@ export default function Submit() {
 
   switch (current) {
     case 0:
-      content = <SelectTask onNext={next} onChange={setTask} selectedTask={task} mode="submit" />;
+      content = (
+        <SelectTask
+          onNext={next}
+          onChange={setTask}
+          previousInfo={previousInfo}
+          selectedTask={task}
+          setPreviousInfo={setPreviousInfo}
+          mode="submit"
+        />
+      );
       break;
     case 1:
       content = task && (
