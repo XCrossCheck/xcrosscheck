@@ -1,26 +1,27 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Submit.css';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Select, Typography, Space } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import { Task, SubmitInfo } from './types';
 import { dbGetReq } from '../../../service/restapi-fb';
 import { getTasks } from '../services/getTasks';
+import * as authSelectors from '../../../storage/auth/selectors';
 
 const { Option } = Select;
 const { Text, Paragraph, Title } = Typography;
-const myGitHub = 'katrin-kot';
 
 export const SelectTask: FC<{
   onNext: () => void;
   onChange: (task: Task) => void;
-  previousInfo: SubmitInfo[];
+  previousInfo: SubmitInfo;
   setPreviousInfo: (submitInfo: SubmitInfo) => void;
   selectedTask?: Task;
   mode: 'submit' | 'review';
 }> = ({ onNext, onChange, selectedTask, previousInfo, mode, setPreviousInfo }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const submissionTask = previousInfo;
+  const myGitHub = useSelector(authSelectors.githubId);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -56,7 +57,7 @@ export const SelectTask: FC<{
           if (task) {
             onChange(task);
             dbGetReq('studentsTasks').then(res => {
-              const prevInfo = Object.values(res.data).filter(
+              const prevInfo = Object.values<SubmitInfo>(res.data).filter(
                 t => t.githubId === myGitHub && t.taskId === task.taskId
               );
               setPreviousInfo(prevInfo[prevInfo.length - 1]);
@@ -83,23 +84,23 @@ export const SelectTask: FC<{
         </>
       )}
       {!canProceed && selectedTask && <div className="warning">Deadline has passed</div>}
-      {submissionTask ? (
+      {previousInfo ? (
         <div>
           <Text>
             <Space>
               <CheckCircleTwoTone twoToneColor="#52c41a" />
               <span>
-                Task {selectedTask.name} succsessfully submited {submissionTask.submittedAt}
+                Task {selectedTask.name} succsessfully submited {previousInfo.submittedAt}
               </span>
             </Space>
           </Text>
-          ,<Title level={5}>Link on Demo </Title>
-          <Paragraph>{submissionTask.demoLink}</Paragraph>
-          <Title level={5}>Link on repository</Title>
-          <Paragraph>{submissionTask.repoLink}</Paragraph>
+          ,<Title level={5}>Demo link: </Title>
+          <Paragraph>{previousInfo.demoLink}</Paragraph>
+          <Title level={5}>Repository link</Title>
+          <Paragraph>{previousInfo.repoLink}</Paragraph>
           <Title level={5}>Self-check score</Title>
-          <Paragraph>{submissionTask.selfCheckScore}</Paragraph>
-          <Link to={`/student/score/${selectedTask.taskId}`}>
+          <Paragraph>{previousInfo.selfCheckScore}</Paragraph>
+          <Link to={`/score/${selectedTask.taskId}`}>
             <Button>View a score</Button>{' '}
           </Link>
         </div>

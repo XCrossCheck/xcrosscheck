@@ -6,26 +6,6 @@ import { getTasks } from '../services/getTasks';
 
 const { Option } = Select;
 const { Title } = Typography;
-// const tasksMock: Task[] = [
-//   {
-//     id: 'Songbird',
-//     availableToSubmit: true,
-//     deadlineReview: '2020-09-20 23:59:59',
-//     deadlineSubmit: '2020-09-14 23:59:59',
-//   },
-//   {
-//     id: 'RS Lang',
-//     availableToSubmit: false,
-//     deadlineReview: '2020-09-13 23:59:59',
-//     deadlineSubmit: '2020-09-12 23:59:59',
-//   },
-//   {
-//     id: 'X-Check',
-//     availableToSubmit: true,
-//     deadlineReview: '2020-09-20 23:59:59',
-//     deadlineSubmit: '2020-09-20 23:59:59',
-//   },
-// ];
 
 export const SelectTask: FC<{
   onNext: () => void;

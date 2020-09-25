@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Button, Space, Typography } from 'antd';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Task, Links, SubmitInfo } from './types';
 import './Submit.css';
 import { dbCreateRecord } from '../../../service/restapi-fb';
+import * as authSelectors from '../../../storage/auth/selectors';
 
 interface Props {
   onNext: () => void;
@@ -16,8 +17,6 @@ interface Props {
 }
 
 const { Paragraph, Title } = Typography;
-const myGitHub = 'katrin-kot';
-// const myGitHub = useSelector(authSelectors.githubId);
 
 export const ReviewAndSubmit: FC<Props> = ({
   onNext,
@@ -31,6 +30,7 @@ export const ReviewAndSubmit: FC<Props> = ({
   const date = new Date();
   const submitedDate = date.toString();
   const [submitInfo, setSubmitInfo] = useState<SubmitInfo>();
+  const myGitHub = useSelector(authSelectors.githubId);
 
   useEffect(() => {
     const currentTaskInfo = {
@@ -43,7 +43,15 @@ export const ReviewAndSubmit: FC<Props> = ({
     };
 
     setSubmitInfo(currentTaskInfo);
-  }, [previousInfo, task.taskId, links.demoLink, links.repoLink, selfCheck, submitedDate]);
+  }, [
+    previousInfo,
+    task.taskId,
+    links.demoLink,
+    links.repoLink,
+    selfCheck,
+    submitedDate,
+    myGitHub,
+  ]);
   return (
     <>
       <div>

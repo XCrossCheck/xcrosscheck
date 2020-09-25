@@ -1,49 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
+import { useSelector } from 'react-redux';
 import { Button, Select, Typography } from 'antd';
 import { dbGetReq } from '../../../service/restapi-fb';
-import { Task, Submission, Submission2 } from './types';
+import { Task, Submission, Submission2, Attendees } from './types';
+import * as authSelectors from '../../../storage/auth/selectors';
 
 const { Option } = Select;
 const { Link, Paragraph, Title } = Typography;
-
-// const studentsMock: Submission[] = [
-//   {
-//     taskId: 'Songbird',
-//     userId: 'Felix',
-//     repoLink: 'https://github.com/blabla',
-//     demoLink: 'https://onliner.by',
-//     submittedAt: 'Mon Sep 14 2020',
-//     selfCheckScore: '180',
-//   },
-//   {
-//     taskId: 'Songbird',
-//     userId: 'Gena',
-//     repoLink: 'https://github.com/blabla',
-//     demoLink: 'https://onliner.by',
-//     submittedAt: 'Mon Sep 14 2020',
-//     selfCheckScore: '200',
-//   },
-//   {
-//     taskId: 'Songbird',
-//     userId: 'Franky',
-//     repoLink: 'https://github.com/blabla',
-//     demoLink: 'https://onliner.by',
-//     submittedAt: 'Mon Sep 14 2020',
-//     selfCheckScore: '190',
-//   },
-// ];
-
-// const reviewMock: Submission2[] = [
-//   {
-//     taskId: 'Songbird',
-//     sender: 'MyId',
-//     recipient: 'Felix',
-//     crossCheckScore: '210',
-//     feedbackId: '15bhdg2',
-//     feedback: 'В целом работа неплохая, но можно и лучше',
-//   },
-// ];
 
 export const SelectStudents: FC<{
   onBack: () => void;
@@ -54,21 +18,22 @@ export const SelectStudents: FC<{
 }> = ({ onBack, onNext, task, onChange, selectedStudent }) => {
   const [students, setStudents] = useState<Submission[]>([]);
   const [review, setReview] = useState<Submission2[]>([]);
-  const myGitHub = 'katrin-kot';
+  const myGitHub = useSelector(authSelectors.githubId);
+
   useEffect(() => {
     dbGetReq('studentScore').then(score => setReview(Object.values(score.data)));
     Promise.all([dbGetReq('studentsTasks'), dbGetReq('attendees')]).then(([taskRes, attendees]) => {
-      const students1 = Object.values(attendees.data).filter(
+      const studentsForReview = Object.values<Attendees>(attendees.data).filter(
         t => t.githubId === myGitHub && t.taskId === task.taskId
       );
-      const students2 = students1[students1.length - 1].reviewerOf;
-      const studentsTasks = Object.values(taskRes.data)
+      const finalReviewStudents = studentsForReview[studentsForReview.length - 1].reviewerOf;
+      const studentsTasks = Object.values<Submission>(taskRes.data)
         .filter(t => t.taskId === task.taskId)
-        .filter(item => students2.includes(item.githubId));
-      console.log(students2, studentsTasks);
+        .filter(item => finalReviewStudents.includes(item.githubId));
       setStudents(studentsTasks);
     });
-  }, [task.taskId]);
+  }, [task.taskId, myGitHub]);
+
   const currentReview = review.filter(elem => elem.recipient === selectedStudent?.githubId);
   return (
     <>
@@ -76,7 +41,7 @@ export const SelectStudents: FC<{
         Task Review: <span>{task?.taskId}</span>
       </Typography.Title>
       <Select
-        defaultValue={selectedStudent?.github.Id}
+        defaultValue={selectedStudent?.githubId}
         placeholder="Select student"
         style={{ width: 360 }}
         onChange={value => {

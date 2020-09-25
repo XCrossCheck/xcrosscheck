@@ -27,3 +27,9 @@ export interface Submission2 {
   feedbackId: string;
   feedback: string;
 }
+
+export interface Attendees {
+  githubId: string;
+  taskId: string;
+  reviewerOf: string[];
+}
