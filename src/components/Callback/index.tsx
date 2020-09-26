@@ -13,7 +13,8 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { setCookie } from '../../service/cookies';
 // import { exit } from 'process';
 
 async function getAccessToken(code: string) {
@@ -47,11 +48,6 @@ async function getGitUser(token:string) {
   }
 }
 
-const createOrUpdateDBUser = () => {
-  
-
-};
-
 type TCallback = {
   history: {}; // {length: number, action: string, location: {…}, createHref: ƒ, push: ƒ, …}
   location: { pathname: string; search: string; hash: string; state: undefined };
@@ -63,11 +59,10 @@ type TGitAuth = {
   props: RouteComponentProps<any>;
   setLogged: (lstate: boolean) => void;
   setGithubId: (githubId: string) => void;
-  setToken: (githubId: string) => void;
 };
 
 // const Callback:React.FC<fCallback> = ({ location }) => {
-const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId, setToken }) => {
+const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId }) => {
 
   const {location: {search} } = props;
   // console.log('Callback:', search);
@@ -82,22 +77,15 @@ const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId, setToken 
     getAccessToken(code) // state
       .then((data) => {
         token = data?.data.token;
-        setToken(token);
+        // setToken(token);
         const github = getGitUser(token);
         return github;
       })
       .then((data) => {
         const {data: {login}} = data;
-        console.log('then', login);
-        
         setGithubId( login);
         setLogged(true);
-        // const exp = (new Date(Date.now() + 86400e3)).toUTCString();
-        document.cookie = `login=${login}; max-age=3600; secure`;   // expires=${exp}`;
-        // encodeURIComponent(name) + '=' + encodeURIComponent(value);        
-        // write 2 db
-
-
+        setCookie('login', login);
 
       })
       .catch((data) => console.log('catch', data));

@@ -3,6 +3,7 @@ import StudentPage from '../Student';
 import StudentSubmitPage from '../Student/Submit';
 import StudentReviewPage from '../Student/Review';
 import Tasks from '../Tasks';
+import { StudentScorePage } from '../Student/Submit/ScorePage';
 import CrossCheck from '../CrossCheck';
 
 export type TPage = {
@@ -35,6 +36,14 @@ const pages: TPage[] = [
     component: StudentSubmitPage,
     title: 'Submit',
     url: '/submit',
+    role: 'student',
+    exact: true,
+    isTab: true,
+  },
+  {
+    component: StudentScorePage,
+    title: 'Score',
+    url: '/score/:taskId',
     role: 'student',
     exact: true,
     isTab: true,
