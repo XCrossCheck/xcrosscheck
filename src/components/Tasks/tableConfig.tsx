@@ -3,7 +3,6 @@ import { ColumnsType } from 'antd/lib/table/Table';
 import React from 'react';
 import { ITask } from '../../storage/data/dataTypes';
 import DeleteTask from './DeleteTask';
-import EditTask from './EditTask';
 
 function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
   return [
@@ -11,7 +10,9 @@ function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
       title: 'Task Name',
       key: 'taskName',
       render: (val, rec) => (
-        <EditTask text={rec.name} task={rec}/>
+        <Button onClick={() =>  editTask(rec)}>
+            rec.name
+        </Button>
       ),
       sorter: (a, b) => a.name > b.name ? 1 : -1
     },
