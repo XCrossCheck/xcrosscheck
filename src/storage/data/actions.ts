@@ -39,7 +39,6 @@ const tasks: TTasks = {
   },
   update: (data) => async dispatch => {
     const result = await taskService.update(taskService.mapDomainToDb(data), data.id);
-    console.log(data);
     if (result) {
       dispatch({ type: constants.UPDATE_TASK, payload: data });
     }
@@ -71,7 +70,6 @@ const crosscheckSessions: TCrosscheckSessions = {
   },
   update: (data) => async dispatch => {
     const result = await csService.update(csService.mapDomainToDb(data), data.id);
-    console.log(data);
     if (result) {
       dispatch({ type: constants.UPDATE_CROSSCHECK_SESSION, payload: data });
     }

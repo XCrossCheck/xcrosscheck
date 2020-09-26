@@ -46,7 +46,6 @@ const CrossCheck: FC = () => {
         };
         return item;
       });
-      console.log('memo', result);
       return result;
     }
     return null;

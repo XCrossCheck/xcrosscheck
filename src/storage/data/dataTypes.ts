@@ -30,16 +30,19 @@ export interface IItem {
 }
 
 export interface ITask extends ITaskDb {
-  key: string;
+  id: string;
 }
 
 
 export interface ITaskDb {
-  author: string;
-  availableToSubmit: boolean;
-  categoriesOrder: string[];
-  id: string;
-  items: IItem[];
   name: string;
+  description: string;
+  demoUrl?: string;
+  repoName?: string;
+  branchName?: string;
+  screenshot?: string;
+  author: string;
   state: string;
+  categoriesOrder: string[];
+  items: IItem[];
 }

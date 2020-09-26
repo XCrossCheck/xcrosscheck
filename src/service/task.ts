@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { ITask, ITaskDb } from '../storage/data/dataTypes';
 import { dbCreateRecord, dbDeleteReq, dbGetReq, dbPatchReqByKey } from './restapi-fb';
 
 export function mapDomainToDb(data: ITask): ITaskDb {
   return {
     author: data.author,
-    availableToSubmit: data.availableToSubmit,
+    description: data.description,
+    demoUrl: data.demoUrl,
+    repoName: data.repoName,
+    branchName: data.branchName,
+    screenshot: data.screenshot,
     categoriesOrder: data.categoriesOrder,
-    id: data.id,
     items: data.items,
     name: data.name,
     state: data.state,
@@ -18,13 +20,16 @@ export function mapDomainToDb(data: ITask): ITaskDb {
 export function mapDbToDomain(data: any, key: string): ITask {
   return {
     author: data.author,
-    availableToSubmit: data.availableToSubmit,
+    description: data.description,
+    demoUrl: data.demoUrl,
+    repoName: data.repoName,
+    branchName: data.branchName,
+    screenshot: data.screenshot,
     categoriesOrder: data.categoriesOrder,
-    id: data.id,
     items: data.items,
     name: data.name,
     state: data.state,
-    key
+    id: key
   };
 }
 

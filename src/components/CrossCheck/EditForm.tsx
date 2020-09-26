@@ -144,7 +144,6 @@ const EditForm: FC<TEditForm> = ({ session, visible, setVisible }) =>  {
   
   function handleOk() {
     const validationResult = validate();
-    console.log(validationResult);
     if (!validationResult.isValid) {
       return;
     }

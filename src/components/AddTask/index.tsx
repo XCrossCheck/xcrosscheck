@@ -1,13 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import {
-  Form, Input, Button, DatePicker, Divider, Typography, List, InputNumber, Modal
+  Form, Input, Button, Divider, Typography, List, InputNumber, Modal, Select, 
 } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import './index.css';
-import { ITask } from 'src/storage/data/dataTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { IItem, ITask } from '../../storage/data/dataTypes';
+import * as authSelectors from '../../storage/auth/selectors';
+import * as dataActions from '../../storage/data/actions';
+import { TStore } from '../../storage';
 
 const { Title } = Typography;
+const { Option } = Select;
 
 const layout = {
   labelCol: { span: 8 },
@@ -32,14 +37,87 @@ const dividerBlack = {
 type TAddTask = {
   task?: ITask;
   visible: boolean;
-  setVisible: (visible: boolean) => void;
+  closeModal: () => void;
 };
 
-const AddTask: FC<TAddTask> = ({ visible, setVisible }) => {
-  // console.log('app: ', props);
 
-  const onFinish = (values: any) => {
-    // console.log('Success:', values);
+type TFormValues = {
+  taskName: string,
+  demo?: string,
+  repoName?: string,
+  screenshot?: string,
+  description?: string,
+  branchName?: string,
+  status: string,
+};
+
+const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
+  const [form] = Form.useForm<TFormValues>();
+
+  const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
+  const [categoriesOrder, setCategoriesOrder] = useState<string[] | null>(null);
+  const [items, setItems] = useState<IItem[] | null>(null);
+  
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (visible) {
+      if (task) {
+        form.setFieldsValue({
+          taskName: task.name,
+          demo: task.demoUrl,
+          repoName: task.repoName,
+          screenshot: task.screenshot,
+          description: task.description,
+          branchName: task.branchName,
+          status: task.state,
+        });
+        setCategoriesOrder(task.categoriesOrder);
+        setItems(task.items);
+      } else {
+        form.setFieldsValue({
+          taskName: null,
+          demo: null,
+          repoName: null,
+          screenshot: null,
+          description: null,
+          branchName: null,
+          status: 'DRAFT',
+        });
+        setCategoriesOrder(null);
+        setItems(null);
+      }
+    }
+  }, [visible, task]);
+  
+  // #region functions
+  
+  const dispatch = useDispatch();
+  const createTask = (payload: ITask) => dispatch(dataActions.tasks.create(payload));
+  const updateTask = (payload: ITask) => dispatch(dataActions.tasks.update(payload));
+
+
+  const onFinish = (values: TFormValues) => {
+    const data: ITask = {
+      name: values.taskName,
+      author: task?.author || githubId,
+      description: values.description,
+      branchName: values.branchName,
+      repoName: values.repoName,
+      screenshot: values.screenshot,
+      demoUrl: values.demo,
+      state: values.status,
+      categoriesOrder,
+      items,
+      id: null
+    };
+    if (!task) {
+      createTask(data);
+    } else {
+      data.id = task.id;
+      updateTask(data);
+    }
+    closeModal();
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -51,59 +129,24 @@ const AddTask: FC<TAddTask> = ({ visible, setVisible }) => {
     const list = document.getElementById('basicList');
     // console.log(list);
   };
-  const [loading, setLoading] = useState<boolean>(false);
-
-  function handleOk() {
-    // const validationResult = validate();
-    // console.log(validationResult);
-    // if (!validationResult.isValid) {
-    //   return;
-    // }
-    // const data: ICrosscheckSession = {
-    //   attendees: [],
-    //   coefficient,
-    //   deadlineReview: reviewDate,
-    //   deadlineSubmit: submitDate,
-    //   desiredReviewersAmount,
-    //   discardMaxScore: true,
-    //   discardMinScore: true,
-    //   minReiewsAmount: minReviewers,
-    //   startDate,
-    //   state: status,
-    //   taskId: taskID,
-    //   id: null,
-    // };
-    // if (!session) {
-    //   createCrosscheckSession(data);
-    // } else {
-    //   data.id = session.id;
-    //   data.attendees = session.attendees;
-    //   updateCrosscheckSession(data);
-    // }
-   
-    setVisible(false);
-  }
 
   function handleCancel() {
-    setVisible(false);
+    closeModal();
   }
+
+  // #endregion
+
   return (
     <Modal
       width='90vw'
       visible={visible}
       title="Title"
-      onOk={handleOk}
       onCancel={handleCancel}
-      footer={[
-        <Button key="back" onClick={handleCancel}>
-          Return
-        </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-          Save
-        </Button>,
-      ]}
+      footer={[ ]}
+      destroyOnClose
     >
       <Form
+        form={form}
         {...layout}
         name="formAddTask"
         initialValues={{ remember: true }}
@@ -115,83 +158,59 @@ const AddTask: FC<TAddTask> = ({ visible, setVisible }) => {
           name="taskName"
           rules={[{ required: true, message: 'Please input task name!' }]}
         >
-          <Input
-            placeholder="task name"
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Старт"
-          name="startDate"
-          rules={[{ required: true, message: 'Please input start date!' }]}
-        >
-          <DatePicker
-            placeholder="start date"
-            style={{ width: '50%' }}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Окончание"
-          name="deadLine"
-          rules={[{ required: true, message: 'Please input deadline!' }]}
-        >
-          <DatePicker
-            placeholder="start date"
-            style={{ width: '50%' }}
-          />
+          <Input placeholder="task name" />
         </Form.Item>
 
         <Form.Item
           label="название репозитория"
           name="repoName"
-          rules={[{ required: true, message: 'Please input repo name!' }]}
+          rules={[{ required: false, message: 'Please input repo name!' }]}
         >
-          <Input
-            placeholder="repo name"
-          />
+          <Input placeholder="repo name" />
         </Form.Item>
 
         <Form.Item
           label="название ветки"
           name="branchName"
-          rules={[{ required: true, message: 'Please input branch name!' }]}
+          rules={[{ required: false, message: 'Please input branch name!' }]}
         >
-          <Input
-            placeholder="branch name"
-          />
+          <Input placeholder="branch name" />
         </Form.Item>
 
         <Form.Item
           label="скриншот"
           name="screenshot"
-          rules={[{ required: true, message: 'Please add screenshot!' }]}
+          rules={[{ required: false, message: 'Please add screenshot!' }]}
         >
-          <Input
-            placeholder="screenshot"
-          />
+          <Input placeholder="screenshot" />
         </Form.Item>
 
         <Form.Item
           label="демо"
           name="demo"
-          rules={[{ required: true, message: 'Please add a link to the demo!' }]}
+          rules={[{ required: false, message: 'Please add a link to the demo!' }]}
         >
-          <Input
-            placeholder="demo"
-          />
+          <Input placeholder="demo" />
         </Form.Item>
 
         <Form.Item
           label="описание"
           name="description"
-          rules={[{ required: true, message: 'Please input description!' }]}
+          rules={[{ required: false }]}
         >
-          <Input.TextArea
-            placeholder="description"
-          />
+          <Input.TextArea placeholder="description" />
         </Form.Item>
-
+        <Form.Item
+          label="статус"
+          name="status"
+          rules={[{ required: false }]}
+        >
+          <Select placeholder="Select status">
+            <Option key="DRAFT" value="DRAFT">DRAFT</Option>
+            <Option key="PUBLISHED" value="PUBLISHED">PUBLISHED</Option>
+            <Option key="ARCHIVED" value="ARCHIVED">ARCHIVED</Option>
+          </Select>
+        </Form.Item>
         <Divider
           {...dividerBlack}
         />
@@ -501,6 +520,14 @@ const AddTask: FC<TAddTask> = ({ visible, setVisible }) => {
         <Divider
           {...dividerBlack}
         />
+        <Form.Item {...tailLayout}>
+          <Button key="back" onClick={handleCancel}>
+            Return
+          </Button>,
+          <Button key="submit" type="primary" htmlType="submit" loading={loading}>
+            Save
+          </Button>,
+        </Form.Item>
       </Form>
     </Modal>
   );

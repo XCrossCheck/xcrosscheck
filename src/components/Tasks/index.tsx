@@ -6,16 +6,25 @@ import * as dataActions from '../../storage/data/actions';
 import * as dataSelectors from '../../storage/data/selectors';
 import { ITask } from '../../storage/data/dataTypes';
 import Loading from '../_Common/loading';
-import tableColumns from './tableConfig';
 import AddTask from '../AddTask';
+import getTableColumns from './tableConfig';
 
 
 const Tasks: FC = () => {
 
+  const [seletedTask, setSeletedTask] = useState<ITask>(null);
   const [visible, setVisible] = useState(false);
-
-  function showModal() {
+  
+  function showModal(id?: ITask) {
+    if (id) {
+      setSeletedTask(id);
+    }
     setVisible(true);
+  }
+
+  function closeModal() {
+    setVisible(false);
+    setSeletedTask(null);
   }
 
   const dispatch = useDispatch();
@@ -35,19 +44,19 @@ const Tasks: FC = () => {
   }
   return (
     <>
-      <Button onClick={showModal}>
+      <Button onClick={() => showModal()}>
           <i className="fas fa-plus" />
           Add Task
       </Button>
-      <AddTask visible={visible} setVisible={setVisible}/>
       <div>
           <Table
             rowKey="id" 
-            columns={tableColumns}
+            columns={getTableColumns(showModal)}
             pagination={{ position: ['bottomLeft'] }}
             dataSource={tasks}
           />
       </div>
+      <AddTask visible={visible} closeModal={closeModal} task={seletedTask}/>
     </>
   );
 };
