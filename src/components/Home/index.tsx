@@ -3,20 +3,19 @@ import { Layout, Typography } from 'antd';
 import MainRouter from '../MainRouter';
 import TabsMenu from '../TabsMenu';
 import pages from './pages';
-import './style.scss';
+import Head from '../Head';
 
-const { Header, Footer, Content } = Layout;
-const { Title } = Typography;
+const { Footer, Content } = Layout;
 
 type THome = {
   userRole: string;
+  githubId: string;
+  logOut: () => void;
 };
 
-const Home: FC<THome> = ({ userRole }) => (
+const Home: FC<THome> = ({ userRole, githubId, logOut }) => (
   <Layout style={{ minHeight: '100vh' }}>
-    <Header>
-      <Title type="secondary" id="title">XCrossCheckTask</Title>
-    </Header>
+    <Head userRole={userRole} githubId={githubId} logOut={logOut} />
     <TabsMenu pages={pages} userRole={userRole} />
     <Content>
       <MainRouter pages={pages} userRole={userRole} />

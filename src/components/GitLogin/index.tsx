@@ -5,12 +5,13 @@ import {
   Form, Button, Card, Select,
 } from 'antd';
 import './GitLogin.css';
+import { setCookie, getCookie } from '../../service/cookies';
 
 type TGitLogin = {
   // setLogged: (lstate: boolean) => void;
   setRole: (role: string) => void;
   // setGithubId: (githubId: string) => void;
-  // setToken: (githubId: string) => void;
+
 };
 
 function randomString(i: number) {
@@ -24,20 +25,11 @@ const GitLogin: React.FC<TGitLogin> = ({ setRole }) => {
   const state = randomString(12);
   const authhref = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${state}`;
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-    // setLogged(true);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
   const { Option } = Select;
 
   function handleChange(value: any) {
-    console.log('selected', value);
     setRole(value);
+    setCookie('userRole', value);
   }
 
   return (
@@ -47,8 +39,6 @@ const GitLogin: React.FC<TGitLogin> = ({ setRole }) => {
           // layout="vertical"
           name="login"
           initialValues={{ userrole: 'student' }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="Role"
