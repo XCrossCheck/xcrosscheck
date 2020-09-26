@@ -1,19 +1,24 @@
-import React, { FC } from "react";
-import { Layout } from "antd";
-import MainRouter from "../MainRouter";
-import pages from "./pages";
+import React, { FC } from 'react';
+import { Layout, Typography } from 'antd';
+import MainRouter from '../MainRouter';
+import TabsMenu from '../TabsMenu';
+import pages from './pages';
+import './style.scss';
 
-const { Header, Footer, Content, Sider } = Layout;
+const { Header, Footer, Content } = Layout;
+const { Title } = Typography;
 
 type THome = {
   userRole: string;
 };
 
 const Home: FC<THome> = ({ userRole }) => (
-  <Layout style={{ minHeight: "100vh" }}>
-    <Header>X Cross Check Task</Header>
+  <Layout style={{ minHeight: '100vh' }}>
+    <Header>
+      <Title type="secondary" id="title">XCrossCheckTask</Title>
+    </Header>
+    <TabsMenu pages={pages} userRole={userRole} />
     <Content>
-      {/* <Sider>Menu ???</Sider> */}
       <MainRouter pages={pages} userRole={userRole} />
     </Content>
     <Footer>Footer</Footer>

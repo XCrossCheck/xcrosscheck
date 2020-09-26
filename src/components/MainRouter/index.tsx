@@ -4,8 +4,8 @@ import PageNotFound from '../_Common/pageNotFound';
 import { TPage } from '../Home/pages';
 
 type TRouter = {
-  userRole: string,
-  pages: TPage[]
+  userRole: string;
+  pages: TPage[];
 };
 
 const Router: FC<TRouter> = ({ userRole, pages }) => (

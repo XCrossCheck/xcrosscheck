@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import { Steps } from 'antd';
-import { Links, Task } from './types';
+import { Submission, Task } from './types';
 import { SelectTask } from './SelectTask';
-import { SelfCheck } from './SelfCheck';
-import { SubmitForm } from './SubmitForm';
+import { SelectStudents } from './Students';
+import { CrossCheck } from './CrossCheck';
 import { ReviewAndSubmit } from './ReviewAndSubmit';
 import { Success } from './Success';
-import './Submit.css';
+import './Review.css';
 
 const { Step } = Steps;
 
-const steps = ['Select Task', 'Submit Links', 'Self-check', 'Submit', 'Success'];
+const steps = ['Select Task', 'Select Student', 'Cross-check', 'Review', 'Success'];
 
-export default function Submit() {
+export default function Review() {
   const [current, setCurrent] = useState(0);
   const [task, setTask] = useState<Task>();
-  const [links, setLinks] = useState<Links>({
-    demoLink: '',
-    repoLink: '',
-  });
-  const [selfCheck] = useState<string>('');
-  const [submittedAt, setSubmitedDate] = useState<string>('');
+  const [student, setStudent] = useState<Submission>();
+  const [crossCheckScore] = useState<string>('');
+  const [feedback] = useState<string>('В целом работа неплохая, бла-бла-бла');
 
   const next = () => {
     setCurrent(current + 1);
@@ -34,37 +31,36 @@ export default function Submit() {
 
   switch (current) {
     case 0:
-      content = <SelectTask onNext={next} onChange={setTask} selectedTask={task} mode="submit" />;
+      content = <SelectTask onNext={next} onChange={setTask} selectedTask={task} mode="review" />;
       break;
     case 1:
       content = task && (
-        <SubmitForm
-          onSubmit={next}
+        <SelectStudents
           onNext={next}
           onBack={prev}
+          selectedStudent={student}
           task={task}
-          initialValues={links}
-          setLinks={values => setLinks(values)}
+          onChange={setStudent}
         />
       );
       break;
     case 2:
-      content = <SelfCheck onNext={next} onBack={prev} />;
+      content = <CrossCheck onNext={next} onBack={prev} />;
       break;
     case 3:
-      content = task && (
+      content = task && student && (
         <ReviewAndSubmit
           onBack={prev}
           onNext={next}
           task={task}
-          links={links}
-          selfCheck={selfCheck}
-          setSubmitedDate={setSubmitedDate}
+          student={student}
+          crossCheckScore={crossCheckScore}
+          feedback={feedback}
         />
       );
       break;
     case 4:
-      content = task && <Success task={task} submittedAt={submittedAt} />;
+      content = <Success />;
       break;
     default:
       break;
