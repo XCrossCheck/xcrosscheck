@@ -3,7 +3,7 @@ import React, { FC, useState, useEffect } from 'react';
 import {
   Form, Input, Button, Divider, Typography, List, InputNumber, Modal, Select, 
 } from 'antd';
-import { MinusCircleOutlined, PlusOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { IItem, ITask } from '../../storage/data/dataTypes';
@@ -23,9 +23,7 @@ const tailLayout = {
 };
 
 const dividerLayout = {
-  style: {
-    width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
-  },
+  width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
 };
 
 const dividerBlack = {
