@@ -1,5 +1,6 @@
 export interface Task {
-  id: string;
+  taskId: string;
+  name: string;
   deadlineSubmit: string;
   deadlineReview: string;
   availableToSubmit: boolean;
@@ -7,7 +8,6 @@ export interface Task {
 
 export interface Submission {
   taskId: string;
-  userId: string;
   repoLink: string;
   demoLink: string;
   submittedAt: string;
@@ -17,4 +17,8 @@ export interface Submission {
 export interface Links {
   demoLink: string;
   repoLink: string;
+}
+
+export interface SubmitInfo extends Submission {
+  githubId: string;
 }

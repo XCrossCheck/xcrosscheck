@@ -2,6 +2,7 @@ import { FC } from 'react';
 import StudentPage from '../Student';
 import StudentSubmitPage from '../Student/Submit';
 import StudentReviewPage from '../Student/Review';
+import { StudentScorePage } from '../Student/Submit/ScorePage';
 import AddTask from '../AddTask';
 import CrossCheck from '../CrossCheck';
 
@@ -39,6 +40,15 @@ const pages: TPage[] = [
     exact: true,
     isTab: true,
   },
+  {
+    component: StudentScorePage,
+    title: 'Score',
+    url: '/score/:taskId',
+    role: 'student',
+    exact: true,
+    isTab: true,
+  },
+
   {
     component: AddTask,
     title: 'Add task',
