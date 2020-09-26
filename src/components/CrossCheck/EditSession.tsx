@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import React, { FC, useState } from 'react';
-import { ICrosscheckSession } from '../../storage/data/reducer';
+import { ICrosscheckSession } from '../../storage/data/dataTypes';
 import EditForm from './EditForm';
 
 type TEditSession = {

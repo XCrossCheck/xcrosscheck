@@ -4,7 +4,7 @@ import { Table, Button } from 'antd';
 import { TStore } from '../../storage';
 import * as dataActions from '../../storage/data/actions';
 import * as dataSelectors from '../../storage/data/selectors';
-import { ITask, ICrosscheckSession } from '../../storage/data/reducer';
+import { ITask, ICrosscheckSession } from '../../storage/data/dataTypes';
 import Loading from '../_Common/loading';
 import { ICrosscheckSessionList } from './types';
 import tableColumns from './tableConfig';

@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { Button, Card, DatePicker, InputNumber, Modal, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { ITask, ICrosscheckSession } from '../../storage/data/reducer';
+import { ITask, ICrosscheckSession } from '../../storage/data/dataTypes';
 import * as dataSelectors from '../../storage/data/selectors';
 import * as dataActions from '../../storage/data/actions';
 import { TStore } from '../../storage';

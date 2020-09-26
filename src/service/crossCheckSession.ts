@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
-import { ICrosscheckSession, ICrosscheckSessionDb } from '../storage/data/reducer';
+import { ICrosscheckSession, ICrosscheckSessionDb } from '../storage/data/dataTypes';
 import { dbGetReq, dbCreateRecord, dbDeleteReq, dbPatchReqByKey } from './restapi-fb';
+import { parseDate } from './utils';
 
-const parseDate = (str: string): Date => 
-  !Number.isNaN(Date.parse(str)) ? new Date(str) : null;
 
 export function mapDomainToDb(data: ICrosscheckSession): ICrosscheckSessionDb {
   return {
@@ -22,26 +20,36 @@ export function mapDomainToDb(data: ICrosscheckSession): ICrosscheckSessionDb {
   };
 }
 
-export async function getSessions(): Promise<ICrosscheckSession[]> {
-  const response = await dbGetReq('crossCheckSession');
-  const result = Object.keys(response.data).map<ICrosscheckSession>(key => ({
-    attendees: response.data[key].attendees,
-    coefficient: response.data[key].coefficient,
-    deadlineReview: parseDate(response.data[key].deadlineReview),
-    deadlineSubmit: parseDate(response.data[key].deadlineSubmit),
-    desiredReviewersAmount: response.data[key].desiredReviewersAmount,
-    discardMaxScore: response.data[key].discardMaxScore,
-    discardMinScore: response.data[key].discardMinScore,
+export function mapDbToDomain(data: any, key: string): ICrosscheckSession {
+  return {
+    attendees: data.attendees,
+    coefficient: data.coefficient,
+    deadlineReview: parseDate(data.deadlineReview),
+    deadlineSubmit: parseDate(data.deadlineSubmit),
+    desiredReviewersAmount: data.desiredReviewersAmount,
+    discardMaxScore: data.discardMaxScore,
+    discardMinScore: data.discardMinScore,
     id: key,
-    minReiewsAmount: response.data[key].minReiewsAmount,
-    startDate: parseDate(response.data[key].startDate),
-    state: response.data[key].state,
-    taskId: response.data[key].taskId,
-  }));
+    minReiewsAmount: data.minReiewsAmount,
+    startDate: parseDate(data.startDate),
+    state: data.state,
+    taskId: data.taskId,
+  };
+}
+
+export async function get(): Promise<ICrosscheckSession[]> {
+  const response = await dbGetReq('crossCheckSession');
+  const result = Object.keys(response.data)
+    .map<ICrosscheckSession>(key => mapDbToDomain(response.data[key], key));
   return result;
 }
 
-export async function createSession(data: ICrosscheckSessionDb): Promise<string> {
+export async function getByKey(key: string): Promise<ICrosscheckSession> {
+  const response = await dbGetReq(`crossCheckSession/${key}`);
+  return mapDbToDomain(response.data, key);
+}
+
+export async function create(data: ICrosscheckSessionDb): Promise<string> {
   let key: string | null = null;
   try {
     const response = await dbCreateRecord('crossCheckSession', data);
@@ -54,7 +62,7 @@ export async function createSession(data: ICrosscheckSessionDb): Promise<string>
   return key;
 }
 
-export async function updateSession(data: ICrosscheckSessionDb, key: string): Promise<boolean> {
+export async function update(data: ICrosscheckSessionDb, key: string): Promise<boolean> {
   try {
     const response = await dbPatchReqByKey('crossCheckSession', key, data);
     if (response.status < 300) {
@@ -66,7 +74,7 @@ export async function updateSession(data: ICrosscheckSessionDb, key: string): Pr
   return false;
 }
 
-export async function deleteSession(id: string): Promise<boolean> {
+export async function del(id: string): Promise<boolean> {
   try {
     const response = await dbDeleteReq('crossCheckSession', id);
     if (response.status < 300) {
