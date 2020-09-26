@@ -2,8 +2,8 @@ import { FC } from 'react';
 import StudentPage from '../Student';
 import StudentSubmitPage from '../Student/Submit';
 import StudentReviewPage from '../Student/Review';
+import Tasks from '../Tasks';
 import { StudentScorePage } from '../Student/Submit/ScorePage';
-import AddTask from '../AddTask';
 import CrossCheck from '../CrossCheck';
 
 export type TPage = {
@@ -48,10 +48,9 @@ const pages: TPage[] = [
     exact: true,
     isTab: true,
   },
-
   {
-    component: AddTask,
-    title: 'Add task',
+    component: Tasks,
+    title: 'Tasks',
     url: '/',
     role: 'author',
     exact: true,

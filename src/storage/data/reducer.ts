@@ -1,57 +1,22 @@
 import { combineReducers } from 'redux';
 import { IReducer, IReducerP } from '../types';
 import constants from './constants';
+import { ICrosscheckSession, ITask } from './dataTypes';
 
-export interface IAttendee {
-  githubId: string;
-  reviewerOf: string[];
-}
-export interface ICrosscheckSessionDb {
-  attendees: IAttendee[];
-  coefficient: number;
-  deadlineReview: Date;
-  deadlineSubmit: Date;
-  desiredReviewersAmount: number;
-  discardMaxScore: boolean;
-  discardMinScore: boolean;
-  minReiewsAmount: number;
-  startDate: Date;
-  state: string;
-  taskId: string;
-}
-
-export interface ICrosscheckSession extends ICrosscheckSessionDb {
-  id: string;
-}
-
-export interface Item {
-  category: string;
-  description: string;
-  id: string;
-  maxScore: number;
-  minScore: number;
-  title: string;
-}
-
-export interface ITask {
-  author: string;
-  availableToSubmit: boolean;
-  categoriesOrder: string[];
-  id: string;
-  key: string;
-  items: Item[];
-  name: string;
-  state: string;
-}
-
-const tasks: IReducer<ITask[]> = (state = null, action) => {
+const tasks: IReducerP<ITask[], ITask[] | ITask | string> = (state = null, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case constants.SET_TASKS:
-      return payload;
+      return payload as ITask[];
     case constants.CLEAR_TASKS:
       return null;
+    case constants.CREATE_TASK:
+      return [...state, payload as ITask];
+    case constants.UPDATE_TASK:
+      return [...state.filter(e => e.id !== (payload as ITask).id), payload as ITask];
+    case constants.DELETE_TASK:
+      return state.filter(e => e.id !== payload as string);
     default:
       return state;
   }

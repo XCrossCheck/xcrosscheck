@@ -1,5 +1,11 @@
 @import '~antd/dist/antd.css';
 
+.formItemButtonDelete {
+    display: flex;
+    margin-right: 0px;
+    margin-left: auto;
+}
+
 #formAddTask {
     margin: 50px;
 }
