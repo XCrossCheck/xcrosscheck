@@ -26,6 +26,7 @@ babel
 webpack  
 eslint-config-airbnb-typescript    
 
+### Team   
 Group chat (Telegram / Discord)  
 https://t.me/joinchat/Oz44CxsBeS-wiLfzyqO9IQ  
 https://discord.gg/7KY5JJ  
