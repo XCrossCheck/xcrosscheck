@@ -53,7 +53,7 @@ const StudentsSubmitList: FC = () => {
             default:
               break;
           }
-          e.submited.forEach(el => {
+          e.submited?.forEach(el => {
             i += 1;
             result.push({
               id: `${task.id}_${el}_${i}`,
@@ -93,9 +93,11 @@ const StudentsSubmitList: FC = () => {
   }
   return (
     <>
-      <Button onClick={() => setShowArchive(s => !s)}>
-        {showArchive ? 'Show active' : 'Show complited'}
-      </Button>
+      <div style={{ marginBottom: '10px' }}>
+        <Button style={{textAlign:'right'}} type='dashed' onClick={() => setShowArchive(s => !s)}>
+          {showArchive ? 'Show active' : 'Show complited'}
+        </Button>
+      </div>
       <Table
         rowKey="id"
         columns={getTableColumns(filters)}

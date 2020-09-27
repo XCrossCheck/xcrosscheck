@@ -30,7 +30,7 @@ const DeleteSession: FC<TDeleteTask> = ({ id }) => {
 
   return (
     <Space>
-      <Button onClick={showDeleteConfirm}>
+      <Button style={{ color: 'red' }} type="text" onClick={showDeleteConfirm}>
         <i className="fas fa-trash-alt" />
       </Button>
     </Space>

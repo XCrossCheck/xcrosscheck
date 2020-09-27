@@ -13,13 +13,13 @@ type THead = {
 
 const Head: FC<THead> = ({ userRole, githubId, logOut }) => (
   <Header className="header">
-    <Title type="secondary" id="title">
+    <Title id="title">
       XCrossCheckTask
     </Title>
-    <div>
+    <div style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
       {userRole} / {githubId}
     </div>
-    <Button onClick={logOut} title="Logout">
+    <Button shape="round" onClick={logOut} title="Logout">
       <LoginOutlined />
     </Button>
   </Header>

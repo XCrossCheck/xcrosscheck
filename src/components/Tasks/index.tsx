@@ -43,10 +43,12 @@ const Tasks: FC = () => {
 
   return (
     <>
-      <Button onClick={() => showModal()}>
-        <i className="fas fa-plus" />
-        Add Task
-      </Button>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+        <Button type="primary" onClick={() => showModal()}>
+          <i style={{ marginRight: '5px' }} className="fas fa-plus" />
+          Add Task
+        </Button>
+      </div>
       <div>
         <Table
           rowKey="id"

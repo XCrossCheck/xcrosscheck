@@ -9,7 +9,7 @@ function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
     {
       title: 'Task Name',
       key: 'taskName',
-      render: (val, rec) => <Button onClick={() => editTask(rec)}>{rec.name}</Button>,
+      render: (val, rec) => <Button type="link" onClick={() => editTask(rec)}>{rec.name}</Button>,
       sorter: (a, b) => (a.name > b.name ? 1 : -1),
     },
     {
@@ -29,7 +29,7 @@ function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
       key: 'action',
       render: (val, rec) => (
         <>
-          <Button onClick={() => editTask(rec)}>
+          <Button type="text" onClick={() => editTask(rec)}>
             <i className="fas fa-pencil-alt" />
           </Button>
           <DeleteTask id={rec.id} />

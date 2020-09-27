@@ -159,7 +159,7 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
     <Modal
       width="90vw"
       visible={visible}
-      title="Title"
+      title="Cross-Check Session"
       onCancel={handleCancel}
       footer={[]}
       destroyOnClose
@@ -169,7 +169,7 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
           <Select
             placeholder="Select task"
             value={taskID}
-            style={{ width: 120 }}
+            style={{ width: '100%' }}
             onChange={handleTaskIdChange}
           >
             {tasks.map(e => {
@@ -194,7 +194,8 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
           {taskID ? (
             <>
               <Card>
-                <p>{tasks.find(e => e.id === taskID).name}</p>
+                <p>Task name: <br /> {tasks.find(e => e.id === taskID).name}</p>
+                <p>Description: <br /> {tasks.find(e => e.id === taskID).description}</p>
               </Card>
               <Card>
                 <Form.Item

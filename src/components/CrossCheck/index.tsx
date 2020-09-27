@@ -10,6 +10,8 @@ import { ICrosscheckSessionList, IFilters } from './types';
 import EditForm from './EditForm';
 import getTableColumns from './tableConfig';
 
+import './style.css';
+
 const CrossCheck: FC = () => {
   const [seletedSessionId, setSeletedSessionId] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
@@ -88,13 +90,15 @@ const CrossCheck: FC = () => {
   }
   return (
     <>
-      <Button onClick={() => showModal(null)}>
-        <i className="fas fa-plus" />
-        Add Session
-      </Button>
-      <Button onClick={() => setShowArchive(s => !s)}>
-        {showArchive ? 'Show active' : 'Show complited'}
-      </Button>
+      <div className="button_block">
+        <Button type="dashed" onClick={() => setShowArchive(s => !s)}>
+          {showArchive ? 'Show active' : 'Show complited'}
+        </Button>
+        <Button type="primary" onClick={() => showModal(null)}>
+          <i style={{ marginRight: '5px' }} className="fas fa-plus" />
+          Add Session
+        </Button>
+      </div>
       <EditForm visible={visible} closeModal={closeModal} session={seletedSession} />
       <div>
         <Table

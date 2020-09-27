@@ -16,7 +16,7 @@ const getTableColumns = (
         rec.state === 'COMPLETED' ? (
           rec.task.name
         ) : (
-          <Button onClick={() => editSession(rec.id)}>{rec.task.name}</Button>
+          <Button type="link" onClick={() => editSession(rec.id)}>{rec.task.name}</Button>
         ),
       sorter: (a, b) => (a.task.name > b.task.name ? 1 : -1),
       filters: filters.tasks.map(e => ({ text: e, value: e })),
@@ -34,10 +34,10 @@ const getTableColumns = (
       title: 'Start Task',
       key: 'startTask',
       render: (val, rec) => (
-        <>
+        <div style={{textAlign:'center'}}>
           <p>{rec.startDate.toLocaleDateString()}</p>
           <p>{rec.startDate.toLocaleTimeString().slice(0, -3)}</p>
-        </>
+        </div>
       ),
       sorter: (a, b) => (a.startDate > b.startDate ? 1 : -1),
     },
@@ -45,10 +45,10 @@ const getTableColumns = (
       title: 'Review Deadline',
       key: 'reviewDeadline',
       render: (val, rec) => (
-        <>
+        <div style={{textAlign:'center'}}>
           <p>{rec.deadlineReview.toLocaleDateString()}</p>
           <p>{rec.deadlineReview.toLocaleTimeString().slice(0, -3)}</p>
-        </>
+        </div>
       ),
       sorter: (a, b) => (a.deadlineReview > b.deadlineReview ? 1 : -1),
     },
@@ -59,7 +59,7 @@ const getTableColumns = (
       render: (val, rec) =>
         rec.state === 'COMPLETED' ? null : (
           <>
-            <Button onClick={() => editSession(rec.id)}>
+            <Button type="text" onClick={() => editSession(rec.id)}>
               <i className="fas fa-pencil-alt" />
             </Button>
             {rec.state === 'DRAFT' ? <DeleteSession id={rec.id} /> : null}
