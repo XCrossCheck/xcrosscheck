@@ -147,7 +147,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
         {...layout}
         name="formAddTask"
         initialValues={{ remember: true }}
-        onFinish={values => console.log(values)}
+        onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
