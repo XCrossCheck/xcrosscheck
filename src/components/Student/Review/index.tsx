@@ -46,7 +46,7 @@ export default function Review() {
       );
       break;
     case 2:
-      content = <CrossCheck onNext={next} onBack={prev} />;
+      content = task && <CrossCheck onNext={next} onBack={prev} task={task} />;
       break;
     case 3:
       content = task && student && (

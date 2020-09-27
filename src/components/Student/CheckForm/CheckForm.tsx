@@ -19,7 +19,7 @@ const formatMark = (mark: number) => {
   if (mark >= 0) {
     return `+${mark}`;
   }
-  return `-${mark}`;
+  return `${mark}`;
 };
 
 const FormItemForCriteria: FC<{
