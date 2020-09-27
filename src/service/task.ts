@@ -14,6 +14,9 @@ export function mapDomainToDb(data: ITask): ITaskDb {
     items: data.items,
     name: data.name,
     state: data.state,
+    basic: data.basic,
+    extra: data.extra,
+    fines: data.fines,
   };
 }
 
@@ -29,6 +32,9 @@ export function mapDbToDomain(data: any, key: string): ITask {
     items: data.items,
     name: data.name,
     state: data.state,
+    basic: data?.basic || [],
+    extra: data?.extra || [],
+    fines: data?.fines || [],
     id: key,
   };
 }

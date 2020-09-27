@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FC, useState, useEffect } from 'react';
-import { Form, Input, Button, Divider, Typography, List, InputNumber, Modal, Select } from 'antd';
-import { MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Criteria } from 'src/types/Criteria';
+import { Form, Input, Button, Divider, Typography, InputNumber, Modal, Select } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { IItem, ITask } from '../../storage/data/dataTypes';
@@ -47,6 +48,9 @@ type TFormValues = {
   description?: string;
   branchName?: string;
   status: string;
+  basic: Criteria[];
+  extra: Criteria[];
+  fines: Criteria[];
 };
 
 const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
@@ -69,6 +73,9 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           description: task.description,
           branchName: task.branchName,
           status: task.state,
+          basic: task.basic,
+          extra: task.extra,
+          fines: task.fines,
         });
         setCategoriesOrder(task.categoriesOrder);
         setItems(task.items);
@@ -86,7 +93,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
         setItems(null);
       }
     }
-  }, [visible, task]);
+  }, [visible, task, form]);
 
   const dispatch = useDispatch();
   const createTask = (payload: ITask) => dispatch(dataActions.tasks.create(payload));
@@ -102,8 +109,12 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
       screenshot: values.screenshot,
       demoUrl: values.demo,
       state: values.status,
+      basic: values.basic,
+      extra: values.extra,
+      fines: values.fines,
       categoriesOrder,
       items,
+
       id: null,
     };
     if (!task) {
@@ -116,20 +127,12 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    // console.log('Failed:', errorInfo);
-  };
-
-  /* в процессе */
-  const addListItem = () => {
-    const list = document.getElementById('basicList');
-    // console.log(list);
+    console.warn('Failed:', errorInfo);
   };
 
   function handleCancel() {
     closeModal();
   }
-
-  // #endregion
 
   return (
     <Modal
@@ -212,58 +215,26 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           {(fieldsBasic, { add, remove }) => (
             <div className="basic">
               {fieldsBasic.map(field => (
-                <div key={field.key}>
+                <div key={`basic_${field.key}`}>
+                  <Title level={5}>{`Пункт ${field.key}`}</Title>
                   <Form.Item
                     {...field}
-                    label={['пункт ', field.name]}
-                    name={['basic_p', field.name]}
-                    fieldKey={[field.fieldKey, 'option']}
-                  />
-                  <Form.Item
-                    {...field}
-                    label="название"
-                    name={[field.name, 'title']}
-                    fieldKey={[field.fieldKey, 'title']}
-                    rules={[{ message: 'Missing Title' }]}
+                    label="Название"
+                    name={[field.name, 'text']}
+                    fieldKey={[field.fieldKey, 'text']}
+                    rules={[{ required: true, message: 'Missing Text' }]}
                   >
-                    <Input placeholder="title" />
+                    <Input placeholder="Text" />
                   </Form.Item>
                   <Form.Item
                     {...field}
-                    label="минимальный балл"
-                    name={[field.name, 'minScore']}
-                    fieldKey={[field.fieldKey, 'minScore']}
-                    rules={[{ required: true, message: 'Missing min Score' }]}
+                    label="Оценка"
+                    name={[field.name, 'score']}
+                    fieldKey={[field.fieldKey, 'score']}
+                    initialValue={0}
                   >
-                    <InputNumber defaultValue={0} />
+                    <InputNumber />
                   </Form.Item>
-                  <Form.Item
-                    {...field}
-                    label="максимальный балл"
-                    name={[field.name, 'maxScore']}
-                    fieldKey={[field.fieldKey, 'maxScore']}
-                    rules={[{ required: true, message: 'Missing maxScore' }]}
-                  >
-                    <InputNumber defaultValue={0} />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...field}
-                    label="описание"
-                    name={[field.name, 'description']}
-                    fieldKey={[field.fieldKey, 'description']}
-                    rules={[{ message: 'Missing description' }]}
-                  >
-                    <Input.TextArea placeholder="description" />
-                  </Form.Item>
-
-                  <PlusCircleOutlined
-                    onClick={() => {
-                      addListItem();
-                    }}
-                    style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}
-                  />
-
                   <Button
                     type="dashed"
                     danger
@@ -272,7 +243,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     }}
                     style={{ display: 'flex', margin: '0 auto' }}
                   >
-                    удалить пункт {field.name} Basic
+                    Удалить пункт {field.name} Basic
                   </Button>
                   <Divider
                     style={{
@@ -307,58 +278,26 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           {(fieldsExtra, { add, remove }) => (
             <div className="extra">
               {fieldsExtra.map(field => (
-                <div key={field.key}>
+                <div key={`extra_${field.key}`}>
+                  <Title level={5}>{`Пункт ${field.key}`}</Title>
                   <Form.Item
                     {...field}
-                    label={['пункт ', field.name]}
-                    name={['extra_p', field.name]}
-                    fieldKey={[field.fieldKey, 'title']}
-                  />
-                  <Form.Item
-                    {...field}
-                    label="название"
-                    name={[field.name, 'title']}
-                    fieldKey={[field.fieldKey, 'title']}
-                    rules={[{ message: 'Missing Title' }]}
+                    label="Название"
+                    name={[field.name, 'text']}
+                    fieldKey={[field.fieldKey, 'text']}
+                    rules={[{ required: true, message: 'Missing Text' }]}
                   >
-                    <Input placeholder="title" />
+                    <Input placeholder="Text" />
                   </Form.Item>
                   <Form.Item
                     {...field}
-                    label="минимальный балл"
-                    name={[field.name, 'minScore']}
-                    fieldKey={[field.fieldKey, 'minScore']}
-                    rules={[{ message: 'Missing min Score' }]}
+                    label="Оценка"
+                    name={[field.name, 'score']}
+                    fieldKey={[field.fieldKey, 'score']}
+                    initialValue={0}
                   >
-                    <InputNumber defaultValue={0} />
+                    <InputNumber />
                   </Form.Item>
-                  <Form.Item
-                    {...field}
-                    label="максимальный балл"
-                    name={[field.name, 'maxScore']}
-                    fieldKey={[field.fieldKey, 'maxScore']}
-                    rules={[{ message: 'Missing maxScore' }]}
-                  >
-                    <InputNumber defaultValue={0} />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...field}
-                    label="описание"
-                    name={[field.name, 'description']}
-                    fieldKey={[field.fieldKey, 'description']}
-                    rules={[{ message: 'Missing description' }]}
-                  >
-                    <Input.TextArea placeholder="description" />
-                  </Form.Item>
-
-                  <MinusCircleOutlined
-                    onClick={() => {
-                      remove(field.name);
-                    }}
-                    style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}
-                  />
-
                   <Button
                     type="dashed"
                     danger
@@ -367,7 +306,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     }}
                     style={{ display: 'flex', margin: '0 auto' }}
                   >
-                    удалить пункт {field.name} Extra
+                    Удалить пункт {field.name} Extra
                   </Button>
                   <Divider
                     style={{
@@ -403,57 +342,26 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           {(fieldsFines, { add, remove }) => (
             <div className="fines">
               {fieldsFines.map(field => (
-                <div key={field.key}>
+                <div key={`fines_${field.key}`}>
+                  <Title level={5}>{`Пункт ${field.key}`}</Title>
                   <Form.Item
                     {...field}
-                    label={['пункт ', field.name]}
-                    name={['fines_p', field.name]}
-                    fieldKey={[field.fieldKey, 'option']}
-                  />
-                  <Form.Item
-                    {...field}
-                    label="название"
-                    name={[field.name, 'title']}
-                    fieldKey={[field.fieldKey, 'title']}
-                    rules={[{ message: 'Missing Title' }]}
+                    label="Название"
+                    name={[field.name, 'text']}
+                    fieldKey={[field.fieldKey, 'text']}
+                    rules={[{ required: true, message: 'Missing Text' }]}
                   >
-                    <Input placeholder="title" />
+                    <Input placeholder="Text" />
                   </Form.Item>
                   <Form.Item
                     {...field}
-                    label="минимальный балл"
-                    name={[field.name, 'minScore']}
-                    fieldKey={[field.fieldKey, 'minScore']}
-                    rules={[{ message: 'Missing min Score' }]}
+                    label="Оценка"
+                    name={[field.name, 'score']}
+                    fieldKey={[field.fieldKey, 'score']}
+                    initialValue={0}
                   >
-                    <InputNumber defaultValue={0} />
+                    <InputNumber />
                   </Form.Item>
-                  <Form.Item
-                    {...field}
-                    label="максимальный балл"
-                    name={[field.name, 'maxScore']}
-                    fieldKey={[field.fieldKey, 'maxScore']}
-                    rules={[{ message: 'Missing maxScore' }]}
-                  >
-                    <InputNumber defaultValue={0} />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...field}
-                    label="описание"
-                    name={[field.name, 'description']}
-                    fieldKey={[field.fieldKey, 'description']}
-                    rules={[{ message: 'Missing description' }]}
-                  >
-                    <Input.TextArea placeholder="description" />
-                  </Form.Item>
-
-                  <MinusCircleOutlined
-                    onClick={() => {
-                      remove(field.name);
-                    }}
-                    style={{ display: 'flex', justifyContent: 'center', marginBottom: 8 }}
-                  />
 
                   <Button
                     type="dashed"
@@ -463,7 +371,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     }}
                     style={{ display: 'flex', margin: '0 auto' }}
                   >
-                    удалить пункт {field.name} Fines
+                    Удалить пункт {field.name} Fines
                   </Button>
                   <Divider
                     style={{
