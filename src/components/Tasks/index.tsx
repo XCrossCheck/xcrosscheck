@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button } from 'antd';
 import { TStore } from '../../storage';
@@ -41,13 +41,14 @@ const Tasks: FC = () => {
     return <Loading />;
   }
 
-  console.log(tasks);
   return (
     <>
-      <Button onClick={() => showModal()}>
-        <i className="fas fa-plus" />
-        Add Task
-      </Button>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+        <Button type="primary" onClick={() => showModal()}>
+          <i style={{ marginRight: '5px' }} className="fas fa-plus" />
+          Add Task
+        </Button>
+      </div>
       <div>
         <Table
           rowKey="id"

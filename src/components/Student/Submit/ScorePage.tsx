@@ -16,6 +16,9 @@ import { AggregatedTask, getTasks } from '../services/getTasks';
 
 const { Paragraph } = Typography;
 const { TextArea } = Input;
+interface ParamTypes {
+  taskId: string;
+}
 
 export const StudentScorePage: FC = () => {
   const [showScore, setShowScore] = useState(false);
@@ -23,7 +26,7 @@ export const StudentScorePage: FC = () => {
   const [visible, showModal] = useState<boolean>(false);
   const [currentTask, setCurrentTask] = useState<AggregatedTask>();
   const [currentFeedback, setCurrentFeedback] = useState<Feedback>();
-  const { taskId } = useParams();
+  const { taskId } = useParams<ParamTypes>();
   const myGitHub = useSelector(authSelectors.githubId);
   const [form] = Form.useForm();
 

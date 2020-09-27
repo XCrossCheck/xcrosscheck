@@ -7,14 +7,14 @@ import * as dataActions from '../../storage/data/actions';
 const { confirm } = Modal;
 
 type TDeleteSession = {
-  id: string
+  id: string;
 };
 
 const DeleteSession: FC<TDeleteSession> = ({ id }) => {
-  
   const dispatch = useDispatch();
-  const deleteCrosscheckSession = (payload) => dispatch(dataActions.crosscheckSessions.delete(payload));
-  
+  const deleteCrosscheckSession = payload =>
+    dispatch(dataActions.crosscheckSessions.delete(payload));
+
   function showDeleteConfirm() {
     confirm({
       title: 'Are you sure to delete this session?',
@@ -25,13 +25,13 @@ const DeleteSession: FC<TDeleteSession> = ({ id }) => {
       cancelText: 'No',
       onOk() {
         deleteCrosscheckSession(id);
-      }
+      },
     });
   }
 
   return (
     <Space>
-      <Button onClick={showDeleteConfirm}>
+      <Button type="text" onClick={showDeleteConfirm} style={{color:'red'}}>
         <i className="fas fa-trash-alt" />
       </Button>
     </Space>

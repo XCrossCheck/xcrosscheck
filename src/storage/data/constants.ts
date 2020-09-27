@@ -1,17 +1,16 @@
 type TDataConstants = {
-  SET_TASKS: string,
-  CREATE_TASK: string,
-  UPDATE_TASK: string,
-  DELETE_TASK: string,
-  CLEAR_TASKS: string,
-  SET_CROSSCHECK_SESSIONS: string,
-  CREATE_CROSSCHECK_SESSION: string,
-  UPDATE_CROSSCHECK_SESSION: string,
-  DELETE_CROSSCHECK_SESSION: string,
-  CLEAR_CROSSCHECK_SESSIONS: string,
-  ATTENDIES_SHUFFLE: string,
+  SET_TASKS: string;
+  CREATE_TASK: string;
+  UPDATE_TASK: string;
+  DELETE_TASK: string;
+  CLEAR_TASKS: string;
+  SET_CROSSCHECK_SESSIONS: string;
+  CREATE_CROSSCHECK_SESSION: string;
+  UPDATE_CROSSCHECK_SESSION: string;
+  DELETE_CROSSCHECK_SESSION: string;
+  CLEAR_CROSSCHECK_SESSIONS: string;
+  ATTENDIES_SHUFFLE: string;
 };
-
 
 const constants: TDataConstants = {
   SET_TASKS: 'SET_TASKS',

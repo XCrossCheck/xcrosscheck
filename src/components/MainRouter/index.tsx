@@ -11,8 +11,8 @@ type TRouter = {
 const Router: FC<TRouter> = ({ userRole, pages }) => (
   <Switch>
     {pages
-      .filter((e) => e.role === userRole)
-      .map((e) => (
+      .filter(e => e.role === userRole)
+      .map(e => (
         <Route key={e.url} exact={e.exact} path={e.url}>
           <e.component routes={pages} />
         </Route>

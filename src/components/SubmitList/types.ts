@@ -1,7 +1,5 @@
-import { ICrosscheckSession, ITask } from '../../storage/data/dataTypes';
-
 export interface ISubmit {
-  id: string,
+  id: string;
   taskName: string;
   studentGithubId: string;
   status: string;

@@ -21,13 +21,6 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const dividerLayout = {
-  width: '50%',
-  minWidth: '50%',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-};
-
 const dividerBlack = {
   style: {
     borderTop: '1px solid black',
@@ -59,8 +52,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
   const githubId = useSelector<TStore, string | null>(state => authSelectors.githubId(state));
   const [categoriesOrder, setCategoriesOrder] = useState<string[] | null>(null);
   const [items, setItems] = useState<IItem[] | null>(null);
-
-  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (visible) {
@@ -138,7 +129,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
     <Modal
       width="90vw"
       visible={visible}
-      title="Title"
+      title="Add Task"
       onCancel={handleCancel}
       footer={[]}
       destroyOnClose
@@ -405,7 +396,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
             Return
           </Button>
           ,
-          <Button key="submit" type="primary" htmlType="submit" loading={loading}>
+          <Button key="submit" type="primary" htmlType="submit">
             Save
           </Button>
           ,

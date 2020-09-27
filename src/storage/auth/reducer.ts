@@ -52,7 +52,6 @@ const token: IReducer<string | null> = (state = '', action) => {
   }
 };
 
-
 const reducer = combineReducers({
   logged,
   userRole,

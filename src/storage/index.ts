@@ -5,9 +5,6 @@ import auth from './auth/reducer';
 import data from './data/reducer';
 import { IActionResult } from './types';
 
-
-
-
 const reducer = combineReducers({
   auth,
   data,
@@ -21,11 +18,11 @@ export interface IDispatchAction<T = void> {
   (payload: T): void;
 }
 export interface IDispatch {
-  (fn: IActionResult<unknown>): void,
+  (fn: IActionResult<unknown>): void;
 }
 
 export interface IDispatchThunk<T = void> {
-  (fn: IThunkAction<T>): void,
+  (fn: IThunkAction<T>): void;
 }
 
 export type IThunkAction<ReturnType = void> = ThunkAction<
