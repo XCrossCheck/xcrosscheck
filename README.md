@@ -31,8 +31,9 @@ Group chat (Telegram / Discord)
 https://t.me/joinchat/Oz44CxsBeS-wiLfzyqO9IQ  
 https://discord.gg/7KY5JJ  
 
-Name Surname			Github			Telegram		Discord  
-Katsiaryna Kleshchukevich	katrin-kot		@katrinkot		@katrin-kot  
-Oleg Kuzmin			self067			@Self067		Oleg (@self067)  
-Aleksandra Kovaleva		toffifi			@toffifee		Tofifi #9784  
-Katsiaryna Kozyrava		braumwinter		@braumwinter	
+| Name       | Surname        | Github      | Telegram     | Discord                   |
+|------------|----------------|-------------|--------------|---------------------------|
+| Katsiaryna | Kleshchukevich | katrin-kot  | @katrinkot   | @katrin-kot               |
+| Oleg       | Kuzmin         | self067     | @Self067     | Oleg (@self067)           |
+| Aleksandra | Kovaleva       | toffifi     | @toffifee    | Tofifi #9784              |
+| Katsiaryna | Kozyrava       | braumwinter | @braumwinter | braumwinter(@braumwinter) |	
