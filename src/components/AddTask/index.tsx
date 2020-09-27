@@ -1,8 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FC, useState, useEffect } from 'react';
-import {
-  Form, Input, Button, Divider, Typography, List, InputNumber, Modal, Select, 
-} from 'antd';
+import { Form, Input, Button, Divider, Typography, List, InputNumber, Modal, Select } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +21,10 @@ const tailLayout = {
 };
 
 const dividerLayout = {
-  width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
+  width: '50%',
+  minWidth: '50%',
+  marginLeft: 'auto',
+  marginRight: 'auto',
 };
 
 const dividerBlack = {
@@ -38,24 +39,23 @@ type TAddTask = {
   closeModal: () => void;
 };
 
-
 type TFormValues = {
-  taskName: string,
-  demo?: string,
-  repoName?: string,
-  screenshot?: string,
-  description?: string,
-  branchName?: string,
-  status: string,
+  taskName: string;
+  demo?: string;
+  repoName?: string;
+  screenshot?: string;
+  description?: string;
+  branchName?: string;
+  status: string;
 };
 
 const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
   const [form] = Form.useForm<TFormValues>();
 
-  const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
+  const githubId = useSelector<TStore, string | null>(state => authSelectors.githubId(state));
   const [categoriesOrder, setCategoriesOrder] = useState<string[] | null>(null);
   const [items, setItems] = useState<IItem[] | null>(null);
-  
+
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -92,7 +92,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
   const createTask = (payload: ITask) => dispatch(dataActions.tasks.create(payload));
   const updateTask = (payload: ITask) => dispatch(dataActions.tasks.update(payload));
 
-
   const onFinish = (values: TFormValues) => {
     const data: ITask = {
       name: values.taskName,
@@ -105,7 +104,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
       state: values.status,
       categoriesOrder,
       items,
-      id: null
+      id: null,
     };
     if (!task) {
       createTask(data);
@@ -134,11 +133,11 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
 
   return (
     <Modal
-      width='90vw'
+      width="90vw"
       visible={visible}
       title="Title"
       onCancel={handleCancel}
-      footer={[ ]}
+      footer={[]}
       destroyOnClose
     >
       <Form
@@ -146,7 +145,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
         {...layout}
         name="formAddTask"
         initialValues={{ remember: true }}
-        onFinish={onFinish}
+        onFinish={values => console.log(values)}
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
@@ -189,34 +188,30 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           <Input placeholder="demo" />
         </Form.Item>
 
-        <Form.Item
-          label="описание"
-          name="description"
-          rules={[{ required: false }]}
-        >
+        <Form.Item label="описание" name="description" rules={[{ required: false }]}>
           <Input.TextArea placeholder="description" />
         </Form.Item>
-        <Form.Item
-          label="статус"
-          name="status"
-          rules={[{ required: false }]}
-        >
+        <Form.Item label="статус" name="status" rules={[{ required: false }]}>
           <Select placeholder="Select status">
-            <Option key="DRAFT" value="DRAFT">DRAFT</Option>
-            <Option key="PUBLISHED" value="PUBLISHED">PUBLISHED</Option>
-            <Option key="ARCHIVED" value="ARCHIVED">ARCHIVED</Option>
+            <Option key="DRAFT" value="DRAFT">
+              DRAFT
+            </Option>
+            <Option key="PUBLISHED" value="PUBLISHED">
+              PUBLISHED
+            </Option>
+            <Option key="ARCHIVED" value="ARCHIVED">
+              ARCHIVED
+            </Option>
           </Select>
         </Form.Item>
-        <Divider
-          {...dividerBlack}
-        />
+        <Divider {...dividerBlack} />
 
         <Title level={4}>Basic Score</Title>
 
         <Form.List name="basic">
           {(fieldsBasic, { add, remove }) => (
             <div className="basic">
-              {fieldsBasic.map((field) => (
+              {fieldsBasic.map(field => (
                 <div key={field.key}>
                   <Form.Item
                     {...field}
@@ -238,7 +233,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     label="минимальный балл"
                     name={[field.name, 'minScore']}
                     fieldKey={[field.fieldKey, 'minScore']}
-                    rules={[{ message: 'Missing min Score' }]}
+                    rules={[{ required: true, message: 'Missing min Score' }]}
                   >
                     <InputNumber defaultValue={0} />
                   </Form.Item>
@@ -247,7 +242,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     label="максимальный балл"
                     name={[field.name, 'maxScore']}
                     fieldKey={[field.fieldKey, 'maxScore']}
-                    rules={[{ message: 'Missing maxScore' }]}
+                    rules={[{ required: true, message: 'Missing maxScore' }]}
                   >
                     <InputNumber defaultValue={0} />
                   </Form.Item>
@@ -259,14 +254,8 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     fieldKey={[field.fieldKey, 'description']}
                     rules={[{ message: 'Missing description' }]}
                   >
-                    <Input.TextArea
-                      placeholder="description"
-                    />
+                    <Input.TextArea placeholder="description" />
                   </Form.Item>
-
-                  <List
-                    id="basicList"
-                  />
 
                   <PlusCircleOutlined
                     onClick={() => {
@@ -283,15 +272,14 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     }}
                     style={{ display: 'flex', margin: '0 auto' }}
                   >
-                    удалить пункт
-                    {' '}
-                    {field.name}
-                    {' '}
-                    Basic
+                    удалить пункт {field.name} Basic
                   </Button>
                   <Divider
                     style={{
-                      width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
+                      width: '50%',
+                      minWidth: '50%',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
                     }}
                   />
                 </div>
@@ -311,16 +299,14 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           )}
         </Form.List>
 
-        <Divider
-          {...dividerBlack}
-        />
+        <Divider {...dividerBlack} />
 
         <Title level={4}>Extra Score</Title>
 
         <Form.List name="extra">
           {(fieldsExtra, { add, remove }) => (
             <div className="extra">
-              {fieldsExtra.map((field) => (
+              {fieldsExtra.map(field => (
                 <div key={field.key}>
                   <Form.Item
                     {...field}
@@ -363,9 +349,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     fieldKey={[field.fieldKey, 'description']}
                     rules={[{ message: 'Missing description' }]}
                   >
-                    <Input.TextArea
-                      placeholder="description"
-                    />
+                    <Input.TextArea placeholder="description" />
                   </Form.Item>
 
                   <MinusCircleOutlined
@@ -383,15 +367,14 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     }}
                     style={{ display: 'flex', margin: '0 auto' }}
                   >
-                    удалить пункт
-                    {' '}
-                    {field.name}
-                    {' '}
-                    Extra
+                    удалить пункт {field.name} Extra
                   </Button>
                   <Divider
                     style={{
-                      width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
+                      width: '50%',
+                      minWidth: '50%',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
                     }}
                   />
                 </div>
@@ -412,16 +395,14 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           )}
         </Form.List>
 
-        <Divider
-          {...dividerBlack}
-        />
+        <Divider {...dividerBlack} />
 
         <Title level={4}>Fines</Title>
 
         <Form.List name="fines">
           {(fieldsFines, { add, remove }) => (
             <div className="fines">
-              {fieldsFines.map((field) => (
+              {fieldsFines.map(field => (
                 <div key={field.key}>
                   <Form.Item
                     {...field}
@@ -464,9 +445,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     fieldKey={[field.fieldKey, 'description']}
                     rules={[{ message: 'Missing description' }]}
                   >
-                    <Input.TextArea
-                      placeholder="description"
-                    />
+                    <Input.TextArea placeholder="description" />
                   </Form.Item>
 
                   <MinusCircleOutlined
@@ -484,15 +463,14 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     }}
                     style={{ display: 'flex', margin: '0 auto' }}
                   >
-                    удалить пункт
-                    {' '}
-                    {field.name}
-                    {' '}
-                    Fines
+                    удалить пункт {field.name} Fines
                   </Button>
                   <Divider
                     style={{
-                      width: '50%', minWidth: '50%', marginLeft: 'auto', marginRight: 'auto',
+                      width: '50%',
+                      minWidth: '50%',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
                     }}
                   />
                 </div>
@@ -513,16 +491,16 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           )}
         </Form.List>
 
-        <Divider
-          {...dividerBlack}
-        />
+        <Divider {...dividerBlack} />
         <Form.Item {...tailLayout}>
           <Button key="back" onClick={handleCancel}>
             Return
-          </Button>,
+          </Button>
+          ,
           <Button key="submit" type="primary" htmlType="submit" loading={loading}>
             Save
-          </Button>,
+          </Button>
+          ,
         </Form.Item>
       </Form>
     </Modal>

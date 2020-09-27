@@ -19,30 +19,24 @@ function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
     {
       title: 'State',
       key: 'state',
-      render: (val, rec) => (
-        <Tag color='green'>
-          {rec.state.toUpperCase()}
-        </Tag>
-      ),
-      sorter: (a, b) => a.state > b.state ? 1 : -1
+      render: (val, rec) => <Tag color="green">{rec.state.toUpperCase()}</Tag>,
+      sorter: (a, b) => (a.state > b.state ? 1 : -1),
     },
     {
       title: 'Author',
       key: 'author',
-      render: (val, rec) => (
-        rec.author
-      ),
-      sorter: (a, b) => a.author > b.author ? 1 : -1
+      render: (val, rec) => rec.author,
+      sorter: (a, b) => (a.author > b.author ? 1 : -1),
     },
     {
       title: 'Action',
       key: 'action',
       render: (val, rec) => (
         <>
-          <Button onClick={() =>  editTask(rec)}>
-              <i className='fas fa-pencil-alt' />
+          <Button onClick={() => editTask(rec)}>
+            <i className="fas fa-pencil-alt" />
           </Button>
-          <DeleteTask id={rec.id}/>
+          <DeleteTask id={rec.id} />
         </>
       ),
     },

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Layout, Typography } from 'antd';
+import { Layout } from 'antd';
 import MainRouter from '../MainRouter';
 import TabsMenu from '../TabsMenu';
 import pages from './pages';
@@ -20,7 +20,7 @@ const Home: FC<THome> = ({ userRole, githubId, logOut }) => (
     <Content>
       <MainRouter pages={pages} userRole={userRole} />
     </Content>
-    <Footer>Footer</Footer>
+    <Footer>X-Cross-Check Team 47</Footer>
   </Layout>
 );
 

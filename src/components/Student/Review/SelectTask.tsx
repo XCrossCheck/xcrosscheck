@@ -1,22 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
 import { Button, Select, Typography } from 'antd';
-import { Task } from './types';
-import { getTasks } from '../services/getTasks';
+import { AggregatedTask, getTasks } from '../services/getTasks';
 
 const { Option } = Select;
 const { Title } = Typography;
 
 export const SelectTask: FC<{
   onNext: () => void;
-  onChange: (task: Task) => void;
-  selectedTask?: Task;
+  onChange: (task: AggregatedTask) => void;
+  selectedTask?: AggregatedTask;
   mode: 'submit' | 'review';
 }> = ({ onNext, onChange, selectedTask, mode }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<AggregatedTask[]>([]);
 
   useEffect(() => {
-    getTasks().then(agregatedTasks => setTasks(agregatedTasks));
+    getTasks().then(aggregatedTasks => setTasks(aggregatedTasks));
   }, []);
 
   let canProceed = false;
@@ -25,34 +24,36 @@ export const SelectTask: FC<{
     const now = new Date();
     if (mode === 'review') {
       canProceed =
-        new Date(selectedTask.deadlineSubmit) < now && new Date(selectedTask.deadlineReview) > now;
+        selectedTask?.availableToSubmit &&
+        new Date(selectedTask.deadlineSubmit) < now &&
+        new Date(selectedTask.deadlineReview) > now;
     }
   }
 
   return (
     <>
-      {selectedTask ? (
+      {selectedTask?.availableToSubmit && (
         <Title level={5} style={{ marginBottom: '2rem' }}>
-          <span className="warning">Attention!</span> You should review more then three tasks
-          {selectedTask.taskId} before{' '}
+          <span className="warning">Attention!</span> You should review more than{' '}
+          {selectedTask.minReiewsAmount} tasks {selectedTask.name} before{' '}
           {new Date(selectedTask.deadlineReview).toLocaleString().slice(0, -3)}
         </Title>
-      ) : null}
+      )}
       <Select
-        defaultValue={selectedTask?.taskId}
+        defaultValue={selectedTask?.name}
         placeholder="Select task"
         style={{ width: 360 }}
         onChange={value => {
-          const task = tasks.find(t => t.taskId === value);
+          const task = tasks.find(t => t.name === value);
           if (task) {
             onChange(task);
           }
         }}
         loading={!tasks.length}
       >
-        {tasks.map(({ taskId }) => (
-          <Option key={taskId} value={taskId}>
-            {taskId}
+        {tasks.map(({ name }) => (
+          <Option key={name} value={name}>
+            {name}
           </Option>
         ))}
       </Select>

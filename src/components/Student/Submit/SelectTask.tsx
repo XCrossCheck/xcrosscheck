@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Select, Typography, Space } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
-import { Task, SubmitInfo } from './types';
+import { SubmitInfo } from './types';
 import { dbGetReq } from '../../../service/restapi-fb';
-import { getTasks } from '../services/getTasks';
+import { AggregatedTask, getTasks } from '../services/getTasks';
 import * as authSelectors from '../../../storage/auth/selectors';
 
 const { Option } = Select;
@@ -14,27 +14,25 @@ const { Text, Paragraph, Title } = Typography;
 
 export const SelectTask: FC<{
   onNext: () => void;
-  onChange: (task: Task) => void;
+  onChange: (task: AggregatedTask) => void;
   previousInfo: SubmitInfo;
   setPreviousInfo: (submitInfo: SubmitInfo) => void;
-  selectedTask?: Task;
+  selectedTask?: AggregatedTask;
   mode: 'submit' | 'review';
 }> = ({ onNext, onChange, selectedTask, previousInfo, mode, setPreviousInfo }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<AggregatedTask[]>();
   const myGitHub = useSelector(authSelectors.githubId);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getTasks().then(aggregatedTasks => setTasks(aggregatedTasks));
-  }, [setPreviousInfo]);
+  }, []);
 
   let canProceed = false;
 
   if (selectedTask) {
     const now = new Date();
     if (mode === 'submit') {
-      console.log(selectedTask, now);
-      canProceed = new Date(selectedTask.deadlineSubmit) > now;
+      canProceed = selectedTask?.availableToSubmit && new Date(selectedTask.deadlineSubmit) > now;
     }
     if (mode === 'review') {
       canProceed = new Date(selectedTask.deadlineReview) > now;
@@ -65,9 +63,9 @@ export const SelectTask: FC<{
             });
           }
         }}
-        loading={!tasks.length}
+        loading={!tasks?.length}
       >
-        {tasks.map(({ name }) => (
+        {tasks?.map(({ name }) => (
           <Option key={name} value={name}>
             {name}
           </Option>
@@ -84,14 +82,17 @@ export const SelectTask: FC<{
           </Button>
         </>
       )}
-      {!canProceed && selectedTask && <div className="warning">Deadline has passed</div>}
+      {!canProceed && selectedTask && (
+        <div className="warning">Submit for cross-check has not started or deadline has passed</div>
+      )}
       {previousInfo ? (
         <div>
           <Text>
             <Space>
               <CheckCircleTwoTone twoToneColor="#52c41a" />
               <span>
-                Task {selectedTask.name} succsessfully submited {previousInfo.submittedAt}
+                Task {selectedTask.name} succsessfully submited{' '}
+                {new Date(previousInfo.submittedAt).toLocaleString().slice(0, -3)}
               </span>
             </Space>
           </Text>
@@ -102,11 +103,11 @@ export const SelectTask: FC<{
           <Title level={5}>Self-check score</Title>
           <Paragraph>{previousInfo.selfCheckScore}</Paragraph>
           <Link to={`/score/${selectedTask.taskId}`}>
-            <Button>View a score</Button>{' '}
+            <Button>View score</Button>{' '}
           </Link>
         </div>
       ) : (
-        selectedTask?.name && <Paragraph>This task was&apos;t submited</Paragraph>
+        selectedTask?.name && <Paragraph>This task was&apos;t submitted</Paragraph>
       )}
     </>
   );
