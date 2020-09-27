@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { ITask, ITaskDb, ICrosscheckSession } from '../storage/data/dataTypes';
-import { dbCreateRecord, dbDeleteReq, dbGetReq, dbPatchReqByKey } from './restapi-fb';
+import { ICrosscheckSession } from '../storage/data/dataTypes';
+import { dbCreateRecord } from './restapi-fb';
 
 interface IAttendeeDb {
   taskId: string;
@@ -8,7 +7,6 @@ interface IAttendeeDb {
   githubId: string;
   reviewerOf: string[];
 }
-
 
 export async function create(data: IAttendeeDb): Promise<string> {
   let key: string | null = null;
@@ -28,7 +26,7 @@ export function shuffleStudents(session: ICrosscheckSession): IAttendeeDb[] {
     githubId: e,
     sessionId: session.id,
     taskId: session.taskId,
-    reviewerOf: []
+    reviewerOf: [],
   }));
   for (let i = 0; i < session.desiredReviewersAmount; i += 1) {
     let list = [...session.submited];

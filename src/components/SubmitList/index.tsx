@@ -1,5 +1,4 @@
-import { Modal, Button, Space, Table } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Button, Table } from 'antd';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as dataActions from '../../storage/data/actions';
@@ -10,20 +9,19 @@ import * as dataSelectors from '../../storage/data/selectors';
 import getTableColumns from './tableConfig';
 import Loading from '../_Common/loading';
 
-
 const StudentsSubmitList: FC = () => {
-
   const [showArchive, setShowArchive] = useState(false);
-  
+
   const dispatch = useDispatch();
-  const tasks = useSelector<TStore, ITask[] | null>((state) => dataSelectors.tasks(state));
-  const crosscheckSessions = useSelector<TStore, ICrosscheckSession[] | null>((state) => 
-    dataSelectors.croscheckSessions(state));
+  const tasks = useSelector<TStore, ITask[] | null>(state => dataSelectors.tasks(state));
+  const crosscheckSessions = useSelector<TStore, ICrosscheckSession[] | null>(state =>
+    dataSelectors.croscheckSessions(state)
+  );
   const getTasks = () => dispatch(dataActions.tasks.get());
   const getCrosscheckSessions = () => dispatch(dataActions.crosscheckSessions.get());
   const clearTasks = () => dispatch(dataActions.tasks.clear());
   const clearCrosscheckSessions = () => dispatch(dataActions.crosscheckSessions.clear());
-  
+
   useEffect(() => {
     getTasks();
     getCrosscheckSessions();
@@ -38,9 +36,9 @@ const StudentsSubmitList: FC = () => {
       const result: ISubmit[] = [];
       let i = 0;
       crosscheckSessions
-        .filter(e => showArchive ? e.state === 'COMPLETED' : e.state !== 'COMPLETED')
+        .filter(e => (showArchive ? e.state === 'COMPLETED' : e.state !== 'COMPLETED'))
         .forEach(e => {
-          const task = tasks.find((t) => t.id === e.taskId);
+          const task = tasks.find(t => t.id === e.taskId);
           let status: string = null;
           switch (e.state) {
             case 'REQUESTS_GATHERING':
@@ -61,7 +59,7 @@ const StudentsSubmitList: FC = () => {
               id: `${task.id}_${el}_${i}`,
               taskName: task.name,
               studentGithubId: el,
-              status
+              status,
             });
           });
         });
@@ -73,7 +71,9 @@ const StudentsSubmitList: FC = () => {
   const filters = useMemo<IFilters>(() => {
     if (list) {
       const tasksFilter = list.map(e => e.taskName).filter((v, i, s) => s.indexOf(v) === i);
-      const studentsFilter = list.map(e => e.studentGithubId).filter((v, i, s) => s.indexOf(v) === i);
+      const studentsFilter = list
+        .map(e => e.studentGithubId)
+        .filter((v, i, s) => s.indexOf(v) === i);
       const statusesFilter = list.map(e => e.status).filter((v, i, s) => s.indexOf(v) === i);
       return {
         statuses: statusesFilter,
@@ -94,14 +94,14 @@ const StudentsSubmitList: FC = () => {
   return (
     <>
       <Button onClick={() => setShowArchive(s => !s)}>
-          {showArchive ? 'Show active' : 'Show complited'}
+        {showArchive ? 'Show active' : 'Show complited'}
       </Button>
-    <Table
-      rowKey="id" 
-      columns={getTableColumns(filters)}
-      pagination={{ position: ['bottomLeft'] }}
-      dataSource={list}
-    />
+      <Table
+        rowKey="id"
+        columns={getTableColumns(filters)}
+        pagination={{ position: ['bottomLeft'] }}
+        dataSource={list}
+      />
     </>
   );
 };

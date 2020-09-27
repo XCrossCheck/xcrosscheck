@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { IReducer, IReducerP } from '../types';
+import { IReducerP } from '../types';
 import constants from './constants';
 import { ICrosscheckSession, ITask } from './dataTypes';
 
@@ -16,13 +16,16 @@ const tasks: IReducerP<ITask[], ITask[] | ITask | string> = (state = null, actio
     case constants.UPDATE_TASK:
       return [...state.filter(e => e.id !== (payload as ITask).id), payload as ITask];
     case constants.DELETE_TASK:
-      return state.filter(e => e.id !== payload as string);
+      return state.filter(e => e.id !== (payload as string));
     default:
       return state;
   }
 };
 
-const crosscheckSessions: IReducerP<ICrosscheckSession[], ICrosscheckSession[] | ICrosscheckSession | string> = (state = null, action) => {
+const crosscheckSessions: IReducerP<
+ICrosscheckSession[],
+ICrosscheckSession[] | ICrosscheckSession | string
+> = (state = null, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -33,9 +36,12 @@ const crosscheckSessions: IReducerP<ICrosscheckSession[], ICrosscheckSession[] |
     case constants.CREATE_CROSSCHECK_SESSION:
       return [...state, payload as ICrosscheckSession];
     case constants.UPDATE_CROSSCHECK_SESSION:
-      return [...state.filter(e => e.id !== (payload as ICrosscheckSession).id), payload as ICrosscheckSession];
+      return [
+        ...state.filter(e => e.id !== (payload as ICrosscheckSession).id),
+        payload as ICrosscheckSession,
+      ];
     case constants.DELETE_CROSSCHECK_SESSION:
-      return state.filter(e => e.id !== payload as string);
+      return state.filter(e => e.id !== (payload as string));
     default:
       return state;
   }

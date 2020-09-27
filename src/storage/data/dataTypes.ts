@@ -13,7 +13,7 @@ export interface ICrosscheckSessionDb {
 
 export interface ICrosscheckSession extends ICrosscheckSessionDb {
   id: string;
-  submited?: string[]
+  submited?: string[];
 }
 
 export interface IItem {
@@ -28,7 +28,6 @@ export interface IItem {
 export interface ITask extends ITaskDb {
   id: string;
 }
-
 
 export interface ITaskDb {
   name: string;

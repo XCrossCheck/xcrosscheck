@@ -1,12 +1,11 @@
 type TAuthConstants = {
-  SET_LOGGED: string,
-  SET_USER_ROLE: string,
-  CLEAR_USER_ROLE: string,
-  SET_GITHUBID: string,
-  CLEAR_GITHUBID: string,
-  SET_TOKEN: string,
-  CLEAR_TOKEN: string,
-
+  SET_LOGGED: string;
+  SET_USER_ROLE: string;
+  CLEAR_USER_ROLE: string;
+  SET_GITHUBID: string;
+  CLEAR_GITHUBID: string;
+  SET_TOKEN: string;
+  CLEAR_TOKEN: string;
 };
 
 const constants: TAuthConstants = {
@@ -17,7 +16,6 @@ const constants: TAuthConstants = {
   CLEAR_GITHUBID: 'CLEAR_GITHUBID',
   SET_TOKEN: 'SET_TOKEN',
   CLEAR_TOKEN: 'CLEAR_TOKEN',
-
 };
 
 export default constants;

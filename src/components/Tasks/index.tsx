@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button } from 'antd';
 import { TStore } from '../../storage';
@@ -41,7 +41,6 @@ const Tasks: FC = () => {
     return <Loading />;
   }
 
-  console.log(tasks);
   return (
     <>
       <Button onClick={() => showModal()}>

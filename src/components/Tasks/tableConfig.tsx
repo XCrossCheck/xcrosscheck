@@ -9,12 +9,8 @@ function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
     {
       title: 'Task Name',
       key: 'taskName',
-      render: (val, rec) => (
-        <Button onClick={() =>  editTask(rec)}>
-            { rec.name }
-        </Button>
-      ),
-      sorter: (a, b) => a.name > b.name ? 1 : -1
+      render: (val, rec) => <Button onClick={() => editTask(rec)}>{rec.name}</Button>,
+      sorter: (a, b) => (a.name > b.name ? 1 : -1),
     },
     {
       title: 'State',

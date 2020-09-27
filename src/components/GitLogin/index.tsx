@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
 import React from 'react';
-import {
-  Form, Button, Card, Select,
-} from 'antd';
+import { Form, Button, Card, Select } from 'antd';
 import './GitLogin.css';
-import { setCookie, getCookie } from '../../service/cookies';
+import { setCookie } from '../../service/cookies';
 
 type TGitLogin = {
   // setLogged: (lstate: boolean) => void;
   setRole: (role: string) => void;
   // setGithubId: (githubId: string) => void;
-
 };
 
 function randomString(i: number) {
@@ -40,24 +37,15 @@ const GitLogin: React.FC<TGitLogin> = ({ setRole }) => {
           name="login"
           initialValues={{ userrole: 'student' }}
         >
-          <Form.Item
-            label="Role"
-            name="userrole"
-          >
+          <Form.Item label="Role" name="userrole">
             <Select onChange={handleChange}>
               <Option value="student">Student</Option>
               <Option value="author">Author</Option>
-              <Option value="manager">Manager</Option>
-              <Option value="supervisor">Supervisor</Option>
             </Select>
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              href={authhref}
-            >
+            <Button type="primary" htmlType="submit" href={authhref}>
               Sign up with GitHub
             </Button>
           </Form.Item>

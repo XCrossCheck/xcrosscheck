@@ -48,13 +48,6 @@ async function getGitUser(token: string) {
   }
 }
 
-type TCallback = {
-  history: {}; // {length: number, action: string, location: {…}, createHref: ƒ, push: ƒ, …}
-  location: { pathname: string; search: string; hash: string; state: undefined };
-  match: { path: string; url: string; isExact: boolean; params: {} };
-  staticContext: undefined;
-};
-
 type TGitAuth = {
   props: any;
   setLogged: (lstate: boolean) => void;

@@ -15,18 +15,6 @@ type TEditForm = {
   closeModal: () => void;
 };
 
-type TValidation = {
-  taskID: boolean;
-  startDate: boolean;
-  submitDate: boolean;
-  reviewDate: boolean;
-  coefficient: boolean;
-  minReviewers: boolean;
-  desiredReviewersAmount: boolean;
-  status: boolean;
-  isValid: boolean;
-};
-
 type TFormValues = {
   startDate: moment.Moment;
   submitDate: moment.Moment;
@@ -36,11 +24,10 @@ type TFormValues = {
   desiredReviewersAmount: number;
 };
 
-const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
-
+const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
   const [form] = Form.useForm<TFormValues>();
 
-  const tasks = useSelector<TStore, ITask[] | null>((state) => dataSelectors.tasks(state));
+  const tasks = useSelector<TStore, ITask[] | null>(state => dataSelectors.tasks(state));
 
   const [taskID, setTaskID] = useState<string | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -81,8 +68,10 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
   }, [visible, session]);
 
   const dispatch = useDispatch();
-  const createCrosscheckSession = (payload: ICrosscheckSession) => dispatch(dataActions.crosscheckSessions.create(payload));
-  const updateCrosscheckSession = (payload: ICrosscheckSession) => dispatch(dataActions.crosscheckSessions.update(payload));
+  const createCrosscheckSession = (payload: ICrosscheckSession) =>
+    dispatch(dataActions.crosscheckSessions.create(payload));
+  const updateCrosscheckSession = (payload: ICrosscheckSession) =>
+    dispatch(dataActions.crosscheckSessions.update(payload));
 
   function handleTaskIdChange(value: string) {
     setTaskID(value);
@@ -116,10 +105,6 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
   function handleCancel() {
     closeModal();
   }
-  
-  const onFinishFailed = (errorInfo: any) => {
-    // console.log('Failed:', errorInfo);
-  };
 
   function getActionButtonName() {
     switch (session?.state) {
@@ -172,127 +157,137 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
 
   return (
     <Modal
-      width='90vw'
+      width="90vw"
       visible={visible}
       title="Title"
       onCancel={handleCancel}
-      footer={[
-      ]}
+      footer={[]}
       destroyOnClose
     >
-    <div>
-      {!session ? (
-        <Select placeholder="Select task" value={taskID} style={{ width: 120 }} onChange={handleTaskIdChange}>
-          {tasks.map((e) => {
-            if (e.state === 'PUBLISHED') {
-              return <Option key={e.id} value={e.id}>{e.name}</Option>;
-            }
-            return null;
-          })}
-        </Select>
-      ) : null}
-      {session? (
-         <Button onClick={handleAction}>
-            {getActionButtonName()}
-        </Button>
-      ) : null}
-      <Form
-        form={form}
-        name="formAddSession"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-      {taskID ? (
-        <>
-          <Card>
-            <p>{tasks.find((e) => e.id === taskID).name}</p>
-          </Card>
-          <Card>
-            <Form.Item
-              label="Session start"
-              name="startDate"
-              rules={[{ required: true, message: 'Please select date' }]}
-            >
-              <DatePicker
-                // value={startDate ? moment(startDate) : moment().endOf('day')}
-                onChange={(value) => setStartDate(value ? value.toDate() : null)}
-                defaultPickerValue={moment().endOf('day')}
-                format="YYYY-MM-DD HH:mm"
-                disabledDate={(c) => c && c < moment().startOf('day')}
-                showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
-              />
-            </Form.Item>
-            <Form.Item
-              label="Submit deadline"
-              name="submitDate"
-              validateStatus={submitDate <= startDate ? 'error' : undefined}
-              help={submitDate <= startDate ? 'Please select the correct date' : undefined}
-              rules={[{ required: true, message: 'Please select date' }]}
-            >
-              <DatePicker
-                onChange={(value) => setSubmitDate(value ? value.toDate() : null)}
-                format="YYYY-MM-DD HH:mm"
-                disabledDate={(c) => c && c < moment(startDate).endOf('day')}
-                showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
-              />
-            </Form.Item>
-            <Form.Item
-              label="Review deadline"
-              name="reviewDate"
-              validateStatus={reviewDate <= startDate || reviewDate <= submitDate ? 'error' : undefined}
-              help={reviewDate <= startDate || reviewDate <= submitDate ? 'Please select the correct date' : undefined}
-              rules={[{ required: true, message: 'Please select date' }]}
-            >
-              <DatePicker
-                // value={reviewDate ? moment(reviewDate) : undefined}
-                onChange={(value) => setReviewDate(value ? value.toDate() : null)}
-                format="YYYY-MM-DD HH:mm"
-                disabledDate={(c) => c && c < moment(submitDate).endOf('day')}
-                showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
-              />
-              </Form.Item>
-          </Card>
-          <Card>
-            <Form.Item
-              label="Coefficient"
-              name="coefficient"
-              rules={[{ required: true, message: 'Please select coefficient' }]}
-            >
-              <InputNumber min={0.1} max={10} step={0.1} />
-            </Form.Item>
-            <Form.Item
-              label="Min Reviewers Amount"
-              name="minReviewers"
-              rules={[{ required: true, message: 'Please select min reviewers amount' }]}
-            >
-              <InputNumber min={1} max={10} />
-            </Form.Item>
-            <Form.Item
-              label="Desired Reviewers Amount"
-              name="desiredReviewersAmount"
-              rules={[{ required: true, message: 'Please select desired reviewers amount' }]}
-            >
-              <InputNumber min={1} max={10} />
-              </Form.Item>
-          </Card>
-          {/* <Select placeholder="Select status" value={status} onChange={handleStatusChange}>
+      <div>
+        {!session ? (
+          <Select
+            placeholder="Select task"
+            value={taskID}
+            style={{ width: 120 }}
+            onChange={handleTaskIdChange}
+          >
+            {tasks.map(e => {
+              if (e.state === 'PUBLISHED') {
+                return (
+                  <Option key={e.id} value={e.id}>
+                    {e.name}
+                  </Option>
+                );
+              }
+              return null;
+            })}
+          </Select>
+        ) : null}
+        {session ? <Button onClick={handleAction}>{getActionButtonName()}</Button> : null}
+        <Form
+          form={form}
+          name="formAddSession"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+        >
+          {taskID ? (
+            <>
+              <Card>
+                <p>{tasks.find(e => e.id === taskID).name}</p>
+              </Card>
+              <Card>
+                <Form.Item
+                  label="Session start"
+                  name="startDate"
+                  rules={[{ required: true, message: 'Please select date' }]}
+                >
+                  <DatePicker
+                    // value={startDate ? moment(startDate) : moment().endOf('day')}
+                    onChange={value => setStartDate(value ? value.toDate() : null)}
+                    defaultPickerValue={moment().endOf('day')}
+                    format="YYYY-MM-DD HH:mm"
+                    disabledDate={c => c && c < moment().startOf('day')}
+                    showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Submit deadline"
+                  name="submitDate"
+                  validateStatus={submitDate <= startDate ? 'error' : undefined}
+                  help={submitDate <= startDate ? 'Please select the correct date' : undefined}
+                  rules={[{ required: true, message: 'Please select date' }]}
+                >
+                  <DatePicker
+                    onChange={value => setSubmitDate(value ? value.toDate() : null)}
+                    format="YYYY-MM-DD HH:mm"
+                    disabledDate={c => c && c < moment(startDate).endOf('day')}
+                    showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Review deadline"
+                  name="reviewDate"
+                  validateStatus={
+                    reviewDate <= startDate || reviewDate <= submitDate ? 'error' : undefined
+                  }
+                  help={
+                    reviewDate <= startDate || reviewDate <= submitDate
+                      ? 'Please select the correct date'
+                      : undefined
+                  }
+                  rules={[{ required: true, message: 'Please select date' }]}
+                >
+                  <DatePicker
+                    // value={reviewDate ? moment(reviewDate) : undefined}
+                    onChange={value => setReviewDate(value ? value.toDate() : null)}
+                    format="YYYY-MM-DD HH:mm"
+                    disabledDate={c => c && c < moment(submitDate).endOf('day')}
+                    showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
+                  />
+                </Form.Item>
+              </Card>
+              <Card>
+                <Form.Item
+                  label="Coefficient"
+                  name="coefficient"
+                  rules={[{ required: true, message: 'Please select coefficient' }]}
+                >
+                  <InputNumber min={0.1} max={10} step={0.1} />
+                </Form.Item>
+                <Form.Item
+                  label="Min Reviewers Amount"
+                  name="minReviewers"
+                  rules={[{ required: true, message: 'Please select min reviewers amount' }]}
+                >
+                  <InputNumber min={1} max={10} />
+                </Form.Item>
+                <Form.Item
+                  label="Desired Reviewers Amount"
+                  name="desiredReviewersAmount"
+                  rules={[{ required: true, message: 'Please select desired reviewers amount' }]}
+                >
+                  <InputNumber min={1} max={10} />
+                </Form.Item>
+              </Card>
+              {/* <Select placeholder="Select status" value={status} onChange={handleStatusChange}>
             <Option key="DRAFT" value="DRAFT">DRAFT</Option>
             <Option key="REQUESTS_GATHERING" value="REQUESTS_GATHERING">REQUESTS_GATHERING</Option>
             <Option key="CROSS_CHECK" value="CROSS_CHECK">CROSS_CHECK</Option>
             <Option key="COMPLETED" value="COMPLETED">COMPLETED</Option>
           </Select>         */}
-          <Form.Item>
-            <Button key="back" onClick={handleCancel}>
-              Return
-            </Button>,
-            <Button key="submit" type="primary" htmlType="submit" loading={loading}>
-              Save
-            </Button>,
-          </Form.Item>
-        </>)
-        :
-        null}
+              <Form.Item>
+                <Button key="back" onClick={handleCancel}>
+                  Return
+                </Button>
+                ,
+                <Button key="submit" type="primary" htmlType="submit" loading={loading}>
+                  Save
+                </Button>
+                ,
+              </Form.Item>
+            </>
+          ) : null}
         </Form>
       </div>
     </Modal>

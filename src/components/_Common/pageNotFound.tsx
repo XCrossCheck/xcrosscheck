@@ -7,7 +7,11 @@ const PageNotFound: FC = () => (
     status="404"
     title="404"
     subTitle="Sorry, the page you visited does not exist."
-    extra={<Button type="primary"><Link to="/">Home</Link></Button>}
+    extra={
+      <Button type="primary">
+        <Link to="/">Home</Link>
+      </Button>
+    }
   />
 );
 export default PageNotFound;

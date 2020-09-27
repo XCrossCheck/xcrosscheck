@@ -3,7 +3,6 @@ import { ICrosscheckSession, ICrosscheckSessionDb } from '../storage/data/dataTy
 import { dbGetReq, dbCreateRecord, dbDeleteReq, dbPatchReqByKey } from './restapi-fb';
 import { parseDate } from './utils';
 
-
 export function mapDomainToDb(data: ICrosscheckSession): ICrosscheckSessionDb {
   return {
     coefficient: data.coefficient,
@@ -37,8 +36,9 @@ export function mapDbToDomain(data: any, key: string): ICrosscheckSession {
 
 export async function get(): Promise<ICrosscheckSession[]> {
   const response = await dbGetReq('crossCheckSession');
-  const result = Object.keys(response.data)
-    .map<ICrosscheckSession>(key => mapDbToDomain(response.data[key], key));
+  const result = Object.keys(response.data).map<ICrosscheckSession>(key =>
+    mapDbToDomain(response.data[key], key)
+  );
   return result;
 }
 

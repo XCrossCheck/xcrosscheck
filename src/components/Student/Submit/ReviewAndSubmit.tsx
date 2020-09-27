@@ -57,7 +57,6 @@ export const ReviewAndSubmit: FC<Props> = ({
               submittedAt: submitedDate,
               sessionId: task.id,
             };
-            console.log(task);
             setSubmitedDate(submitedDate);
             dbCreateRecord('studentsTasks', submitInfo);
             onNext();

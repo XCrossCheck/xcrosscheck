@@ -3,11 +3,11 @@ import { Tabs } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { TPage } from '../Home/pages';
 
-import './style.scss';
+import './style.css';
 
 type TRouter = {
-  userRole: string,
-  pages: TPage[]
+  userRole: string;
+  pages: TPage[];
 };
 
 interface ILocationState {
@@ -17,17 +17,23 @@ interface ILocationState {
 const { TabPane } = Tabs;
 
 const TabsMenu: FC<TRouter> = ({ userRole, pages }) => {
-  const location: ILocationState = useLocation(); 
+  const location: ILocationState = useLocation();
 
   return (
-    <nav className='tabs'>
+    <nav className="tabs">
       <Tabs activeKey={location.pathname}>
         {pages
-          .filter((e) => e.role === userRole && e.isTab)
-          .map((e) => (
-            <TabPane tab={<Link to={e.url} key={`link_${e.url}`}>{e.title}</Link>} key={e.url} />
-          ))
-        }
+          .filter(e => e.role === userRole && e.isTab)
+          .map(e => (
+            <TabPane
+              tab={
+                <Link to={e.url} key={`link_${e.url}`}>
+                  {e.title}
+                </Link>
+              }
+              key={e.url}
+            />
+          ))}
       </Tabs>
     </nav>
   );

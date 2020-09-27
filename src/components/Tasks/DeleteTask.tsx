@@ -7,14 +7,13 @@ import * as dataActions from '../../storage/data/actions';
 const { confirm } = Modal;
 
 type TDeleteTask = {
-  id: string
+  id: string;
 };
 
 const DeleteSession: FC<TDeleteTask> = ({ id }) => {
-  
   const dispatch = useDispatch();
-  const deleteTask = (payload) => dispatch(dataActions.tasks.delete(payload));
-  
+  const deleteTask = payload => dispatch(dataActions.tasks.delete(payload));
+
   function showDeleteConfirm() {
     confirm({
       title: 'Are you sure to delete this session?',
@@ -25,7 +24,7 @@ const DeleteSession: FC<TDeleteTask> = ({ id }) => {
       cancelText: 'No',
       onOk() {
         deleteTask(id);
-      }
+      },
     });
   }
 

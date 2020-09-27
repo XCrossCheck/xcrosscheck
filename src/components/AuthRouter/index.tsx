@@ -1,7 +1,3 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/prefer-regexp-exec */
 import React, { FC } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,12 +12,12 @@ import { setCookie, getCookie, delCookie } from '../../service/cookies';
 
 const AuthRouter: FC = () => {
   const dispatch: IDispatch = useDispatch();
-  const logged = useSelector<TStore, boolean | null>((state) => authSelectors.logged(state));
-  const userRole = useSelector<TStore, string | null>((state) => authSelectors.userRole(state));
-  const githubId = useSelector<TStore, string | null>((state) => authSelectors.githubId(state));
-  const setLogged: IDispatchAction<boolean> = (payload) => dispatch(authAct.logged.set(payload));
-  const setUserRole: IDispatchAction<string> = (payload) => dispatch(authAct.userRole.set(payload));
-  const setGithubId: IDispatchAction<string> = (payload) => dispatch(authAct.githubId.set(payload));
+  const logged = useSelector<TStore, boolean | null>(state => authSelectors.logged(state));
+  const userRole = useSelector<TStore, string | null>(state => authSelectors.userRole(state));
+  const githubId = useSelector<TStore, string | null>(state => authSelectors.githubId(state));
+  const setLogged: IDispatchAction<boolean> = payload => dispatch(authAct.logged.set(payload));
+  const setUserRole: IDispatchAction<string> = payload => dispatch(authAct.userRole.set(payload));
+  const setGithubId: IDispatchAction<string> = payload => dispatch(authAct.githubId.set(payload));
 
   const login = getCookie('login');
   const ur = getCookie('userRole');
@@ -34,34 +30,29 @@ const AuthRouter: FC = () => {
     setGithubId('');
     return <Redirect to="/" />;
   };
-  
+
   if (ur) setUserRole(ur);
   else if (userRole) setCookie('userRole', userRole);
-  if ( login) {
-    setLogged( true);
-    setGithubId( login);
+  if (login) {
+    setLogged(true);
+    setGithubId(login);
   }
 
-  if ( !logged ) {
+  if (!logged) {
     return (
       <Switch>
         <Route
           path="/callback"
-          render={(props) => (
-            <Callback props={props} setLogged={setLogged} setGithubId={setGithubId}/>
-          )}
-        /> 
-        <Route
-          path="/"
-          render={() => (
-            <GitLogin setRole={setUserRole} />
+          render={props => (
+            <Callback props={props} setLogged={setLogged} setGithubId={setGithubId} />
           )}
         />
+        <Route path="/" render={() => <GitLogin setRole={setUserRole} />} />
       </Switch>
     );
-  } if (logged && userRole) {
-
-    return <Home userRole={userRole} githubId={githubId} logOut={logOut}/>;
+  }
+  if (logged && userRole) {
+    return <Home userRole={userRole} githubId={githubId} logOut={logOut} />;
   }
   return <Loading />;
 };

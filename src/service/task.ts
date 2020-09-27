@@ -29,14 +29,13 @@ export function mapDbToDomain(data: any, key: string): ITask {
     items: data.items,
     name: data.name,
     state: data.state,
-    id: key
+    id: key,
   };
 }
 
 export async function get(): Promise<ITask[]> {
   const response = await dbGetReq('tasks');
-  return Object.keys(response.data)
-    .map<ITask>(key => mapDbToDomain(response.data[key], key));
+  return Object.keys(response.data).map<ITask>(key => mapDbToDomain(response.data[key], key));
 }
 
 export async function getByKey(key: string): Promise<ITask> {

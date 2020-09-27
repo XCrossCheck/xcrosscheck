@@ -11,7 +11,6 @@ import EditForm from './EditForm';
 import getTableColumns from './tableConfig';
 
 const CrossCheck: FC = () => {
-
   const [seletedSessionId, setSeletedSessionId] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
@@ -29,14 +28,15 @@ const CrossCheck: FC = () => {
   }
 
   const dispatch = useDispatch();
-  const tasks = useSelector<TStore, ITask[] | null>((state) => dataSelectors.tasks(state));
-  const crosscheckSessions = useSelector<TStore, ICrosscheckSession[] | null>((state) => 
-    dataSelectors.croscheckSessions(state));
+  const tasks = useSelector<TStore, ITask[] | null>(state => dataSelectors.tasks(state));
+  const crosscheckSessions = useSelector<TStore, ICrosscheckSession[] | null>(state =>
+    dataSelectors.croscheckSessions(state)
+  );
   const getTasks = () => dispatch(dataActions.tasks.get());
   const getCrosscheckSessions = () => dispatch(dataActions.crosscheckSessions.get());
   const clearTasks = () => dispatch(dataActions.tasks.clear());
   const clearCrosscheckSessions = () => dispatch(dataActions.crosscheckSessions.clear());
-  
+
   useEffect(() => {
     getTasks();
     getCrosscheckSessions();
@@ -49,9 +49,9 @@ const CrossCheck: FC = () => {
   const list = useMemo<ICrosscheckSessionList[] | null>(() => {
     if (tasks && crosscheckSessions) {
       const result = crosscheckSessions
-        .filter(e => showArchive ? e.state === 'COMPLETED' : e.state !== 'COMPLETED')
+        .filter(e => (showArchive ? e.state === 'COMPLETED' : e.state !== 'COMPLETED'))
         .map<ICrosscheckSessionList>(e => {
-        const task = tasks.find((t) => t.id === e.taskId);
+        const task = tasks.find(t => t.id === e.taskId);
         const item: ICrosscheckSessionList = {
           ...e,
           task,
@@ -77,8 +77,11 @@ const CrossCheck: FC = () => {
       tasks: [],
     };
   }, [list]);
-  
-  const seletedSession = useMemo(() => list?.find(e => e.id === seletedSessionId), [list, seletedSessionId]);
+
+  const seletedSession = useMemo(() => list?.find(e => e.id === seletedSessionId), [
+    list,
+    seletedSessionId,
+  ]);
 
   if (!list) {
     return <Loading />;
@@ -86,20 +89,20 @@ const CrossCheck: FC = () => {
   return (
     <>
       <Button onClick={() => showModal(null)}>
-          <i className="fas fa-plus" />
-          Add Session
+        <i className="fas fa-plus" />
+        Add Session
       </Button>
       <Button onClick={() => setShowArchive(s => !s)}>
-          {showArchive ? 'Show active' : 'Show complited'}
+        {showArchive ? 'Show active' : 'Show complited'}
       </Button>
-      <EditForm visible={visible} closeModal={closeModal} session={seletedSession}/>
+      <EditForm visible={visible} closeModal={closeModal} session={seletedSession} />
       <div>
-          <Table
-            rowKey="id" 
-            columns={getTableColumns(showModal, filters)}
-            pagination={{ position: ['bottomLeft'] }}
-            dataSource={list}
-          />
+        <Table
+          rowKey="id"
+          columns={getTableColumns(showModal, filters)}
+          pagination={{ position: ['bottomLeft'] }}
+          dataSource={list}
+        />
       </div>
     </>
   );

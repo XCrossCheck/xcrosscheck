@@ -33,7 +33,8 @@ const tasks: TTasks = {
   get: () => async dispatch => {
     const payload = taskService.get();
     dispatch({ type: constants.SET_TASKS, payload: await payload });
-  }, create: (data) => async dispatch => {
+  },
+  create: data => async dispatch => {
     const id = await taskService.create(taskService.mapDomainToDb(data));
     if (id) {
       const payload: ITask = {
@@ -43,19 +44,19 @@ const tasks: TTasks = {
       dispatch({ type: constants.CREATE_TASK, payload });
     }
   },
-  update: (data) => async dispatch => {
+  update: data => async dispatch => {
     const result = await taskService.update(taskService.mapDomainToDb(data), data.id);
     if (result) {
       dispatch({ type: constants.UPDATE_TASK, payload: data });
     }
   },
-  delete: (id) => async dispatch => {
+  delete: id => async dispatch => {
     const result = await taskService.del(id);
     if (result) {
       dispatch({ type: constants.DELETE_TASK, payload: id });
     }
   },
-  set: (payload) => ({ type: constants.SET_TASKS, payload }),
+  set: payload => ({ type: constants.SET_TASKS, payload }),
   clear: () => ({ type: constants.CLEAR_TASKS, payload: null }),
 };
 
@@ -63,7 +64,7 @@ const crosscheckSessions: TCrosscheckSessions = {
   get: () => async dispatch => {
     const payload = await csService.get();
     const promises = payload
-      .filter(e=> e.state === 'REQUESTS_GATHERING' || e.state === 'CROSS_CHECK')
+      .filter(e => e.state === 'REQUESTS_GATHERING' || e.state === 'CROSS_CHECK')
       .map(e => stService.getGithubIdBySessionId(e.id));
     const st = await Promise.all(promises);
     payload.forEach(e => {
@@ -71,7 +72,7 @@ const crosscheckSessions: TCrosscheckSessions = {
     });
     dispatch({ type: constants.SET_CROSSCHECK_SESSIONS, payload });
   },
-  create: (data) => async dispatch => {
+  create: data => async dispatch => {
     const id = await csService.create(csService.mapDomainToDb(data));
     if (id) {
       const payload: ICrosscheckSession = {
@@ -81,24 +82,24 @@ const crosscheckSessions: TCrosscheckSessions = {
       dispatch({ type: constants.CREATE_CROSSCHECK_SESSION, payload });
     }
   },
-  update: (data) => async dispatch => {
+  update: data => async dispatch => {
     const result = await csService.update(csService.mapDomainToDb(data), data.id);
     if (result) {
       dispatch({ type: constants.UPDATE_CROSSCHECK_SESSION, payload: data });
     }
   },
-  delete: (id) => async dispatch => {
+  delete: id => async dispatch => {
     const result = await csService.del(id);
     if (result) {
       dispatch({ type: constants.DELETE_CROSSCHECK_SESSION, payload: id });
     }
   },
-  set: (payload) => ({ type: constants.SET_CROSSCHECK_SESSIONS, payload }),
+  set: payload => ({ type: constants.SET_CROSSCHECK_SESSIONS, payload }),
   clear: () => ({ type: constants.CLEAR_CROSSCHECK_SESSIONS, payload: null }),
 };
 
 const attendees: TAttendees = {
-  shuffle: (data) => async dispatch => {
+  shuffle: data => async dispatch => {
     const attendeesResult = attService.shuffleStudents(data);
     const promises = attendeesResult.map(e => attService.create(e));
     await Promise.all(promises);
@@ -106,8 +107,4 @@ const attendees: TAttendees = {
   },
 };
 
-export {
-  tasks,
-  crosscheckSessions,
-  attendees,
-};
+export { tasks, crosscheckSessions, attendees };
