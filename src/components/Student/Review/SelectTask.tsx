@@ -1,22 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
 import { Button, Select, Typography } from 'antd';
-import { Task } from './types';
-import { getTasks } from '../services/getTasks';
+import { AggregatedTask, getTasks } from '../services/getTasks';
 
 const { Option } = Select;
 const { Title } = Typography;
 
 export const SelectTask: FC<{
   onNext: () => void;
-  onChange: (task: Task) => void;
-  selectedTask?: Task;
+  onChange: (task: AggregatedTask) => void;
+  selectedTask?: AggregatedTask;
   mode: 'submit' | 'review';
 }> = ({ onNext, onChange, selectedTask, mode }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<AggregatedTask[]>([]);
 
   useEffect(() => {
-    getTasks().then(agregatedTasks => setTasks(agregatedTasks));
+    getTasks().then(aggregatedTasks => setTasks(aggregatedTasks));
   }, []);
 
   let canProceed = false;
@@ -30,7 +29,7 @@ export const SelectTask: FC<{
         new Date(selectedTask.deadlineReview) > now;
     }
   }
-  console.log(canProceed);
+
   return (
     <>
       {selectedTask?.availableToSubmit && (

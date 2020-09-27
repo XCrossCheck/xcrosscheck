@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Steps } from 'antd';
-import { Submission, Task } from './types';
+import { Submission } from './types';
 import { SelectTask } from './SelectTask';
 import { SelectStudents } from './Students';
 import { CrossCheck } from './CrossCheck';
 import { ReviewAndSubmit } from './ReviewAndSubmit';
 import { Success } from './Success';
 import './Review.css';
+import { AggregatedTask } from '../services/getTasks';
 
 const { Step } = Steps;
 
@@ -14,7 +15,7 @@ const steps = ['Select Task', 'Select Student', 'Cross-check', 'Review', 'Succes
 
 export default function Review() {
   const [current, setCurrent] = useState(0);
-  const [task, setTask] = useState<Task>();
+  const [task, setTask] = useState<AggregatedTask>();
   const [student, setStudent] = useState<Submission>();
   const [crossCheckScore] = useState<string>('');
   const [feedback] = useState<string>('В целом работа неплохая, бла-бла-бла');

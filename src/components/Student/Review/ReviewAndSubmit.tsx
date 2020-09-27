@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Space, Typography } from 'antd';
-import { Task, Submission } from './types';
+import { Submission } from './types';
 import './Review.css';
 import * as authSelectors from '../../../storage/auth/selectors';
 import { dbCreateRecord } from '../../../service/restapi-fb';

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Steps } from 'antd';
-import { Links, Task, SubmitInfo } from './types';
+import { Links, SubmitInfo } from './types';
 import { SelectTask } from './SelectTask';
 import { SelfCheck } from './SelfCheck';
 import { SubmitForm } from './SubmitForm';
 import { ReviewAndSubmit } from './ReviewAndSubmit';
 import { Success } from './Success';
 import './Submit.css';
+import { AggregatedTask } from '../services/getTasks';
 
 const { Step } = Steps;
 
@@ -14,7 +15,7 @@ const steps = ['Select Task', 'Submit Links', 'Self-check', 'Submit', 'Success']
 
 export default function Submit() {
   const [current, setCurrent] = useState(0);
-  const [task, setTask] = useState<Task>();
+  const [task, setTask] = useState<AggregatedTask>();
   const [links, setLinks] = useState<Links>({
     demoLink: '',
     repoLink: '',

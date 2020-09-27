@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
 import { useSelector } from 'react-redux';
 import { Button, Modal, Select, Typography } from 'antd';
-import { Task, Submission, Review, Dispute } from './types';
+import { Submission, Review, Dispute } from './types';
 import * as authSelectors from '../../../storage/auth/selectors';
-import { getSubmittedTasks } from '../services/getTasks';
+import { AggregatedTask, getSubmittedTasks } from '../services/getTasks';
 import { getDisputes, getStudentScore } from '../services/getScore';
 
 const { Option } = Select;
@@ -13,7 +13,7 @@ const { Link, Paragraph, Title } = Typography;
 export const SelectStudents: FC<{
   onBack: () => void;
   onNext: () => void;
-  task: Task;
+  task: AggregatedTask;
   onChange: (student: Submission) => void;
   selectedStudent?: Submission;
 }> = ({ onBack, onNext, task, onChange, selectedStudent }) => {

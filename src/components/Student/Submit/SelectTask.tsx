@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Select, Typography, Space } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
-import { Task, SubmitInfo } from './types';
+import { SubmitInfo } from './types';
 import { dbGetReq } from '../../../service/restapi-fb';
 import { AggregatedTask, getTasks } from '../services/getTasks';
 import * as authSelectors from '../../../storage/auth/selectors';
@@ -14,10 +14,10 @@ const { Text, Paragraph, Title } = Typography;
 
 export const SelectTask: FC<{
   onNext: () => void;
-  onChange: (task: Task | AggregatedTask) => void;
+  onChange: (task: AggregatedTask) => void;
   previousInfo: SubmitInfo;
   setPreviousInfo: (submitInfo: SubmitInfo) => void;
-  selectedTask?: Task;
+  selectedTask?: AggregatedTask;
   mode: 'submit' | 'review';
 }> = ({ onNext, onChange, selectedTask, previousInfo, mode, setPreviousInfo }) => {
   const [tasks, setTasks] = useState<AggregatedTask[]>();

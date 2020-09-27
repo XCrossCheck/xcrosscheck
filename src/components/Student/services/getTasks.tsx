@@ -7,6 +7,7 @@ import { Submission, Task } from '../Submit/types';
 export interface AggregatedTask extends ICrosscheckSession {
   name: string;
   taskId: string;
+  availableToSubmit: boolean;
 }
 
 function aggregateTasksAndSessions(

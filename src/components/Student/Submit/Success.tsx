@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Space, Typography } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
-import { Task } from './types';
+import { AggregatedTask } from '../services/getTasks';
 
 const { Title } = Typography;
 
 interface Props {
-  task: Task;
+  task: AggregatedTask;
   submittedAt: string;
 }
 

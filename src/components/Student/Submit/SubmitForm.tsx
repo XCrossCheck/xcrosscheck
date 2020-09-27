@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import { Form, Input, Button, Typography } from 'antd';
 import './Submit.css';
 import { DEMO_LINK, REPO_LINK } from '../../../helpers/validationRules';
-import { Links, Task } from './types';
+import { Links } from './types';
+import { AggregatedTask } from '../services/getTasks';
 
 interface Props {
   onSubmit: () => void;
   onNext: () => void;
   onBack: () => void;
-  task: Task;
+  task: AggregatedTask;
   setLinks: (values: Links) => void;
   initialValues: Links;
 }
