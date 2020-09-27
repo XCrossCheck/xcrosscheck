@@ -1,11 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Criteria } from 'src/types/Criteria';
 import { Form, Input, Button, Divider, Typography, InputNumber, Modal, Select } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { IItem, ITask } from '../../storage/data/dataTypes';
+import { saveAs } from 'file-saver';
+import Dragger from 'antd/lib/upload/Dragger';
+import { RcFile } from 'antd/lib/upload';
+import { ITask, ITaskDb } from '../../storage/data/dataTypes';
 import * as authSelectors from '../../storage/auth/selectors';
 import * as dataActions from '../../storage/data/actions';
 import { TStore } from '../../storage';
@@ -50,9 +53,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
   const [form] = Form.useForm<TFormValues>();
 
   const githubId = useSelector<TStore, string | null>(state => authSelectors.githubId(state));
-  const [categoriesOrder, setCategoriesOrder] = useState<string[] | null>(null);
-  const [items, setItems] = useState<IItem[] | null>(null);
-
   useEffect(() => {
     if (visible) {
       if (task) {
@@ -68,8 +68,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           extra: task.extra,
           fines: task.fines,
         });
-        setCategoriesOrder(task.categoriesOrder);
-        setItems(task.items);
       } else {
         form.setFieldsValue({
           taskName: null,
@@ -79,9 +77,10 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
           description: null,
           branchName: null,
           status: 'DRAFT',
+          basic: null,
+          extra: null,
+          fines: null,
         });
-        setCategoriesOrder(null);
-        setItems(null);
       }
     }
   }, [visible, task, form]);
@@ -103,9 +102,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
       basic: values.basic,
       extra: values.extra,
       fines: values.fines,
-      categoriesOrder,
-      items,
-
       id: null,
     };
     if (!task) {
@@ -125,6 +121,53 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
     closeModal();
   }
 
+  function exportToJson() {
+    form
+      .validateFields()
+      .then(() => {
+        const values: TFormValues = form.getFieldsValue();
+        const data: ITaskDb = {
+          name: values.taskName,
+          author: task?.author || githubId,
+          description: values.description,
+          branchName: values.branchName,
+          repoName: values.repoName,
+          screenshot: values.screenshot,
+          demoUrl: values.demo,
+          state: values.status,
+          basic: values.basic,
+          extra: values.extra,
+          fines: values.fines,
+        };
+        const json = JSON.stringify(data);
+        saveAs(new Blob([json], { type: 'application/json;charset=utf-8' }), 'task.json');
+      })
+      .catch(() => null);
+  }
+
+  function importFromJson(file: RcFile) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const taskObj = JSON.parse(e.target.result as string);
+      if (taskObj.name && taskObj.description && taskObj.author) {
+        form.setFieldsValue({
+          taskName: taskObj.name,
+          demo: taskObj.demoUrl,
+          repoName: taskObj.repoName,
+          screenshot: taskObj.screenshot,
+          description: taskObj.description,
+          branchName: taskObj.branchName,
+          status: taskObj.state,
+          basic: taskObj.basic,
+          extra: taskObj.extra,
+          fines: taskObj.fines,
+        });
+      }
+    };
+    reader.readAsText(file);
+    return false;
+  }
+
   return (
     <Modal
       width="90vw"
@@ -134,6 +177,12 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
       footer={[]}
       destroyOnClose
     >
+      <Dragger name="file" beforeUpload={importFromJson} showUploadList={false}>
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">Click or drag JSON to this area to upload</p>
+      </Dragger>
       <Form
         form={form}
         {...layout}
@@ -187,15 +236,21 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
         </Form.Item>
         <Form.Item label="статус" name="status" rules={[{ required: false }]}>
           <Select placeholder="Select status">
-            <Option key="DRAFT" value="DRAFT">
-              DRAFT
-            </Option>
-            <Option key="PUBLISHED" value="PUBLISHED">
-              PUBLISHED
-            </Option>
-            <Option key="ARCHIVED" value="ARCHIVED">
-              ARCHIVED
-            </Option>
+            {(task && task.state === 'DRAFT') || !task ? (
+              <Option key="DRAFT" value="DRAFT">
+                DRAFT
+              </Option>
+            ) : null}
+            {task && (task.state === 'DRAFT' || task.state === 'PUBLISHED') ? (
+              <Option key="PUBLISHED" value="PUBLISHED">
+                PUBLISHED
+              </Option>
+            ) : null}
+            {task && (task.state === 'PUBLISHED' || task.state === 'ARCHIVED') ? (
+              <Option key="ARCHIVED" value="ARCHIVED">
+                ARCHIVED
+              </Option>
+            ) : null}
           </Select>
         </Form.Item>
         <Divider {...dividerBlack} />
@@ -209,7 +264,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                 <div key={`basic_${field.key}`}>
                   <Title level={5}>{`Пункт ${field.key}`}</Title>
                   <Form.Item
-                    {...field}
                     label="Название"
                     name={[field.name, 'text']}
                     fieldKey={[field.fieldKey, 'text']}
@@ -218,7 +272,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     <Input placeholder="Text" />
                   </Form.Item>
                   <Form.Item
-                    {...field}
                     label="Оценка"
                     name={[field.name, 'score']}
                     fieldKey={[field.fieldKey, 'score']}
@@ -272,7 +325,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                 <div key={`extra_${field.key}`}>
                   <Title level={5}>{`Пункт ${field.key}`}</Title>
                   <Form.Item
-                    {...field}
                     label="Название"
                     name={[field.name, 'text']}
                     fieldKey={[field.fieldKey, 'text']}
@@ -281,7 +333,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     <Input placeholder="Text" />
                   </Form.Item>
                   <Form.Item
-                    {...field}
                     label="Оценка"
                     name={[field.name, 'score']}
                     fieldKey={[field.fieldKey, 'score']}
@@ -336,7 +387,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                 <div key={`fines_${field.key}`}>
                   <Title level={5}>{`Пункт ${field.key}`}</Title>
                   <Form.Item
-                    {...field}
                     label="Название"
                     name={[field.name, 'text']}
                     fieldKey={[field.fieldKey, 'text']}
@@ -345,7 +395,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     <Input placeholder="Text" />
                   </Form.Item>
                   <Form.Item
-                    {...field}
                     label="Оценка"
                     name={[field.name, 'score']}
                     fieldKey={[field.fieldKey, 'score']}
@@ -392,14 +441,13 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
 
         <Divider {...dividerBlack} />
         <Form.Item {...tailLayout}>
+          <Button onClick={exportToJson}>Export to JSON</Button>
           <Button key="back" onClick={handleCancel}>
             Return
           </Button>
-          ,
           <Button key="submit" type="primary" htmlType="submit">
             Save
           </Button>
-          ,
         </Form.Item>
       </Form>
     </Modal>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button } from 'antd';
 import { TStore } from '../../storage';
@@ -7,7 +7,7 @@ import * as dataSelectors from '../../storage/data/selectors';
 import { ITask } from '../../storage/data/dataTypes';
 import Loading from '../_Common/loading';
 import AddTask from '../AddTask';
-import getTableColumns from './tableConfig';
+import getTableColumns, { IFilters } from './tableConfig';
 
 const Tasks: FC = () => {
   const [seletedTask, setSeletedTask] = useState<ITask>(null);
@@ -37,22 +37,39 @@ const Tasks: FC = () => {
     };
   }, []);
 
+  const filters = useMemo<IFilters>(() => {
+    if (tasks) {
+      const tasksFilter = tasks.map(e => e.name).filter((v, i, s) => s.indexOf(v) === i);
+      const statusesFilter = tasks.map(e => e.state).filter((v, i, s) => s.indexOf(v) === i);
+      const authorsFilter = tasks.map(e => e.author).filter((v, i, s) => s.indexOf(v) === i);
+      return {
+        statuses: statusesFilter,
+        tasks: tasksFilter,
+        authors: authorsFilter,
+      };
+    }
+    return {
+      statuses: [],
+      tasks: [],
+      authors: [],
+    };
+  }, [tasks]);
+
   if (!tasks) {
     return <Loading />;
   }
-
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
-        <Button type="primary" onClick={() => showModal()}>
-          <i style={{ marginRight: '5px' }} className="fas fa-plus" />
-          Add Task
-        </Button>
-      </div>
+    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+      <Button type="primary" onClick={() => showModal()}>
+        <i style={{ marginRight: '5px' }} className="fas fa-plus" />
+        Add Task
+      </Button>
+    </div>
       <div>
         <Table
           rowKey="id"
-          columns={getTableColumns(showModal)}
+          columns={getTableColumns(showModal, filters)}
           pagination={{ position: ['bottomLeft'] }}
           dataSource={tasks}
         />

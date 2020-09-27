@@ -44,8 +44,6 @@ export interface ITaskDb {
   screenshot?: string;
   author: string;
   state: string;
-  categoriesOrder: string[];
-  items: IItem[];
   basic: Criteria[];
   extra: Criteria[];
   fines: Criteria[];
