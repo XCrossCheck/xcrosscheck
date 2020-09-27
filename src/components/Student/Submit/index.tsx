@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Steps } from 'antd';
+import { CheckScore } from 'src/types/Criteria';
 import { Links, SubmitInfo } from './types';
 import { SelectTask } from './SelectTask';
 import { SelfCheck } from './SelfCheck';
@@ -20,7 +21,7 @@ export default function Submit() {
     demoLink: '',
     repoLink: '',
   });
-  const [selfCheck] = useState<string>('');
+  const [selfCheck, setSelfCheck] = useState<CheckScore>();
   const [submittedAt, setSubmitedDate] = useState<string>('');
   const [previousInfo, setPreviousInfo] = useState<SubmitInfo>();
 
@@ -60,7 +61,9 @@ export default function Submit() {
       );
       break;
     case 2:
-      content = <SelfCheck onNext={next} onBack={prev} />;
+      content = task && (
+        <SelfCheck onNext={next} onBack={prev} task={task} setSelfCheck={setSelfCheck} />
+      );
       break;
     case 3:
       content = task && (

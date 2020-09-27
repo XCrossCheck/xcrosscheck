@@ -1,3 +1,5 @@
+import { Criteria } from 'src/types/Criteria';
+
 export interface Task {
   taskId: string;
   name: string;
@@ -11,6 +13,9 @@ export interface Task {
   discardMinScore: boolean;
   minReiewsAmount: number;
   startDate: string;
+  basic: Criteria[];
+  extra: Criteria[];
+  fines: Criteria[];
 }
 
 export interface Submission {

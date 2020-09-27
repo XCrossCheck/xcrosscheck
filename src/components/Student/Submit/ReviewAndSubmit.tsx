@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Button, Space, Typography } from 'antd';
 import { useSelector } from 'react-redux';
+import { CheckScore } from 'src/types/Criteria';
 import { Links, SubmitInfo } from './types';
 import './Submit.css';
 import { dbCreateRecord } from '../../../service/restapi-fb';
@@ -13,7 +14,7 @@ interface Props {
   task: AggregatedTask;
   previousInfo?: SubmitInfo;
   links: Links;
-  selfCheck: string;
+  selfCheck: CheckScore;
   setSubmitedDate: (submitedDate: string) => void;
 }
 
@@ -31,6 +32,12 @@ export const ReviewAndSubmit: FC<Props> = ({
   const submitedDate = date.toString();
   const myGitHub = useSelector(authSelectors.githubId);
 
+  const { basic, extra, fines } = selfCheck;
+  let finalScore = 0;
+  [basic, extra, fines].forEach(arr => {
+    finalScore += arr.reduce((acc, { score }) => acc + score, 0);
+  });
+
   return (
     <>
       <div>
@@ -41,7 +48,7 @@ export const ReviewAndSubmit: FC<Props> = ({
         <Title level={5}>Repository link</Title>
         <Paragraph>{links.repoLink}</Paragraph>
         <Title level={5}>Self-check score</Title>
-        <Paragraph>{selfCheck}</Paragraph>
+        <Paragraph>{finalScore}</Paragraph>
       </div>
       <Space className="button-wrapper">
         <Button onClick={onBack}>Back</Button>
@@ -53,9 +60,10 @@ export const ReviewAndSubmit: FC<Props> = ({
               demoLink: links.demoLink,
               taskId: task.taskId,
               repoLink: links.repoLink,
-              selfCheckScore: selfCheck,
+              selfCheckScore: finalScore,
               submittedAt: submitedDate,
               sessionId: task.id,
+              selfCheck,
             };
             setSubmitedDate(submitedDate);
             dbCreateRecord('studentsTasks', submitInfo);

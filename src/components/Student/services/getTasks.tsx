@@ -1,4 +1,5 @@
 import { ICrosscheckSession } from 'src/storage/data/dataTypes';
+import { Criteria } from 'src/types/Criteria';
 import { dbGetReq } from '../../../service/restapi-fb';
 import { get } from '../../../service/crossCheckSession';
 import { Attendees } from '../Review/types';
@@ -8,6 +9,9 @@ export interface AggregatedTask extends ICrosscheckSession {
   name: string;
   taskId: string;
   availableToSubmit: boolean;
+  basic: Criteria[];
+  extra: Criteria[];
+  fines: Criteria[];
 }
 
 function aggregateTasksAndSessions(
@@ -18,6 +22,9 @@ function aggregateTasksAndSessions(
     return {
       name: obj.name,
       taskId: key,
+      basic: obj.basic,
+      extra: obj.extra,
+      fines: obj.fines,
     };
   });
   const sessionsData = sessions.map(session => {
