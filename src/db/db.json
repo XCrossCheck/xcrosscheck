@@ -1,196 +1,770 @@
 {
-  "crossCheckSession" : {
-    "-MGyWh3I7UYeIUkTOHWW" : {
-      "attendees" : [ {
-        "githubId" : "ButterBrot777",
-        "reviewerOf" : [ "torvalds", "cardamo" ]
-      }, {
-        "githubId" : "torvalds",
-        "reviewerOf" : [ "cardamo" ]
-      }, {
-        "githubId" : "cardamo",
-        "reviewerOf" : [ "ButterBrot777" ]
-      } ],
-      "coefficient" : 0.7,
-      "desiredReviewersAmount" : 2,
-      "discardMaxScore" : false,
-      "discardMinScore" : true,
-      "endDate" : "2020-07-14",
-      "id" : "rss2020Q3css-html",
-      "minReiewsAmount" : 1,
-      "startDate" : "2020-07-07",
-      "state" : "DRAFT",
-      "taskId" : "csshtml-task-v1"
+  "attendees" : {
+    "-MIFCqYD4KhVH5Ajj5pW" : {
+      "githubId" : "99999",
+      "reviewerOf" : [ "66666", "55555", "44444", "88888" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
     },
-    "-MGyWtjjsjjoXo8HXKVB" : {
-      "attendees" : [ {
-        "githubId" : "ButterBrot777",
-        "reviewerOf" : [ "torvalds", "cardamo" ]
-      }, {
-        "githubId" : "torvalds",
-        "reviewerOf" : [ "cardamo" ]
-      }, {
-        "githubId" : "cardamo",
-        "reviewerOf" : [ "ButterBrot777" ]
-      } ],
-      "coefficient" : 0.7,
-      "desiredReviewersAmount" : 2,
-      "discardMaxScore" : false,
+    "-MIFCqYH65Mt0SbPQ2hy" : {
+      "githubId" : "88888",
+      "reviewerOf" : [ "111111", "44444", "55555", "77777" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCqYfRP006Q9DFM-s" : {
+      "githubId" : "77777",
+      "reviewerOf" : [ "55555", "88888", "111111", "44444" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCqYiUF4XHOYPt3Q6" : {
+      "githubId" : "111111",
+      "reviewerOf" : [ "44444", "99999", "222222", "55555" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCqYjRSMgYhks--G3" : {
+      "githubId" : "55555",
+      "reviewerOf" : [ "88888", "222222", "333333", "99999" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCq_K7WGvigM9IXQw" : {
+      "githubId" : "44444",
+      "reviewerOf" : [ "99999", "66666", "77777", "333333" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCq_LaVLy7Tu7a2Qs" : {
+      "githubId" : "333333",
+      "reviewerOf" : [ "222222", "77777", "66666", "111111" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCq_OsFPO8Q6IkqXs" : {
+      "githubId" : "66666",
+      "reviewerOf" : [ "333333", "99999", "222222" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIFCq_mYhr1JqdJCaTJ" : {
+      "githubId" : "222222",
+      "reviewerOf" : [ "77777", "111111", "88888", "66666" ],
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    }
+  },
+  "crossCheckSession" : {
+    "-MIDY0KRox36ckkIQ-O0" : {
+      "coefficient" : 1,
+      "deadlineReview" : "2020-10-11T20:59:00.269Z",
+      "deadlineSubmit" : "2020-10-04T20:59:00.435Z",
+      "desiredReviewersAmount" : 4,
+      "discardMaxScore" : true,
       "discardMinScore" : true,
-      "endDate" : "2020-07-14",
-      "id" : "rss2020Q3react-xcheck",
-      "minReiewsAmount" : 1,
-      "startDate" : "2020-07-07",
+      "minReiewsAmount" : 3,
+      "startDate" : "2020-09-27T05:59:59.999Z",
+      "state" : "CROSS_CHECK",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIDysoiOydiYpQZ8wB5" : {
+      "coefficient" : 1,
+      "deadlineReview" : "2020-10-11T20:59:00.310Z",
+      "deadlineSubmit" : "2020-09-27T11:29:37.547Z",
+      "desiredReviewersAmount" : 4,
+      "discardMaxScore" : true,
+      "discardMinScore" : true,
+      "minReiewsAmount" : 3,
+      "startDate" : "2020-09-26T21:00:59.999Z",
+      "state" : "CROSS_CHECK",
+      "taskId" : "-MIBCCtEqS-_azga7T8S"
+    },
+    "-MIGA2UjykVQKZhk6KVu" : {
+      "coefficient" : 1,
+      "deadlineReview" : "2020-09-30T20:59:00.513Z",
+      "deadlineSubmit" : "2020-09-28T20:59:00.171Z",
+      "desiredReviewersAmount" : 4,
+      "discardMaxScore" : true,
+      "discardMinScore" : true,
+      "minReiewsAmount" : 3,
+      "startDate" : "2020-09-27T20:59:59.999Z",
       "state" : "DRAFT",
-      "taskId" : "simple-task-v1"
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
     }
   },
   "dispute" : {
+    "-MI0nYpegrIEjaDPIR04" : {
+      "items" : {
+        "basic_p1" : {
+          "comment" : "You should push the button",
+          "suggestedScore" : 30
+        },
+        "extra_p1" : {
+          "comment" : "You should select this option",
+          "suggestedScore" : 30
+        },
+        "fines_p1" : {
+          "comment" : "none",
+          "suggestedScore" : 0
+        }
+      },
+      "reviewId" : "kotKatrinkot",
+      "taskId" : "xcheck"
+    },
+    "-MI0ncMDAq8OMTaLHBwt" : {
+      "items" : {
+        "basic_p1" : {
+          "comment" : "You should push the button",
+          "suggestedScore" : 30
+        },
+        "extra_p1" : {
+          "comment" : "You should select this option",
+          "suggestedScore" : 30
+        },
+        "fines_p1" : {
+          "comment" : "none",
+          "suggestedScore" : 0
+        }
+      },
+      "reviewId" : "kotKatrinkot",
+      "taskId" : "xcheck"
+    },
+    "-MI3Ksc5YGj8_X9sYzTr" : {
+      "items" : {
+        "basic_p1" : {
+          "comment" : "You should push the button",
+          "suggestedScore" : 30
+        },
+        "extra_p1" : {
+          "comment" : "You should select this option",
+          "suggestedScore" : 30
+        },
+        "fines_p1" : {
+          "comment" : "none",
+          "suggestedScore" : 0
+        }
+      },
+      "reviewId" : "kot1",
+      "taskId" : "english"
+    },
+    "-MIBWIfj4IpsJqUSNWWG" : {
+      "items" : {
+        "basic_p1" : {
+          "comment" : "Нужно нажать на кнопку слева...",
+          "suggestedScore" : 100
+        },
+        "extra_p1" : {
+          "comment" : "Нужно обновить страницу...",
+          "suggestedScore" : 120
+        },
+        "fines_p1" : {
+          "comment" : "Нет",
+          "suggestedScore" : 0
+        }
+      },
+      "reviewId" : "-MIBSebenPbpslNFfEW1",
+      "state" : "ONGOING"
+    },
+    "-MIFEbs4i_ZKFbt0unux" : {
+      "items" : {
+        "basic_p1" : {
+          "comment" : "Compliant basic scope",
+          "suggestedScore" : 110
+        },
+        "extra_p1" : {
+          "comment" : "Compliant Extra scope",
+          "suggestedScore" : 130
+        },
+        "fines_p1" : {
+          "comment" : "Fines actually should be",
+          "suggestedScore" : -10
+        }
+      },
+      "reviewId" : "-MIEZZH8ZsKC12JRzXqB",
+      "state" : "ONGOING",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
     "comment" : "Check out the 'All things' page to see all things that were implemented",
     "idem" : "extra_p1",
     "reviewId" : "rev-id-1",
     "state" : "ONGOING",
     "suggestedScore" : 30
   },
-  "review" : {
-    "author" : "ButterBrot777",
-    "id" : "rev-id-1",
-    "requestId" : "rev-req-1",
-    "state" : "DISPUTED"
-  },
-  "reviewRequest" : {
-    "author" : "cardamo",
-    "crossCheckSessionId" : "rss2020Q3react-xcheck",
-    "id" : "rev-req-1",
-    "state" : "PUBLISHED",
-    "task" : "simple-task-v1"
-  },
   "roles" : [ "author", "student", "supervisor", "course_manager" ],
-  "studentsTasks" : {
-    "-MGx9LEK1U3LSfxSIkJZ" : {
-      "githubId" : "self067",
-      "tasks" : [ {
-        "demoLink" : "http://songbird-nick.netlify.app/",
-        "id" : "simple-task-v2",
-        "repoLink" : "github-name/task",
-        "selfCheckScore" : 180,
-        "submitDate" : "11.09.2020"
-      } ]
+  "studentScore" : {
+    "-MHXW5FjGohH6JEBpUKv" : {
+      "crossCheckScore" : "180",
+      "feedback" : "Очень хорошая работа",
+      "feedbackId" : "katrinKotFelix",
+      "recipient" : "Felix",
+      "sender" : "katrin-kot",
+      "taskId" : {
+        "routes" : [ {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Page",
+          "url" : "/student"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Submit Page",
+          "url" : "/student/submit"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Score Page",
+          "url" : "/student/score"
+        }, {
+          "exact" : true,
+          "role" : "author",
+          "title" : "Add task",
+          "url" : "/"
+        } ]
+      }
     },
-    "-MGx9QEVdCPI1EW7Ifji" : {
-      "githubId" : "antonio",
-      "tasks" : [ {
-        "demoLink" : "http://songbird-nick.netlify.app/",
-        "id" : "simple-task-v2",
-        "repoLink" : "github-name/task",
-        "selfCheckScore" : 180,
-        "submitDate" : "11.09.2020"
-      } ]
+    "-MHXWdq9WA2HK3YZ891a" : {
+      "crossCheckScore" : "100",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "katrinKotFrank",
+      "recipient" : "Frank",
+      "sender" : "katrin-kot",
+      "taskId" : {
+        "routes" : [ {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Page",
+          "url" : "/student"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Submit Page",
+          "url" : "/student/submit"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Score Page",
+          "url" : "/student/score"
+        }, {
+          "exact" : true,
+          "role" : "author",
+          "title" : "Add task",
+          "url" : "/"
+        } ]
+      }
+    },
+    "-MHXWtdrX4Jx7E5IhNvI" : {
+      "crossCheckScore" : "100",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "katrinKotFrank",
+      "recipient" : "Frank",
+      "sender" : "katrin-kot",
+      "taskId" : {
+        "routes" : [ {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Page",
+          "url" : "/student"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Submit Page",
+          "url" : "/student/submit"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Score Page",
+          "url" : "/student/score"
+        }, {
+          "exact" : true,
+          "role" : "author",
+          "title" : "Add task",
+          "url" : "/"
+        } ]
+      }
+    },
+    "-MHXYcxP0E1IfJSB-xoL" : {
+      "crossCheckScore" : "100",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "kotKatrinkot",
+      "recipient" : "katrin-kot",
+      "sender" : "kot",
+      "taskId" : {
+        "routes" : [ {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Page",
+          "url" : "/student"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Submit Page",
+          "url" : "/student/submit"
+        }, {
+          "exact" : true,
+          "role" : "student",
+          "title" : "Student Score Page",
+          "url" : "/student/score"
+        }, {
+          "exact" : true,
+          "role" : "author",
+          "title" : "Add task",
+          "url" : "/"
+        } ]
+      }
+    },
+    "-MHXnft7zIPlYIdube_J" : {
+      "crossCheckScore" : "140",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "kotKatrinkot",
+      "recipient" : "katrin-kot",
+      "sender" : "kotik",
+      "taskId" : "xcheck"
+    },
+    "-MHXnwrZ5CD9i_iJef3_" : {
+      "crossCheckScore" : "140",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "kotKatrinkot",
+      "recipient" : "katrin-kot",
+      "sender" : "kotik",
+      "taskId" : "xcheck"
+    },
+    "-MHXoJoSw4wlzACLbmXv" : {
+      "crossCheckScore" : "160",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "kotKatrinkot",
+      "recipient" : "Fedor",
+      "sender" : "katrin-kot",
+      "taskId" : "xcheck"
+    },
+    "-MHXpE3gtaMxf1OHbl7t" : {
+      "crossCheckScore" : "180",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "mishaKatrinkot",
+      "recipient" : "Misha",
+      "sender" : "katrin-kot",
+      "taskId" : "xcheck"
+    },
+    "-MHXpHEmHNW6lg-OJZcC" : {
+      "crossCheckScore" : "180",
+      "feedback" : "Ваш балл 100, не выполнено многое...",
+      "feedbackId" : "mishaKatrinkot",
+      "recipient" : "Misha",
+      "sender" : "katrin-kot",
+      "taskId" : "xcheck"
+    },
+    "-MIBSebenPbpslNFfEW1" : {
+      "crossCheckScore" : "",
+      "feedback" : "В целом работа неплохая, бла-бла-бла",
+      "recipient" : "Nikolas",
+      "sender" : "katrin-kot",
+      "taskId" : "-MIBCCtEqS-_azga7T8S"
+    },
+    "-MIEZZH8ZsKC12JRzXqB" : {
+      "crossCheckScore" : "220",
+      "feedback" : "В целом работа неплохая...",
+      "recipient" : "katrin-kot",
+      "sender" : "Felix",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIE_0f4VzQk6H4YaTmB" : {
+      "crossCheckScore" : "200",
+      "feedback" : "В целом работа неплохая...",
+      "recipient" : "katrin-kot",
+      "sender" : "John",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIEdAACxmlqVP1xfVta" : {
+      "crossCheckScore" : "180",
+      "feedback" : "В целом работа неплохая...",
+      "recipient" : "Felix",
+      "sender" : "katrin-kot",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIEdBvErhoX1HB3bYHj" : {
+      "crossCheckScore" : "180",
+      "feedback" : "В целом работа неплохая...",
+      "recipient" : "Felix",
+      "sender" : "katrin-kot",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIEdCCeoIoeiPv-27C7" : {
+      "crossCheckScore" : "180",
+      "feedback" : "В целом работа неплохая...",
+      "recipient" : "Felix",
+      "sender" : "katrin-kot",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    }
+  },
+  "studentsTasks" : {
+    "-MHfcyyZ2tCCKIXqiOld" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "katrin-kot",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIDY0KRox36ckkIQ-O0",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "xcheck"
+    },
+    "-MHfdJ1xo2MCVxzsxMag" : {
+      "demoLink" : "https://netlify.netlifyhello.app",
+      "githubId" : "katrin-kot",
+      "repoLink" : "https://github.com/helloworld",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIDY0KRox36ckkIQ-O0",
+      "submittedAt" : "Sun Sep 20 2020 16:12:47 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "xcheck"
+    },
+    "-MHfiADNDIdy2ePN1MEm" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "katrin-kot",
+      "repoLink" : "https://github.com/helloworld",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIDY0KRox36ckkIQ-O0",
+      "submittedAt" : "Sun Sep 20 2020 16:34:01 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "xcheck"
+    },
+    "-MIBOZByIl80-Z9R4oFT" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "Nikolas",
+      "repoLink" : "https://github.com/singolo",
+      "selfCheckScore" : "220",
+      "sessionId" : "-MIDysoiOydiYpQZ8wB5",
+      "submittedAt" : "Sun Sep 25 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIBCCtEqS-_azga7T8S"
+    },
+    "-MIBOkwX4WnoWvqPsuwo" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "Mary",
+      "repoLink" : "https://github.com/singolo",
+      "selfCheckScore" : "200",
+      "sessionId" : "-MIDysoiOydiYpQZ8wB5",
+      "submittedAt" : "Sun Sep 24 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIBCCtEqS-_azga7T8S"
+    },
+    "-MIBP1aoFu5SW3Bh1qQ1" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "John",
+      "repoLink" : "https://github.com/singolo",
+      "selfCheckScore" : "180",
+      "sessionId" : "-MIDysoiOydiYpQZ8wB5",
+      "submittedAt" : "Sun Sep 23 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIBCCtEqS-_azga7T8S"
+    },
+    "-MIBPJ9D-tMsF54lAFA2" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "Felix",
+      "repoLink" : "https://github.com/singolo",
+      "selfCheckScore" : "180",
+      "sessionId" : "-MIDysoiOydiYpQZ8wB5",
+      "submittedAt" : "Sun Sep 23 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIBCCtEqS-_azga7T8S"
+    },
+    "-MIERWd6ncP-KfPqedjL" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "katrin-kot",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "submittedAt" : "\"2020-09-27T12:03:06.909Z\"",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIETfUscjoxPM-umQVo" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "katrin-kot",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "submittedAt" : "Sun Sep 27 2020 15:12:25 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIEU4Exuwtpz-D1OLjJ" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "111111",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU5TRQRbydRi429MH" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "222222",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU66O5rRfJPXP_o4F" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "333333",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU6nUhd3FtevkxhA-" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "44444",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU7dDs_9P8189ChYj" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "55555",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU8H9Zsa9GLuSBDfy" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "66666",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU8zsFz1QlorNfknH" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "77777",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEU9k2dUBDYH_sOClc" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "88888",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIEUALMdKhiPqs5lomr" : {
+      "demoLink" : "https://netlify.netlify.app",
+      "githubId" : "99999",
+      "repoLink" : "https://github.com/hello",
+      "selfCheckScore" : "",
+      "sessionId" : "-MIETZg0VP4jXwr7jjKU",
+      "submittedAt" : "Sun Sep 20 2020 16:11:20 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIA4zSoPAejzhuv9E5x"
+    },
+    "-MIGZKbEAyhaiJBZlxXl" : {
+      "demoLink" : "https://netlify.netlifyhello.app",
+      "githubId" : "katrin-kot",
+      "repoLink" : "https://github.com/helloworld",
+      "selfCheck" : {
+        "basic" : [ {
+          "comment" : "Все гут",
+          "score" : 10
+        }, {
+          "comment" : "Не сделано",
+          "score" : 0
+        }, {
+          "comment" : "Все гут",
+          "score" : 20
+        } ],
+        "extra" : [ {
+          "comment" : "Тут половина",
+          "score" : 5
+        } ],
+        "fines" : [ {
+          "comment" : "",
+          "score" : 0
+        } ]
+      },
+      "selfCheckScore" : 35,
+      "sessionId" : "-MIDY0KRox36ckkIQ-O0",
+      "submittedAt" : "Mon Sep 28 2020 00:56:33 GMT+0300 (Москва, стандартное время)",
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
     }
   },
   "taskScore" : {
-    "items" : {
-      "basic_p1" : {
-        "comment" : "Well done!",
-        "score" : 20
+    "-MHh39OBMnziRIkmiWsP" : {
+      "feedbackId" : "dfd",
+      "items" : {
+        "basic_p1" : {
+          "comment" : "Well done!",
+          "score" : 20
+        },
+        "extra_p1" : {
+          "comment" : "Some things are done, some are not",
+          "score" : 15
+        },
+        "fines_p1" : {
+          "comment" : "No ticket today",
+          "score" : 0
+        }
       },
-      "extra_p1" : {
-        "comment" : "Some things are done, some are not",
-        "score" : 15
-      },
-      "fines_p1" : {
-        "comment" : "No ticket today",
-        "score" : 0
-      }
+      "task" : "simple-task-v1"
     },
-    "task" : "simple-task-v1"
+    "-MHh3ky2z7YayZ89vPZM" : {
+      "feedbackId" : "kotKatrinkot",
+      "items" : {
+        "basic_p1" : {
+          "comment" : "Well done!",
+          "score" : 20
+        },
+        "extra_p1" : {
+          "comment" : "Some things are done, some are not",
+          "score" : 15
+        },
+        "fines_p1" : {
+          "comment" : "No ticket today",
+          "score" : 0
+        }
+      },
+      "taskId" : "xcheck"
+    },
+    "-MIEfShkmc2Lbnw0uxvN" : {
+      "feedbackId" : "-MIEZZH8ZsKC12JRzXqB",
+      "items" : {
+        "basic_p1" : {
+          "comment" : "Well done!",
+          "score" : 100
+        },
+        "extra_p1" : {
+          "comment" : "Some things are done, some are not",
+          "score" : 120
+        },
+        "fines_p1" : {
+          "comment" : "No ticket today",
+          "score" : 0
+        }
+      },
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    },
+    "-MIEfd_BRqJlpS86aHrr" : {
+      "feedbackId" : "-MIE_0f4VzQk6H4YaTmB",
+      "items" : {
+        "basic_p1" : {
+          "comment" : "Well done!",
+          "score" : 100
+        },
+        "extra_p1" : {
+          "comment" : "Some things are done, some are not",
+          "score" : 100
+        },
+        "fines_p1" : {
+          "comment" : "No ticket today",
+          "score" : 0
+        }
+      },
+      "taskId" : "-MIDTIi1rvutvGvmd8sF"
+    }
   },
   "tasks" : {
-    "0" : {
-      "author" : "cardamo",
-      "availableToSubmit" : true,
-      "categoriesOrder" : [ "Basic Scope", "Extra Scope", "Fines" ],
-      "id" : "simple-task-v1",
-      "items" : [ {
-        "category" : "Basic Scope",
-        "description" : "You need to make things right, not wrong",
-        "id" : "basic_p1",
-        "maxScore" : 20,
-        "minScore" : 0,
-        "title" : "Basic things"
+    "-MIBCCtEqS-_azga7T8S" : {
+      "author" : "katrin-kot",
+      "description" : "singolo",
+      "name" : "Singolo",
+      "state" : "PUBLISHED"
+    },
+    "-MIDTIi1rvutvGvmd8sF" : {
+      "author" : "katrin-kot",
+      "basic" : [ {
+        "score" : 10,
+        "text" : "Упрощённая страница/окно авторизации"
       }, {
-        "category" : "Extra Scope",
-        "description" : "Be creative and make up some more awesome things",
-        "id" : "extra_p1",
-        "maxScore" : 30,
-        "minScore" : 0,
-        "title" : "More awesome things"
+        "score" : 10,
+        "text" : "Страница со списком задач (tasks)."
       }, {
-        "category" : "Fines",
-        "description" : "App causes BSoD!",
-        "id" : "fines_p1",
-        "maxScore" : 0,
-        "minScore" : -10,
-        "title" : "App crashes"
+        "score" : 20,
+        "text" : "Форма (на отдельной странице или в окне) создания и редактирования задачи."
       } ],
+      "description" : "X-Check is very good",
+      "extra" : [ {
+        "score" : 10,
+        "text" : "Каждое действие, меняющее данные, доступно только при наличии у пользователя соответствующей роли. Набор ролей можно взять из примера или придумать свои. Ограничения должны быть описаны в README. Если выбор роли недоступен при логине или регистрации, тогда в исходной базе (db.json) должны быть тестовые пользователи с каждой из ролей, а их логины и пароли должны быть в README"
+      } ],
+      "fines" : [ {
+        "score" : 10,
+        "text" : "В репозитории есть \"следы\" активной командной работы - комментарии в пулл реквестах"
+      } ],
+      "name" : "X-Check",
+      "state" : "PUBLISHED"
+    },
+    "-MIGKU41Aj9K4DtvL3_x" : {
+      "author" : "Toffifi",
+      "basic" : [ {
+        "score" : 10,
+        "text" : "12312"
+      }, {
+        "score" : 20,
+        "text" : "dgsdg"
+      } ],
+      "branchName" : "qqww",
+      "demoUrl" : "qweqw",
+      "description" : "qweqwe",
+      "extra" : [ {
+        "score" : 60,
+        "text" : "dsfsadg"
+      }, {
+        "score" : 30,
+        "text" : "agasd"
+      } ],
+      "fines" : [ {
+        "score" : 30,
+        "text" : "wegsadhg"
+      }, {
+        "score" : 60,
+        "text" : "dgdsgsdg"
+      } ],
+      "name" : "taskInDraft!!!",
+      "repoName" : "eeww",
+      "screenshot" : "qweq",
       "state" : "DRAFT"
     },
-    "1" : {
-      "author" : "seltor",
-      "availableToSubmit" : true,
-      "categoriesOrder" : [ "Basic Scope", "Extra Scope", "Fines" ],
-      "id" : "simple-task-v2",
-      "items" : [ {
-        "category" : "Basic Scope",
-        "description" : "You need to make things right, not wrong",
-        "id" : "basic_p1",
-        "maxScore" : 20,
-        "minScore" : 0,
-        "title" : "Basic things"
+    "-MIGOUdT2LOaA5VFPKjJ" : {
+      "author" : "Toffifi",
+      "basic" : [ {
+        "score" : 10,
+        "text" : "12312"
       }, {
-        "category" : "Extra Scope",
-        "description" : "Be creative and make up some more awesome things",
-        "id" : "extra_p1",
-        "maxScore" : 30,
-        "minScore" : 0,
-        "title" : "More awesome things"
-      }, {
-        "category" : "Fines",
-        "description" : "App causes BSoD!",
-        "id" : "fines_p1",
-        "maxScore" : 0,
-        "minScore" : -10,
-        "title" : "App crashes"
+        "score" : 20,
+        "text" : "dgsdg"
       } ],
+      "branchName" : "qqww",
+      "demoUrl" : "qweqw",
+      "description" : "qweqwe",
+      "extra" : [ {
+        "score" : 60,
+        "text" : "dsfsadg"
+      }, {
+        "score" : 30,
+        "text" : "agasd"
+      } ],
+      "fines" : [ {
+        "score" : 30,
+        "text" : "wegsadhg"
+      }, {
+        "score" : 60,
+        "text" : "dgdsgsdg"
+      } ],
+      "name" : "tasktasktask",
+      "repoName" : "eeww",
+      "screenshot" : "qweq",
       "state" : "DRAFT"
-    },
-    "-MGsEVrdJBaWIt-Sjaq4" : {
-      "author" : "newuser",
-      "availableToSubmit" : true,
-      "categoriesOrder" : [ "Basic Scope", "Extra Scope", "Fines" ],
-      "id" : "newtask-v3",
-      "items" : [ {
-        "category" : "Basic Scope",
-        "description" : "You need to make things right, not wrong",
-        "id" : "basic_p1",
-        "maxScore" : 50,
-        "minScore" : 0,
-        "title" : "Basic things"
-      } ]
     }
   },
   "users" : {
     "0" : {
       "email" : "self067@gmail.com",
       "githubId" : "self067",
-      "id" : 1,
-      "password" : "qweqaz123"
+      "id" : 1
     },
     "-MGyVvkLgdGAjAIPP4tN" : {
       "email" : "ssffgfsg@gmail.com",
       "githubId" : "sass",
-      "id" : 2,
-      "password" : "qweqaz123"
+      "id" : 2
     }
   }
 }
