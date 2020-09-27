@@ -6,7 +6,6 @@ import { parseDate } from './utils';
 
 export function mapDomainToDb(data: ICrosscheckSession): ICrosscheckSessionDb {
   return {
-    attendees: data.attendees,
     coefficient: data.coefficient,
     deadlineReview: data.deadlineReview,
     deadlineSubmit: data.deadlineSubmit,
@@ -22,7 +21,6 @@ export function mapDomainToDb(data: ICrosscheckSession): ICrosscheckSessionDb {
 
 export function mapDbToDomain(data: any, key: string): ICrosscheckSession {
   return {
-    attendees: data.attendees,
     coefficient: data.coefficient,
     deadlineReview: parseDate(data.deadlineReview),
     deadlineSubmit: parseDate(data.deadlineSubmit),

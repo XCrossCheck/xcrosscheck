@@ -1,9 +1,4 @@
-export interface IAttendee {
-  githubId: string;
-  reviewerOf: string[];
-}
 export interface ICrosscheckSessionDb {
-  attendees: IAttendee[];
   coefficient: number;
   deadlineReview: Date;
   deadlineSubmit: Date;
@@ -18,6 +13,7 @@ export interface ICrosscheckSessionDb {
 
 export interface ICrosscheckSession extends ICrosscheckSessionDb {
   id: string;
+  submited?: string[]
 }
 
 export interface IItem {
