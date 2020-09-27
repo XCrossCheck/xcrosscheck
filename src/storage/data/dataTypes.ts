@@ -1,3 +1,9 @@
+import { Criteria } from 'src/types/Criteria';
+
+export interface IAttendee {
+  githubId: string;
+  reviewerOf: string[];
+}
 export interface ICrosscheckSessionDb {
   coefficient: number;
   deadlineReview: Date;
@@ -13,7 +19,7 @@ export interface ICrosscheckSessionDb {
 
 export interface ICrosscheckSession extends ICrosscheckSessionDb {
   id: string;
-  submited?: string[]
+  submited?: string[];
 }
 
 export interface IItem {
@@ -29,7 +35,6 @@ export interface ITask extends ITaskDb {
   id: string;
 }
 
-
 export interface ITaskDb {
   name: string;
   description: string;
@@ -41,4 +46,7 @@ export interface ITaskDb {
   state: string;
   categoriesOrder: string[];
   items: IItem[];
+  basic: Criteria[];
+  extra: Criteria[];
+  fines: Criteria[];
 }
