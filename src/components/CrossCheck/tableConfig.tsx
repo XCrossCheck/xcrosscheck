@@ -9,19 +9,13 @@ const tableColumns: ColumnsType<ICrosscheckSessionList> = [
   {
     title: 'Task Name',
     key: 'taskName',
-    render: (val, rec) => (
-      <EditSession text={rec.task.name} session={rec}/>
-    ),
-    sorter: (a, b) => a.task.name > b.task.name ? 1 : -1
+    render: (val, rec) => <EditSession text={rec.task?.name} session={rec} />,
+    sorter: (a, b) => (a.task?.name > b.task?.name ? 1 : -1),
   },
   {
     title: 'State',
     key: 'state',
-    render: (val, rec) => (
-      <Tag color='green'>
-        {rec.state.toUpperCase()}
-      </Tag>
-    ),
+    render: (val, rec) => <Tag color="green">{rec.state.toUpperCase()}</Tag>,
   },
   {
     title: 'Start Task',
@@ -32,7 +26,7 @@ const tableColumns: ColumnsType<ICrosscheckSessionList> = [
         <p>{rec.startDate.toLocaleTimeString().slice(0, -3)}</p>
       </>
     ),
-    sorter: (a, b) => a.startDate > b.startDate ? 1 : -1
+    sorter: (a, b) => (a.startDate > b.startDate ? 1 : -1),
   },
   {
     title: 'Review Dedlain',
@@ -43,7 +37,7 @@ const tableColumns: ColumnsType<ICrosscheckSessionList> = [
         <p>{rec.deadlineReview.toLocaleTimeString().slice(0, -3)}</p>
       </>
     ),
-    sorter: (a, b) => a.deadlineReview > b.deadlineReview ? 1 : -1
+    sorter: (a, b) => (a.deadlineReview > b.deadlineReview ? 1 : -1),
   },
   {
     title: 'Action',
@@ -51,9 +45,9 @@ const tableColumns: ColumnsType<ICrosscheckSessionList> = [
     render: (val, rec) => (
       <>
         <EditSession session={rec}>
-          <i className='fas fa-pencil-alt' />
+          <i className="fas fa-pencil-alt" />
         </EditSession>
-        <DeleteSession id={rec.id}/>
+        <DeleteSession id={rec.id} />
       </>
     ),
   },

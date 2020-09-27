@@ -2,23 +2,21 @@ import React, { FC } from 'react';
 import { Form, Input, Button, Typography } from 'antd';
 import './Submit.css';
 import { DEMO_LINK, REPO_LINK } from '../../../helpers/validationRules';
-import { Links, Task } from './types';
+import { Links } from './types';
+import { AggregatedTask } from '../services/getTasks';
 
 interface Props {
   onSubmit: () => void;
   onNext: () => void;
   onBack: () => void;
-  task: Task;
+  task: AggregatedTask;
   setLinks: (values: Links) => void;
   initialValues: Links;
 }
 
 export const SubmitForm: FC<Props> = ({ onNext, onBack, task, setLinks, initialValues }) => (
   <>
-    <Typography.Title level={4}>
-      Task Submit:
-      {task.id}
-    </Typography.Title>
+    <Typography.Title level={4}>Task Submit: {task.name}</Typography.Title>
     <Form
       layout="vertical"
       name="basic"
@@ -30,7 +28,7 @@ export const SubmitForm: FC<Props> = ({ onNext, onBack, task, setLinks, initialV
     >
       <Form.Item
         name="demoLink"
-        label="Link on DEMO version"
+        label="Demo Link"
         rules={[
           { required: true, message: 'Please enter demo link!' },
           {

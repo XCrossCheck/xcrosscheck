@@ -1,15 +1,16 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Button, Space, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-import { Task, Links, SubmitInfo } from './types';
+import { Links, SubmitInfo } from './types';
 import './Submit.css';
 import { dbCreateRecord } from '../../../service/restapi-fb';
 import * as authSelectors from '../../../storage/auth/selectors';
+import { AggregatedTask } from '../services/getTasks';
 
 interface Props {
   onNext: () => void;
   onBack: () => void;
-  task: Task;
+  task: AggregatedTask;
   previousInfo?: SubmitInfo;
   links: Links;
   selfCheck: string;
@@ -22,44 +23,22 @@ export const ReviewAndSubmit: FC<Props> = ({
   onNext,
   onBack,
   task,
-  previousInfo,
   links,
   selfCheck,
   setSubmitedDate,
 }) => {
   const date = new Date();
   const submitedDate = date.toString();
-  const [submitInfo, setSubmitInfo] = useState<SubmitInfo>();
   const myGitHub = useSelector(authSelectors.githubId);
 
-  useEffect(() => {
-    const currentTaskInfo = {
-      githubId: myGitHub,
-      demoLink: links.demoLink,
-      taskId: task.taskId,
-      repoLink: links.repoLink,
-      selfCheckScore: selfCheck,
-      submittedAt: submitedDate,
-    };
-
-    setSubmitInfo(currentTaskInfo);
-  }, [
-    previousInfo,
-    task.taskId,
-    links.demoLink,
-    links.repoLink,
-    selfCheck,
-    submitedDate,
-    myGitHub,
-  ]);
   return (
     <>
       <div>
         <Title level={5}>Task</Title>
         <Paragraph>{task.name}</Paragraph>
-        <Title level={5}>Link on Demo </Title>
+        <Title level={5}>Demo link </Title>
         <Paragraph>{links.demoLink}</Paragraph>
-        <Title level={5}>Link on repository</Title>
+        <Title level={5}>Repository link</Title>
         <Paragraph>{links.repoLink}</Paragraph>
         <Title level={5}>Self-check score</Title>
         <Paragraph>{selfCheck}</Paragraph>
@@ -69,6 +48,16 @@ export const ReviewAndSubmit: FC<Props> = ({
         <Button
           type="primary"
           onClick={() => {
+            const submitInfo = {
+              githubId: myGitHub,
+              demoLink: links.demoLink,
+              taskId: task.taskId,
+              repoLink: links.repoLink,
+              selfCheckScore: selfCheck,
+              submittedAt: submitedDate,
+              sessionId: task.id,
+            };
+            console.log(task);
             setSubmitedDate(submitedDate);
             dbCreateRecord('studentsTasks', submitInfo);
             onNext();
