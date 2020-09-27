@@ -88,8 +88,6 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
     }
   }, [visible, task]);
   
-  // #region functions
-  
   const dispatch = useDispatch();
   const createTask = (payload: ITask) => dispatch(dataActions.tasks.create(payload));
   const updateTask = (payload: ITask) => dispatch(dataActions.tasks.update(payload));

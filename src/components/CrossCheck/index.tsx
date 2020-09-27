@@ -7,15 +7,25 @@ import * as dataSelectors from '../../storage/data/selectors';
 import { ITask, ICrosscheckSession } from '../../storage/data/dataTypes';
 import Loading from '../_Common/loading';
 import { ICrosscheckSessionList } from './types';
-import tableColumns from './tableConfig';
 import EditForm from './EditForm';
+import getTableColumns from './tableConfig';
 
 const CrossCheck: FC = () => {
 
+  const [seletedSessionId, setSeletedSessionId] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
+  const [showArchive, setShowArchive] = useState(false);
 
-  function showModal() {
+  function showModal(id?: string) {
+    if (id) {
+      setSeletedSessionId(id);
+    }
     setVisible(true);
+  }
+
+  function closeModal() {
+    setVisible(false);
+    setSeletedSessionId(null);
   }
 
   const dispatch = useDispatch();
@@ -38,7 +48,9 @@ const CrossCheck: FC = () => {
 
   const list = useMemo<ICrosscheckSessionList[] | null>(() => {
     if (tasks && crosscheckSessions) {
-      const result = crosscheckSessions.map<ICrosscheckSessionList>(e => {
+      const result = crosscheckSessions
+        .filter(e => showArchive ? e.state === 'COMPLETED' : e.state !== 'COMPLETED')
+        .map<ICrosscheckSessionList>(e => {
         const task = tasks.find((t) => t.id === e.taskId);
         const item: ICrosscheckSessionList = {
           ...e,
@@ -49,22 +61,27 @@ const CrossCheck: FC = () => {
       return result;
     }
     return null;
-  }, [tasks, crosscheckSessions]);
+  }, [tasks, crosscheckSessions, showArchive]);
+  
+  const seletedSession = useMemo(() => list?.find(e => e.id === seletedSessionId), [list, seletedSessionId]);
 
   if (!list) {
     return <Loading />;
   }
   return (
     <>
-      <Button onClick={showModal}>
+      <Button onClick={() => showModal(null)}>
           <i className="fas fa-plus" />
           Add Session
       </Button>
-      <EditForm visible={visible} setVisible={setVisible}/>
+      <Button onClick={() => setShowArchive(s => !s)}>
+          {showArchive ? 'Show active' : 'Show complited'}
+      </Button>
+      <EditForm visible={visible} closeModal={closeModal} session={seletedSession}/>
       <div>
           <Table
             rowKey="id" 
-            columns={tableColumns}
+            columns={getTableColumns(showModal)}
             pagination={{ position: ['bottomLeft'] }}
             dataSource={list}
           />

@@ -11,7 +11,7 @@ function getTableColumns(editTask: (task: ITask) => void): ColumnsType<ITask> {
       key: 'taskName',
       render: (val, rec) => (
         <Button onClick={() =>  editTask(rec)}>
-            rec.name
+            { rec.name }
         </Button>
       ),
       sorter: (a, b) => a.name > b.name ? 1 : -1

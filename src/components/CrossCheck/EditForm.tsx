@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Button, Card, DatePicker, InputNumber, Modal, Select } from 'antd';
+import { Button, Card, DatePicker, Form, InputNumber, Modal, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { ITask, ICrosscheckSession } from '../../storage/data/dataTypes';
@@ -12,7 +12,7 @@ const { Option } = Select;
 type TEditForm = {
   session?: ICrosscheckSession;
   visible: boolean;
-  setVisible: (visible: boolean) => void;
+  closeModal: () => void;
 };
 
 type TValidation = {
@@ -27,7 +27,18 @@ type TValidation = {
   isValid: boolean;
 };
 
-const EditForm: FC<TEditForm> = ({ session, visible, setVisible }) =>  {
+type TFormValues = {
+  startDate: moment.Moment;
+  submitDate: moment.Moment;
+  reviewDate: moment.Moment;
+  coefficient: number;
+  minReviewers: number;
+  desiredReviewersAmount: number;
+};
+
+const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
+
+  const [form] = Form.useForm<TFormValues>();
 
   const tasks = useSelector<TStore, ITask[] | null>((state) => dataSelectors.tasks(state));
 
@@ -35,41 +46,39 @@ const EditForm: FC<TEditForm> = ({ session, visible, setVisible }) =>  {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [submitDate, setSubmitDate] = useState<Date | null>(null);
   const [reviewDate, setReviewDate] = useState<Date | null>(null);
-  const [coefficient, setCoefficient] = useState<number | null>(null);
-  const [minReviewers, setMinReviewers] = useState<number | null>(null);
-  const [desiredReviewersAmount, setDesiredReviewersAmount] = useState<number | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
+  const [currentAction, setCurrentAction] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (visible) {
-      if (session) {
-        setTaskID(session.taskId);
-        setStartDate(session.startDate);
-        setSubmitDate(session.deadlineSubmit);
-        setReviewDate(session.deadlineReview);
-        setCoefficient(session.coefficient);
-        setMinReviewers(session.minReiewsAmount);
-        setDesiredReviewersAmount(session.desiredReviewersAmount);
-        setStatus(session.state);
-      } else {
-        setStartDate(moment().endOf('day').toDate());
-        setCoefficient(1);
-        setMinReviewers(3);
-        setDesiredReviewersAmount(4);
-        setStatus('DRAFT');
-      }
+    if (visible && session) {
+      setTaskID(session.taskId);
+      form.setFieldsValue({
+        startDate: session.startDate ? moment(session.startDate) : moment().endOf('day'),
+        submitDate: session.deadlineSubmit ? moment(session.deadlineSubmit) : undefined,
+        reviewDate: session.deadlineReview ? moment(session.deadlineReview) : undefined,
+        coefficient: session.coefficient,
+        minReviewers: session.minReiewsAmount,
+        desiredReviewersAmount: session.desiredReviewersAmount,
+      });
+      setStartDate(session.startDate || moment().endOf('day').toDate());
+      setSubmitDate(session.deadlineSubmit || undefined);
+      setReviewDate(session.deadlineReview || undefined);
     } else {
+      form.setFieldsValue({
+        startDate: moment().endOf('day'),
+        submitDate: undefined,
+        reviewDate: undefined,
+        coefficient: 1,
+        minReviewers: 3,
+        desiredReviewersAmount: 4,
+      });
       setTaskID(null);
-      setStartDate(null);
-      setSubmitDate(null);
-      setReviewDate(null);
-      setCoefficient(null);
-      setMinReviewers(null);
-      setDesiredReviewersAmount(null);
-      setStatus(null);
+      setStartDate(moment().endOf('day').toDate());
+      setSubmitDate(undefined);
+      setReviewDate(undefined);
+      setLoading(false);
     }
-  }, [visible]);
+  }, [visible, session]);
 
   const dispatch = useDispatch();
   const createCrosscheckSession = (payload: ICrosscheckSession) => dispatch(dataActions.crosscheckSessions.create(payload));
@@ -79,189 +88,210 @@ const EditForm: FC<TEditForm> = ({ session, visible, setVisible }) =>  {
     setTaskID(value);
   }
 
-  function handleStartDateChange(value: moment.Moment | null) {
-    setStartDate(value ? value.toDate() : null);
-  }
-
-  function handleSubmitDateChange(value: moment.Moment | null) {
-    setSubmitDate(value ? value.toDate() : null);
-  }
-
-  function handleReviewDateChange(value: moment.Moment | null) {
-    setReviewDate(value ? value.toDate() : null);
-  }
-
-  function disabledStartDate(current) {
-    return current && current < moment().startOf('day');
-  }
-
-  function disabledSubmitDate(current) {
-    return current && current < moment(startDate).endOf('day');
-  }
-
-  function disabledReviewDate(current) {
-    return current && current < moment(submitDate).endOf('day');
-  }
-
-  function onCoefficientChange(value: number) {
-    setCoefficient(value);
-  }
-
-  function onMinReviewersChange(value: number) {
-    setMinReviewers(value);
-  }
-
-  function onDesiredReviewersAmountChange(value: number) {
-    setDesiredReviewersAmount(value);
-  }
-
-  function handleStatusChange(value: string) {
-    setStatus(value);
-  }
-
-  function validate() {
-    const result: TValidation = {
-      taskID: !!taskID,
-      startDate: !!startDate,
-      submitDate: !!submitDate,
-      reviewDate: !!reviewDate,
-      coefficient: !!coefficient,
-      minReviewers: !!minReviewers,
-      desiredReviewersAmount: !!desiredReviewersAmount,
-      status: !!status,
-      isValid: false,
-    };
-    if (submitDate <= startDate) {
-      result.submitDate = false;
-    }
-    if (reviewDate <= startDate || reviewDate <= submitDate) {
-      result.reviewDate = false;
-    }
-    result.isValid = result.taskID && result.startDate && result.submitDate && result.reviewDate 
-      && result.coefficient && result.minReviewers && result.desiredReviewersAmount &&result.status;
-    return result;
-  }
-  
-  function handleOk() {
-    const validationResult = validate();
-    if (!validationResult.isValid) {
+  const onFinish = (values: TFormValues) => {
+    if (submitDate <= startDate || reviewDate <= startDate || reviewDate <= submitDate) {
       return;
     }
     const data: ICrosscheckSession = {
-      attendees: [],
-      coefficient,
-      deadlineReview: reviewDate,
-      deadlineSubmit: submitDate,
-      desiredReviewersAmount,
+      coefficient: values.coefficient,
+      deadlineReview: values.reviewDate ? values.reviewDate.toDate() : null,
+      deadlineSubmit: values.submitDate ? values.submitDate.toDate() : null,
+      desiredReviewersAmount: values.desiredReviewersAmount,
       discardMaxScore: true,
       discardMinScore: true,
-      minReiewsAmount: minReviewers,
-      startDate,
-      state: status,
+      minReiewsAmount: values.minReviewers,
+      startDate: values.startDate ? values.startDate.toDate() : null,
       taskId: taskID,
-      id: null,
+      state: session ? session.state : 'DRAFT',
+      id: session ? session.id : null,
+      attendees: session ? session.attendees : [],
     };
     if (!session) {
       createCrosscheckSession(data);
     } else {
-      data.id = session.id;
-      data.attendees = session.attendees;
       updateCrosscheckSession(data);
     }
-   
-    setVisible(false);
-  }
+    closeModal();
+  };
 
   function handleCancel() {
-    setVisible(false);
+    closeModal();
+  }
+  
+  const onFinishFailed = (errorInfo: any) => {
+    // console.log('Failed:', errorInfo);
+  };
+
+  function getActionButtonName() {
+    switch (session?.state) {
+      case 'DRAFT':
+        return 'Start requests gathering';
+      case 'REQUESTS_GATHERING':
+        return 'Start crosscheck and shuffle students';
+      case 'CROSS_CHECK':
+        return 'End session and calculate score';
+      default:
+        return null;
+    }
+  }
+
+  useEffect(() => {
+    if (session && currentAction && currentAction !== session?.state) {
+      setCurrentAction(null);
+      setLoading(false);
+    }
+  }, [currentAction, session]);
+
+  function handleAction() {
+    if (loading || !visible) {
+      return;
+    }
+    const data: ICrosscheckSession = { ...session };
+    switch (session.state) {
+      case 'DRAFT':
+        data.state = 'REQUESTS_GATHERING';
+        break;
+      case 'REQUESTS_GATHERING':
+        data.state = 'CROSS_CHECK';
+        break;
+      case 'CROSS_CHECK':
+        data.state = 'COMPLETED';
+        break;
+      default:
+        break;
+    }
+    setCurrentAction(session.state);
+    setLoading(true);
+    updateCrosscheckSession(data);
+    if (session.state === 'CROSS_CHECK') {
+      closeModal();
+    }
   }
 
   return (
     <Modal
+      width='90vw'
       visible={visible}
       title="Title"
-      onOk={handleOk}
       onCancel={handleCancel}
       footer={[
-        <Button key="back" onClick={handleCancel}>
-          Return
-        </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-          Save
-        </Button>,
       ]}
+      destroyOnClose
     >
     <div>
       {!session ? (
         <Select placeholder="Select task" value={taskID} style={{ width: 120 }} onChange={handleTaskIdChange}>
-          {tasks.map((e) => 
-            <Option key={e.id} value={e.id}>{e.name}</Option>
-          )}
+          {tasks.map((e) => {
+            if (e.state === 'PUBLISHED') {
+              return <Option key={e.id} value={e.id}>{e.name}</Option>;
+            }
+            return null;
+          })}
         </Select>
       ) : null}
-      {taskID ? 
-        (
-          <>
-            <Card>
-              <p>{tasks.find((e) => e.id === taskID).name}</p>
-            </Card>
-            <Card>
-              <div>
-                <p>Session start:</p>
-                <DatePicker
-                  onChange={handleStartDateChange}
-                  value={startDate ? moment(startDate) : moment().endOf('day')}
-                  defaultPickerValue={moment().endOf('day')}
-                  format="YYYY-MM-DD HH:mm"
-                  disabledDate={disabledStartDate}
-                  showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
-                />
-              </div>
-              <div>
-                <p>Submit dedline:</p>
-                <DatePicker
-                  onChange={handleSubmitDateChange}
-                  value={submitDate ? moment(submitDate) : undefined}
-                  format="YYYY-MM-DD HH:mm"
-                  disabledDate={disabledSubmitDate}
-                  showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
-                />
-              </div>
-              <div>
-                <p>Review dedline:</p>
-                <DatePicker
-                  onChange={handleReviewDateChange}
-                  value={reviewDate ? moment(reviewDate) : undefined}
-                  format="YYYY-MM-DD HH:mm"
-                  disabledDate={disabledReviewDate}
-                  showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
-                />
-              </div>
-            </Card>
-            <Card>
-              <div>
-                <p>Coefficient</p>
-                <InputNumber min={0.1} max={10} step={0.1} value={coefficient} onChange={onCoefficientChange} />
-              </div>
-              <div>
-                <p>Min Reviewers Amount</p>
-                <InputNumber min={1} max={10} value={minReviewers} onChange={onMinReviewersChange} />
-              </div>
-              <div>
-                <p>Desired Reviewers Amount</p>
-                <InputNumber min={1} max={10} value={desiredReviewersAmount} onChange={onDesiredReviewersAmountChange} />
-              </div>
-            </Card>
-            <Select placeholder="Select status" value={status} onChange={handleStatusChange}>
-              <Option key="DRAFT" value="DRAFT">DRAFT</Option>
-              <Option key="REQUESTS_GATHERING" value="REQUESTS_GATHERING">REQUESTS_GATHERING</Option>
-              <Option key="CROSS_CHECK" value="CROSS_CHECK">CROSS_CHECK</Option>
-              <Option key="COMPLETED" value="COMPLETED">COMPLETED</Option>
-            </Select>
-          </>
-        )
+      {session? (
+         <Button onClick={handleAction}>
+            {getActionButtonName()}
+        </Button>
+      ) : null}
+      <Form
+        form={form}
+        name="formAddSession"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+      {taskID ? (
+        <>
+          <Card>
+            <p>{tasks.find((e) => e.id === taskID).name}</p>
+          </Card>
+          <Card>
+            <Form.Item
+              label="Session start"
+              name="startDate"
+              rules={[{ required: true, message: 'Please select date' }]}
+            >
+              <DatePicker
+                // value={startDate ? moment(startDate) : moment().endOf('day')}
+                onChange={(value) => setStartDate(value ? value.toDate() : null)}
+                defaultPickerValue={moment().endOf('day')}
+                format="YYYY-MM-DD HH:mm"
+                disabledDate={(c) => c && c < moment().startOf('day')}
+                showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Submit deadline"
+              name="submitDate"
+              validateStatus={submitDate <= startDate ? 'error' : undefined}
+              help={submitDate <= startDate ? 'Please select the correct date' : undefined}
+              rules={[{ required: true, message: 'Please select date' }]}
+            >
+              <DatePicker
+                onChange={(value) => setSubmitDate(value ? value.toDate() : null)}
+                format="YYYY-MM-DD HH:mm"
+                disabledDate={(c) => c && c < moment(startDate).endOf('day')}
+                showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Review deadline"
+              name="reviewDate"
+              validateStatus={reviewDate <= startDate || reviewDate <= submitDate ? 'error' : undefined}
+              help={reviewDate <= startDate || reviewDate <= submitDate ? 'Please select the correct date' : undefined}
+              rules={[{ required: true, message: 'Please select date' }]}
+            >
+              <DatePicker
+                // value={reviewDate ? moment(reviewDate) : undefined}
+                onChange={(value) => setReviewDate(value ? value.toDate() : null)}
+                format="YYYY-MM-DD HH:mm"
+                disabledDate={(c) => c && c < moment(submitDate).endOf('day')}
+                showTime={{ defaultValue: moment('23:59:59', 'HH:mm') }}
+              />
+              </Form.Item>
+          </Card>
+          <Card>
+            <Form.Item
+              label="Coefficient"
+              name="coefficient"
+              rules={[{ required: true, message: 'Please select coefficient' }]}
+            >
+              <InputNumber min={0.1} max={10} step={0.1} />
+            </Form.Item>
+            <Form.Item
+              label="Min Reviewers Amount"
+              name="minReviewers"
+              rules={[{ required: true, message: 'Please select min reviewers amount' }]}
+            >
+              <InputNumber min={1} max={10} />
+            </Form.Item>
+            <Form.Item
+              label="Desired Reviewers Amount"
+              name="desiredReviewersAmount"
+              rules={[{ required: true, message: 'Please select desired reviewers amount' }]}
+            >
+              <InputNumber min={1} max={10} />
+              </Form.Item>
+          </Card>
+          {/* <Select placeholder="Select status" value={status} onChange={handleStatusChange}>
+            <Option key="DRAFT" value="DRAFT">DRAFT</Option>
+            <Option key="REQUESTS_GATHERING" value="REQUESTS_GATHERING">REQUESTS_GATHERING</Option>
+            <Option key="CROSS_CHECK" value="CROSS_CHECK">CROSS_CHECK</Option>
+            <Option key="COMPLETED" value="COMPLETED">COMPLETED</Option>
+          </Select>         */}
+          <Form.Item>
+            <Button key="back" onClick={handleCancel}>
+              Return
+            </Button>,
+            <Button key="submit" type="primary" htmlType="submit" loading={loading}>
+              Save
+            </Button>,
+          </Form.Item>
+        </>)
         :
         null}
+        </Form>
       </div>
     </Modal>
   );

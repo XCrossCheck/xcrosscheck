@@ -13,7 +13,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { setCookie } from '../../service/cookies';
 // import { exit } from 'process';
 
