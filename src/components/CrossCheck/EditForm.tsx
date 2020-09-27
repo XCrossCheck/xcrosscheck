@@ -37,33 +37,35 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (visible && session) {
-      setTaskID(session.taskId);
-      form.setFieldsValue({
-        startDate: session.startDate ? moment(session.startDate) : moment().endOf('day'),
-        submitDate: session.deadlineSubmit ? moment(session.deadlineSubmit) : undefined,
-        reviewDate: session.deadlineReview ? moment(session.deadlineReview) : undefined,
-        coefficient: session.coefficient,
-        minReviewers: session.minReiewsAmount,
-        desiredReviewersAmount: session.desiredReviewersAmount,
-      });
-      setStartDate(session.startDate || moment().endOf('day').toDate());
-      setSubmitDate(session.deadlineSubmit || undefined);
-      setReviewDate(session.deadlineReview || undefined);
-    } else {
-      form.setFieldsValue({
-        startDate: moment().endOf('day'),
-        submitDate: undefined,
-        reviewDate: undefined,
-        coefficient: 1,
-        minReviewers: 3,
-        desiredReviewersAmount: 4,
-      });
-      setTaskID(null);
-      setStartDate(moment().endOf('day').toDate());
-      setSubmitDate(undefined);
-      setReviewDate(undefined);
-      setLoading(false);
+    if (visible) {
+      if (session) {
+        setTaskID(session.taskId);
+        form.setFieldsValue({
+          startDate: session.startDate ? moment(session.startDate) : moment().endOf('day'),
+          submitDate: session.deadlineSubmit ? moment(session.deadlineSubmit) : undefined,
+          reviewDate: session.deadlineReview ? moment(session.deadlineReview) : undefined,
+          coefficient: session.coefficient,
+          minReviewers: session.minReiewsAmount,
+          desiredReviewersAmount: session.desiredReviewersAmount,
+        });
+        setStartDate(session.startDate || moment().endOf('day').toDate());
+        setSubmitDate(session.deadlineSubmit || undefined);
+        setReviewDate(session.deadlineReview || undefined);
+      } else {
+        form.setFieldsValue({
+          startDate: moment().endOf('day'),
+          submitDate: undefined,
+          reviewDate: undefined,
+          coefficient: 1,
+          minReviewers: 3,
+          desiredReviewersAmount: 4,
+        });
+        setTaskID(null);
+        setStartDate(moment().endOf('day').toDate());
+        setSubmitDate(undefined);
+        setReviewDate(undefined);
+        setLoading(false);
+      }
     }
   }, [visible, session]);
 
@@ -172,16 +174,13 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
             style={{ width: '100%' }}
             onChange={handleTaskIdChange}
           >
-            {tasks.map(e => {
-              if (e.state === 'PUBLISHED') {
-                return (
-                  <Option key={e.id} value={e.id}>
-                    {e.name}
-                  </Option>
-                );
-              }
-              return null;
-            })}
+            {tasks
+              .filter(e => e.state === 'PUBLISHED')
+              .map(e => (
+                <Option key={e.id} value={e.id}>
+                  {e.name}
+                </Option>
+              ))}
           </Select>
         ) : null}
         {session ? <Button onClick={handleAction}>{getActionButtonName()}</Button> : null}
@@ -193,10 +192,10 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
         >
           {taskID ? (
             <>
-              <Card>
-                <p>Task name: <br /> {tasks.find(e => e.id === taskID).name}</p>
-                <p>Description: <br /> {tasks.find(e => e.id === taskID).description}</p>
-              </Card>
+            <Card>
+              <p>Task name: <br /> {tasks.find(e => e.id === taskID).name}</p>
+              <p>Description: <br /> {tasks.find(e => e.id === taskID).description}</p>
+            </Card>
               <Card>
                 <Form.Item
                   label="Session start"
@@ -271,12 +270,6 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) => {
                   <InputNumber min={1} max={10} />
                 </Form.Item>
               </Card>
-              {/* <Select placeholder="Select status" value={status} onChange={handleStatusChange}>
-            <Option key="DRAFT" value="DRAFT">DRAFT</Option>
-            <Option key="REQUESTS_GATHERING" value="REQUESTS_GATHERING">REQUESTS_GATHERING</Option>
-            <Option key="CROSS_CHECK" value="CROSS_CHECK">CROSS_CHECK</Option>
-            <Option key="COMPLETED" value="COMPLETED">COMPLETED</Option>
-          </Select>         */}
               <Form.Item>
                 <Button key="back" onClick={handleCancel}>
                   Return
