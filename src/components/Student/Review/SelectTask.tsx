@@ -25,34 +25,36 @@ export const SelectTask: FC<{
     const now = new Date();
     if (mode === 'review') {
       canProceed =
-        new Date(selectedTask.deadlineSubmit) < now && new Date(selectedTask.deadlineReview) > now;
+        selectedTask?.availableToSubmit &&
+        new Date(selectedTask.deadlineSubmit) < now &&
+        new Date(selectedTask.deadlineReview) > now;
     }
   }
-
+  console.log(canProceed);
   return (
     <>
-      {selectedTask ? (
+      {selectedTask?.availableToSubmit && (
         <Title level={5} style={{ marginBottom: '2rem' }}>
-          <span className="warning">Attention!</span> You should review more then three tasks
-          {selectedTask.taskId} before{' '}
+          <span className="warning">Attention!</span> You should review more than{' '}
+          {selectedTask.minReiewsAmount} tasks {selectedTask.name} before{' '}
           {new Date(selectedTask.deadlineReview).toLocaleString().slice(0, -3)}
         </Title>
-      ) : null}
+      )}
       <Select
-        defaultValue={selectedTask?.taskId}
+        defaultValue={selectedTask?.name}
         placeholder="Select task"
         style={{ width: 360 }}
         onChange={value => {
-          const task = tasks.find(t => t.taskId === value);
+          const task = tasks.find(t => t.name === value);
           if (task) {
             onChange(task);
           }
         }}
         loading={!tasks.length}
       >
-        {tasks.map(({ taskId }) => (
-          <Option key={taskId} value={taskId}>
-            {taskId}
+        {tasks.map(({ name }) => (
+          <Option key={name} value={name}>
+            {name}
           </Option>
         ))}
       </Select>

@@ -15,10 +15,7 @@ interface Props {
 
 export const SubmitForm: FC<Props> = ({ onNext, onBack, task, setLinks, initialValues }) => (
   <>
-    <Typography.Title level={4}>
-      Task Submit:
-      {task.id}
-    </Typography.Title>
+    <Typography.Title level={4}>Task Submit: {task.name}</Typography.Title>
     <Form
       layout="vertical"
       name="basic"
@@ -30,7 +27,7 @@ export const SubmitForm: FC<Props> = ({ onNext, onBack, task, setLinks, initialV
     >
       <Form.Item
         name="demoLink"
-        label="Link on DEMO version"
+        label="Demo Link"
         rules={[
           { required: true, message: 'Please enter demo link!' },
           {

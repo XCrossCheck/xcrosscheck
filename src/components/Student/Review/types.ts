@@ -3,6 +3,8 @@ export interface Task {
   deadlineSubmit: string;
   deadlineReview: string;
   availableToSubmit: boolean;
+  name: string;
+  minReiewsAmount: number;
 }
 
 export interface Submission {
@@ -19,12 +21,12 @@ export interface Links {
   repoLink: string;
 }
 
-export interface Submission2 {
+export interface Review {
   taskId: string;
   sender: string;
   recipient: string;
   crossCheckScore: string;
-  feedbackId: string;
+  reviewId: string;
   feedback: string;
 }
 
@@ -32,4 +34,24 @@ export interface Attendees {
   githubId: string;
   taskId: string;
   reviewerOf: string[];
+}
+
+export interface Dispute {
+  'items': {
+    'basic_p1': {
+      'comment': string;
+      'suggestedScore': number;
+    };
+    'extra_p1': {
+      'comment': string;
+      'suggestedScore': number;
+    };
+    'fines_p1': {
+      'comment': string;
+      'suggestedScore': number;
+    };
+  };
+  'taskId': string;
+  'reviewId': string;
+  'state': string;
 }

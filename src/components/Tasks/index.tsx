@@ -9,12 +9,10 @@ import Loading from '../_Common/loading';
 import AddTask from '../AddTask';
 import getTableColumns from './tableConfig';
 
-
 const Tasks: FC = () => {
-
   const [seletedTask, setSeletedTask] = useState<ITask>(null);
   const [visible, setVisible] = useState(false);
-  
+
   function showModal(id?: ITask) {
     if (id) {
       setSeletedTask(id);
@@ -28,10 +26,10 @@ const Tasks: FC = () => {
   }
 
   const dispatch = useDispatch();
-  const tasks = useSelector<TStore, ITask[] | null>((state) => dataSelectors.tasks(state));
+  const tasks = useSelector<TStore, ITask[] | null>(state => dataSelectors.tasks(state));
   const getTasks = () => dispatch(dataActions.tasks.get());
   const clearTasks = () => dispatch(dataActions.tasks.clear());
-  
+
   useEffect(() => {
     getTasks();
     return () => {
@@ -42,21 +40,23 @@ const Tasks: FC = () => {
   if (!tasks) {
     return <Loading />;
   }
+
+  console.log(tasks);
   return (
     <>
       <Button onClick={() => showModal()}>
-          <i className="fas fa-plus" />
-          Add Task
+        <i className="fas fa-plus" />
+        Add Task
       </Button>
       <div>
-          <Table
-            rowKey="id" 
-            columns={getTableColumns(showModal)}
-            pagination={{ position: ['bottomLeft'] }}
-            dataSource={tasks}
-          />
+        <Table
+          rowKey="id"
+          columns={getTableColumns(showModal)}
+          pagination={{ position: ['bottomLeft'] }}
+          dataSource={tasks}
+        />
       </div>
-      <AddTask visible={visible} closeModal={closeModal} task={seletedTask}/>
+      <AddTask visible={visible} closeModal={closeModal} task={seletedTask} />
     </>
   );
 };

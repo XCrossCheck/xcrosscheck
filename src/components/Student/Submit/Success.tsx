@@ -18,14 +18,14 @@ export const Success: FC<Props> = ({ task, submittedAt }) => (
       <Title level={3}>
         <Space>
           <span>
-            Task {task.id} succsessfully submited{' '}
+            Task {task.name} succsessfully submited{' '}
             {new Date(submittedAt).toLocaleString().slice(0, -3)}
           </span>
         </Space>
       </Title>
     </div>
     <Space>
-      <Link to="/student">
+      <Link to="/">
         <Button>To Main Page</Button>
       </Link>
     </Space>

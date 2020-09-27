@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import './Review.css';
 import { useSelector } from 'react-redux';
-import { Button, Select, Typography } from 'antd';
-import { dbGetReq } from '../../../service/restapi-fb';
-import { Task, Submission, Submission2, Attendees } from './types';
+import { Button, Modal, Select, Typography } from 'antd';
+import { Task, Submission, Review, Dispute } from './types';
 import * as authSelectors from '../../../storage/auth/selectors';
+import { getSubmittedTasks } from '../services/getTasks';
+import { getDisputes, getStudentScore } from '../services/getScore';
 
 const { Option } = Select;
 const { Link, Paragraph, Title } = Typography;
@@ -17,28 +18,31 @@ export const SelectStudents: FC<{
   selectedStudent?: Submission;
 }> = ({ onBack, onNext, task, onChange, selectedStudent }) => {
   const [students, setStudents] = useState<Submission[]>([]);
-  const [review, setReview] = useState<Submission2[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [currentReview, setCurrentReview] = useState<Review>();
+  const [disputes, setDisputes] = useState<Dispute[]>([]);
+  const [currentDispute, setCurrentDispute] = useState<Dispute>();
+  const [visible, showModal] = useState<boolean>(false);
   const myGitHub = useSelector(authSelectors.githubId);
 
   useEffect(() => {
-    dbGetReq('studentScore').then(score => setReview(Object.values(score.data)));
-    Promise.all([dbGetReq('studentsTasks'), dbGetReq('attendees')]).then(([taskRes, attendees]) => {
-      const studentsForReview = Object.values<Attendees>(attendees.data).filter(
-        t => t.githubId === myGitHub && t.taskId === task.taskId
-      );
-      const finalReviewStudents = studentsForReview[studentsForReview.length - 1].reviewerOf;
-      const studentsTasks = Object.values<Submission>(taskRes.data)
-        .filter(t => t.taskId === task.taskId)
-        .filter(item => finalReviewStudents.includes(item.githubId));
-      setStudents(studentsTasks);
-    });
+    getStudentScore().then(setReviews);
+    getDisputes().then(setDisputes);
+    getSubmittedTasks(myGitHub, task.taskId).then(setStudents);
   }, [task.taskId, myGitHub]);
 
-  const currentReview = review.filter(elem => elem.recipient === selectedStudent?.githubId);
+  useEffect(() => {
+    setCurrentReview(reviews.find(r => r.recipient === selectedStudent?.githubId));
+  }, [reviews, selectedStudent]);
+
+  useEffect(() => {
+    setCurrentDispute(disputes.find(d => d.reviewId === currentReview?.reviewId));
+  }, [disputes, currentReview]);
+
   return (
     <>
       <Typography.Title level={4}>
-        Task Review: <span>{task?.taskId}</span>
+        Task Review: <span>{task?.name}</span>
       </Typography.Title>
       <Select
         defaultValue={selectedStudent?.githubId}
@@ -81,29 +85,54 @@ export const SelectStudents: FC<{
           <div>
             {' '}
             <Title level={5}>Task </Title>
-            <Paragraph> {selectedStudent.taskId}</Paragraph>
-            <Title level={5}>Link on Demo </Title>
+            <Paragraph> {task.name}</Paragraph>
+            <Title level={5}>Demo link </Title>
             <Link href={selectedStudent.demoLink} target="_blank">
               {selectedStudent.demoLink}
             </Link>
-            <Title level={5}>Link on repository</Title>
+            <Title level={5}>Repository link</Title>
             <Link href={selectedStudent.repoLink} target="_blank">
               {selectedStudent.repoLink}
             </Link>
             <Title level={5}>Self-check score</Title>
             <Paragraph>{selectedStudent.selfCheckScore}</Paragraph>
           </div>
-          {currentReview.length ? (
+          {currentReview && (
             <div style={{ marginLeft: '40px', width: '400px', overflow: 'hidden' }}>
               <Title className="warning" level={5}>
                 Score was already submitted
               </Title>
               <Title level={5}>Submitted score </Title>
-              <Paragraph>{currentReview[0].crossCheckScore}</Paragraph>
+              <Paragraph>{currentReview.crossCheckScore}</Paragraph>
               <Title level={5}>Feedback</Title>
-              <Paragraph>{currentReview[0].feedback}</Paragraph>
+              <Paragraph>{currentReview.feedback}</Paragraph>
+
+              {currentDispute && (
+                <>
+                  <Button type="primary" onClick={() => showModal(true)} danger>
+                    View dispute
+                  </Button>
+                  <Modal
+                    title="Dispute"
+                    visible={visible}
+                    onOk={() => showModal(false)}
+                    onCancel={() => showModal(false)}
+                  >
+                    <Title level={5}>Basic scope</Title>
+                    <Paragraph>{currentDispute.items?.basic_p1.comment}</Paragraph>
+                    <Paragraph strong>Suggested score: </Paragraph>
+                    <Paragraph>{currentDispute.items?.basic_p1.suggestedScore}</Paragraph>
+                    <Paragraph>{currentDispute.items?.extra_p1.comment}</Paragraph>
+                    <Paragraph strong>Suggested score: </Paragraph>
+                    <Paragraph>{currentDispute.items?.extra_p1.suggestedScore}</Paragraph>
+                    <Paragraph>{currentDispute.items?.fines_p1.comment}</Paragraph>
+                    <Paragraph strong>Suggested score: </Paragraph>
+                    <Paragraph>{currentDispute.items?.fines_p1.suggestedScore}</Paragraph>
+                  </Modal>
+                </>
+              )}
             </div>
-          ) : null}
+          )}
         </div>
       ) : null}
     </>

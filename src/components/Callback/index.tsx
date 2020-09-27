@@ -24,7 +24,7 @@ async function getAccessToken(code: string) {
     res = await axios(authurl, {
       method: 'get',
     });
-    
+
     return res;
   } catch (e) {
     console.log(`Axios request failed: ${e}`);
@@ -32,15 +32,15 @@ async function getAccessToken(code: string) {
   }
 }
 
-async function getGitUser(token:string) {
+async function getGitUser(token: string) {
   let res;
   try {
     res = await axios.get('https://api.github.com/user', {
       headers: {
-        Authorization: `token ${token}`
-      }
+        Authorization: `token ${token}`,
+      },
     });
-    
+
     return res;
   } catch (e) {
     console.log(`Axios request failed: ${e}`);
@@ -56,43 +56,44 @@ type TCallback = {
 };
 
 type TGitAuth = {
-  props: RouteComponentProps<any>;
+  props: any;
   setLogged: (lstate: boolean) => void;
   setGithubId: (githubId: string) => void;
 };
 
 // const Callback:React.FC<fCallback> = ({ location }) => {
 const Callback: React.FC<TGitAuth> = ({ props, setLogged, setGithubId }) => {
-
-  const {location: {search} } = props;
+  const {
+    location: { search },
+  } = props;
   // console.log('Callback:', search);
   const url = new URLSearchParams(search);
   const code = url.get('code');
-  let token = 'not ready'; 
+  let token = 'not ready';
   //  !!!!!!!
   // const state = url.get('state') || '';
   // if (state !== verify_state) then exit;
 
   if (code) {
     getAccessToken(code) // state
-      .then((data) => {
+      .then(data => {
         token = data?.data.token;
         // setToken(token);
         const github = getGitUser(token);
         return github;
       })
-      .then((data) => {
-        const {data: {login}} = data;
-        setGithubId( login);
+      .then(data => {
+        const {
+          data: { login },
+        } = data;
+        setGithubId(login);
         setLogged(true);
         setCookie('login', login);
-
       })
-      .catch((data) => console.log('catch', data));
+      .catch(data => console.log('catch', data));
   }
 
   return <Redirect to="/" />;
-  
 };
 
 export default Callback;
