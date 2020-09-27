@@ -12,6 +12,7 @@ import { TStore } from '../../storage';
 
 const { Title } = Typography;
 const { Option } = Select;
+const { TextArea } = Input;
 
 const layout = {
   labelCol: { span: 8 },
@@ -215,7 +216,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     fieldKey={[field.fieldKey, 'text']}
                     rules={[{ required: true, message: 'Missing Text' }]}
                   >
-                    <Input placeholder="Text" />
+                    <TextArea placeholder="Text" autoSize />
                   </Form.Item>
                   <Form.Item
                     {...field}
@@ -278,7 +279,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     fieldKey={[field.fieldKey, 'text']}
                     rules={[{ required: true, message: 'Missing Text' }]}
                   >
-                    <Input placeholder="Text" />
+                    <TextArea placeholder="Text" autoSize />
                   </Form.Item>
                   <Form.Item
                     {...field}
@@ -342,7 +343,7 @@ const AddTask: FC<TAddTask> = ({ visible, closeModal, task }) => {
                     fieldKey={[field.fieldKey, 'text']}
                     rules={[{ required: true, message: 'Missing Text' }]}
                   >
-                    <Input placeholder="Text" />
+                    <TextArea placeholder="Text" autoSize />
                   </Form.Item>
                   <Form.Item
                     {...field}
