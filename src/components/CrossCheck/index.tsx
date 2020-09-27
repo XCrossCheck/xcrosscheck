@@ -6,7 +6,7 @@ import * as dataActions from '../../storage/data/actions';
 import * as dataSelectors from '../../storage/data/selectors';
 import { ITask, ICrosscheckSession } from '../../storage/data/dataTypes';
 import Loading from '../_Common/loading';
-import { ICrosscheckSessionList } from './types';
+import { ICrosscheckSessionList, IFilters } from './types';
 import EditForm from './EditForm';
 import getTableColumns from './tableConfig';
 
@@ -62,6 +62,21 @@ const CrossCheck: FC = () => {
     }
     return null;
   }, [tasks, crosscheckSessions, showArchive]);
+
+  const filters = useMemo<IFilters>(() => {
+    if (list) {
+      const tasksFilter = list.map(e => e.task.name).filter((v, i, s) => s.indexOf(v) === i);
+      const statusesFilter = list.map(e => e.state).filter((v, i, s) => s.indexOf(v) === i);
+      return {
+        statuses: statusesFilter,
+        tasks: tasksFilter,
+      };
+    }
+    return {
+      statuses: [],
+      tasks: [],
+    };
+  }, [list]);
   
   const seletedSession = useMemo(() => list?.find(e => e.id === seletedSessionId), [list, seletedSessionId]);
 
@@ -81,7 +96,7 @@ const CrossCheck: FC = () => {
       <div>
           <Table
             rowKey="id" 
-            columns={getTableColumns(showModal)}
+            columns={getTableColumns(showModal, filters)}
             pagination={{ position: ['bottomLeft'] }}
             dataSource={list}
           />

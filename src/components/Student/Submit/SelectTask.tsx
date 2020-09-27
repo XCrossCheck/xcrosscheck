@@ -33,6 +33,7 @@ export const SelectTask: FC<{
   if (selectedTask) {
     const now = new Date();
     if (mode === 'submit') {
+      console.log(selectedTask, now);
       canProceed = new Date(selectedTask.deadlineSubmit) > now;
     }
     if (mode === 'review') {

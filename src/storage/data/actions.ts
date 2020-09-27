@@ -3,7 +3,9 @@ import constants from './constants';
 import { IThunkAction } from '..';
 import * as csService from '../../service/crossCheckSession';
 import * as taskService from '../../service/task';
+import * as stService from '../../service/studentsTasks';
 import { ICrosscheckSession, ITask } from './dataTypes';
+import * as attService from '../../service/attendees';
 
 type TTasks = {
   get: () => IThunkAction;
@@ -21,6 +23,10 @@ type TCrosscheckSessions = {
   update: (data: ICrosscheckSession) => IThunkAction;
   delete: (id: string) => IThunkAction;
   clear: IAction<void>;
+};
+
+type TAttendees = {
+  shuffle: (data: ICrosscheckSession) => IThunkAction;
 };
 
 const tasks: TTasks = {
@@ -56,6 +62,13 @@ const tasks: TTasks = {
 const crosscheckSessions: TCrosscheckSessions = {
   get: () => async dispatch => {
     const payload = await csService.get();
+    const promises = payload
+      .filter(e=> e.state === 'REQUESTS_GATHERING' || e.state === 'CROSS_CHECK')
+      .map(e => stService.getGithubIdBySessionId(e.id));
+    const st = await Promise.all(promises);
+    payload.forEach(e => {
+      e.submited = st.find(s => s.sessionId === e.id)?.githubIds;
+    });
     dispatch({ type: constants.SET_CROSSCHECK_SESSIONS, payload });
   },
   create: (data) => async dispatch => {
@@ -84,7 +97,17 @@ const crosscheckSessions: TCrosscheckSessions = {
   clear: () => ({ type: constants.CLEAR_CROSSCHECK_SESSIONS, payload: null }),
 };
 
+const attendees: TAttendees = {
+  shuffle: (data) => async dispatch => {
+    const attendeesResult = attService.shuffleStudents(data);
+    const promises = attendeesResult.map(e => attService.create(e));
+    await Promise.all(promises);
+    dispatch(crosscheckSessions.get());
+  },
+};
+
 export {
   tasks,
   crosscheckSessions,
+  attendees,
 };

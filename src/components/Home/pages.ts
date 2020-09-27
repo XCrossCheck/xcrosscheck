@@ -4,6 +4,7 @@ import StudentSubmitPage from '../Student/Submit';
 import StudentReviewPage from '../Student/Review';
 import Tasks from '../Tasks';
 import { StudentScorePage } from '../Student/Submit/ScorePage';
+import StudentsSubmitList from '../SubmitList';
 import CrossCheck from '../CrossCheck';
 
 export type TPage = {
@@ -60,6 +61,14 @@ const pages: TPage[] = [
     component: CrossCheck,
     title: 'Cross Check',
     url: '/crosscheck',
+    role: 'author',
+    exact: true,
+    isTab: true,
+  },
+  {
+    component: StudentsSubmitList,
+    title: 'Students submit list',
+    url: '/studentssubmitlist',
     role: 'author',
     exact: true,
     isTab: true,

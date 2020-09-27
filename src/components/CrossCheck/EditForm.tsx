@@ -104,7 +104,6 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
       taskId: taskID,
       state: session ? session.state : 'DRAFT',
       id: session ? session.id : null,
-      attendees: session ? session.attendees : [],
     };
     if (!session) {
       createCrosscheckSession(data);
@@ -142,6 +141,8 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
     }
   }, [currentAction, session]);
 
+  const shuffleStudents = (s: ICrosscheckSession) => dispatch(dataActions.attendees.shuffle(s));
+
   function handleAction() {
     if (loading || !visible) {
       return;
@@ -153,6 +154,7 @@ const EditForm: FC<TEditForm> = ({ session, visible, closeModal }) =>  {
         break;
       case 'REQUESTS_GATHERING':
         data.state = 'CROSS_CHECK';
+        shuffleStudents(session);
         break;
       case 'CROSS_CHECK':
         data.state = 'COMPLETED';

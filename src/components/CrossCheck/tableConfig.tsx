@@ -2,9 +2,9 @@ import { Button, Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table/Table';
 import React from 'react';
 import DeleteSession from './DeleteSession';
-import { ICrosscheckSessionList } from './types';
+import { ICrosscheckSessionList, IFilters } from './types';
 
-const getTableColumns = (editSession: (id?: string) => void): ColumnsType<ICrosscheckSessionList> => {
+const getTableColumns = (editSession: (id?: string) => void, filters: IFilters): ColumnsType<ICrosscheckSessionList> => {
   const config: ColumnsType<ICrosscheckSessionList> =  [
     {
       title: 'Task Name',
@@ -18,7 +18,9 @@ const getTableColumns = (editSession: (id?: string) => void): ColumnsType<ICross
           </Button>
           )
       ),
-      sorter: (a, b) => a.task.name > b.task.name ? 1 : -1
+      sorter: (a, b) => a.task.name > b.task.name ? 1 : -1,
+      filters: filters.tasks.map(e => ({ text: e, value: e })),
+      onFilter: (val, rec) => rec.task.name.includes(val as string),
     },
     {
       title: 'State',
@@ -28,7 +30,9 @@ const getTableColumns = (editSession: (id?: string) => void): ColumnsType<ICross
           {rec.state.toUpperCase()}
         </Tag>
       ),
-      sorter: (a, b) => a.startDate > b.startDate ? 1 : -1
+      sorter: (a, b) => a.startDate > b.startDate ? 1 : -1,
+      filters: filters.statuses.map(e => ({ text: e, value: e })),
+      onFilter: (val, rec) => rec.state.includes(val as string),
     },
     {
       title: 'Start Task',
@@ -63,7 +67,9 @@ const getTableColumns = (editSession: (id?: string) => void): ColumnsType<ICross
           <Button onClick={() =>  editSession(rec.id)}>
               <i className='fas fa-pencil-alt' />
           </Button>
-          <DeleteSession id={rec.id}/>
+        {rec.state === 'DRAFT' ? 
+           <DeleteSession id={rec.id}/> : null}
+         
         </>
       ),
     },
