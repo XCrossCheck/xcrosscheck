@@ -1,27 +1,39 @@
-# xcrosscheck
-X-CrossCheck group 47 React Q3 2020
+## X-CrossCheck task group 47  
 
-Group chat (Telegram / Discord) 
+### Demo  
+https://x-check-app-team47.netlify.app/  
 
-https://t.me/joinchat/Oz44CxsBeS-wiLfzyqO9IQ 
+### Getting Started  
 
-https://discord.gg/7KY5JJ
+    npm install  
+    ./cert-gen.cmd  
+    npm run dev  
 
+### Production  
+ 
+    npm run buid  
 
+### Technologies stack  
+react  
+typescript  
+redux  
+redux-thunk 
+react-router-dom  
+antd  
+googleapis  
+moment  
+babel  
+webpack  
+eslint-config-airbnb-typescript    
 
-Name Surname 			Github 			Telegram  
+### Team   
+Group chat (Telegram / Discord)  
+https://t.me/joinchat/Oz44CxsBeS-wiLfzyqO9IQ  
+https://discord.gg/7KY5JJ  
 
-Konstantsin Kasko 		KonstantinMinsk 	@Konstantsin_Minsk 
-
-Katsiaryna Kleshchukevich 	katrin-kot 		@katrinkot @katrin-kot 
-
-Oleg Kuzmin 			self067 		@Self067 Oleg (@self067) 
-
-Veranika Martsinovich 		veronika-martinovich 	@veronika_martinovich Veronika#5340 
-
-Katerina Railian 		kotiknalune 		@kotiknalune
-
-Aleksandra Kovaleva 		toffifi 		@toffifee 
-
-Katsiaryna Kozyrava 		braumwinter 		@braumwinter
-
+| Name       | Surname        | Github      | Telegram     | Discord                   |
+|------------|----------------|-------------|--------------|---------------------------|
+| Katsiaryna | Kleshchukevich | katrin-kot  | @katrinkot   | @katrin-kot               |
+| Oleg       | Kuzmin         | self067     | @Self067     | Oleg (@self067)           |
+| Aleksandra | Kovaleva       | toffifi     | @toffifee    | Tofifi #9784              |
+| Katsiaryna | Kozyrava       | braumwinter | @braumwinter | braumwinter(@braumwinter) |	
