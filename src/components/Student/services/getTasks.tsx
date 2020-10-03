@@ -36,7 +36,8 @@ function aggregateTasksAndSessions(
   });
 
   return tasksData.map(task => {
-    const session = sessionsData.find(s => s.taskId === task.taskId);
+    const taskSessions = sessionsData.filter(s => s.taskId === task.taskId);
+    const session = taskSessions[taskSessions.length - 1];
     return {
       ...task,
       ...session,
